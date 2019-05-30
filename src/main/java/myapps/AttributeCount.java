@@ -83,8 +83,6 @@ public class AttributeCount{
 
             streams.start();
 
-            //Testweises warten bis State ist initialisiert, weil sonst stream thread starting, not running fehler
-             Thread.sleep(5000);
 
         try {
             latch.await();
