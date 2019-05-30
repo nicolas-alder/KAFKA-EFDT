@@ -23,6 +23,7 @@ import org.apache.kafka.streams.kstream.*;
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
 import org.apache.kafka.streams.processor.ProcessorSupplier;
+import org.apache.kafka.streams.processor.StateStore;
 import org.apache.kafka.streams.state.*;
 
 import java.util.Arrays;
@@ -43,22 +44,22 @@ public class AttributeCount{
     public static void main(String[] args) throws Exception {
 
         Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-attributcount");
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "treeworker");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
         final StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String,String> stream = builder.<String, String>stream("attributj_node_i");
+        KStream<String,String> stream = builder.<String, String>stream("node_i");
         //Nodenames will be dynamically generated with naming tree naming convention
         //Count Attribute values
         //Attribute values are counted from 1 to n for range of 1 to n discrete values, key represents possible values (key = 1 is value 1 etc.)
         //StateStore can be queried for currennt attribute statistics
-        stream.groupByKey(Grouped.with(Serdes.String(), Serdes.String())).count(Materialized.<String, java.lang.Long, KeyValueStore<Bytes, byte[]>>as("CountsKeyValueStore"));
+        stream.groupByKey(Grouped.with(Serdes.String(), Serdes.String())).count(Materialized.<String, java.lang.Long, KeyValueStore<Bytes, byte[]>>as("nodeStore_i"));
 
-        stream.to("attributj_node_i_plus_1", Produced.with(Serdes.String(), Serdes.String()));
-        stream.to("attributj_node_i_plus_2", Produced.with(Serdes.String(), Serdes.String()));
+        stream.to("node_i_plus_1", Produced.with(Serdes.String(), Serdes.String()));
+        stream.to("node_i_plus_2", Produced.with(Serdes.String(), Serdes.String()));
 
 
         final Topology topology = builder.build();
@@ -93,19 +94,4 @@ public class AttributeCount{
         System.exit(0);
     }
 
-    private static void query(KafkaStreams streams) {
-        // Get the key-value store CountsKeyValueStore
-        ReadOnlyKeyValueStore<String, String> keyValueStore =
-                streams.store("CountsKeyValueStore", QueryableStoreTypes.keyValueStore());
-
-        // Get the values for all of the keys available in this application instance
-        KeyValueIterator<String, String> range = keyValueStore.all();
-        while (range.hasNext()) {
-            KeyValue<String, String> next = range.next();
-            System.out.println("count for " + next.key + ": " + value);
-        }
-        // close the iterator to release resources
-        range.close();
-        return;
-    }
 }
