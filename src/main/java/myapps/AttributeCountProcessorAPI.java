@@ -59,7 +59,7 @@ public class AttributeCountProcessorAPI implements Processor<String, Record> {
             Map.Entry pair = (Map.Entry)it.next();
             String recordKey = (String) pair.getKey();
             String recordValue = (String) pair.getValue();
-            String compound_key = recordKey.concat(recordValue);
+            String compound_key = recordKey.concat("_".concat(recordValue));
             Integer current_count = this.kvStore.get(compound_key);
             if (current_count == null){current_count=0;}
             this.kvStore.put(compound_key,current_count+1);
