@@ -16,6 +16,7 @@
  */
 package myapps;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.*;
@@ -30,8 +31,11 @@ import org.apache.kafka.streams.state.StoreBuilder;
 import org.apache.kafka.streams.state.Stores;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public class AttributeCountProcessorAPI implements Processor<String, Integer> {
+public class AttributeCountProcessorAPI implements Processor<String, Record> {
 
     private ProcessorContext context;
     private KeyValueStore<String, Integer> kvStore;
@@ -48,13 +52,20 @@ public class AttributeCountProcessorAPI implements Processor<String, Integer> {
     }
 
     @Override
-    public void process(String key, Integer value) {
-        Integer oldValue = this.kvStore.get(key);
-        if (oldValue == null){oldValue=0;}
+    public void process(String key, Record value) {
 
-        System.out.println(oldValue);
-        System.out.println(key);
-        this.kvStore.put(key,oldValue+1);
+        Iterator it = value.getMap().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            String recordKey = (String) pair.getKey();
+            String recordValue = (String) pair.getValue();
+            String compound_key = recordKey.concat(recordValue);
+            Integer current_count = this.kvStore.get(compound_key);
+            if (current_count == null){current_count=0;}
+            this.kvStore.put(compound_key,current_count+1);
+            System.out.println(compound_key + Integer.toString(current_count+1));
+
+        }
         context.forward(key,value);
         context.commit();
     }

@@ -6,6 +6,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -23,13 +24,21 @@ public class ExampleProducer {
     //    props.put("linger.ms", 1);
      //   props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
+        props.put("value.serializer", "myapps.RecordSerializer");
 
-        Producer<String, Integer> producer = new KafkaProducer<>(props);
+
+        HashMap<String,String> map = new HashMap<>();
+        map.put("Ampelfarbe","gruen");
+        map.put("Geschwindigkeit",">50km/h");
+        map.put("Fahrzeug","fahren");
+
+        Record record = new Record(map);
+
+        Producer<String, Record> producer = new KafkaProducer<>(props);
         for (int i = 0; i < 100; i++)
-            producer.send(new ProducerRecord<String, Integer>("topic_i", "Wert", 1));
-            System.out.println(new ProducerRecord<String, Integer>("topic_i", 0,"Wert", 1));
+            producer.send(new ProducerRecord<String, Record>("topic_i", "record_seq", record));
 
+            System.out.println(record.getMap().toString());
         producer.close();
     }
 }
