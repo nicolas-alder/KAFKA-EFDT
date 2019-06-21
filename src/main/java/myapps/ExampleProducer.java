@@ -35,10 +35,10 @@ public class ExampleProducer {
         Record record = new Record(map);
 
         Producer<String, Record> producer = new KafkaProducer<>(props);
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 100; i++){
             producer.send(new ProducerRecord<String, Record>("topic_i", "record_seq", record));
 
-            System.out.println(record.getMap().toString());
+            System.out.println(record.getMap().toString());}
         producer.close();
     }
 }
