@@ -1,4 +1,4 @@
-//package.myapps
+package myapps;
 
 import java.util.*;
 
