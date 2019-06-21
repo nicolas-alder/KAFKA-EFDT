@@ -60,6 +60,8 @@ public class EFDT_InfoGain {
             double IG_value = IG(Attributevalue1, Attributevalue2, Label);
             IG_calcs.put(Att, IG_value);
         }
+        double Nullsplit=Collections.min(Label)/Collections.max(Label);
+        IG_calcs.put("Nullsplit", Nullsplit);
         return IG_calcs;
     }
 
@@ -68,11 +70,40 @@ public class EFDT_InfoGain {
 
         for (String key : IG_collection.keySet()){
             if (IG_collection.get(key).equals(Collections.max(IG_collection.values()))){
-                System.out.println(" Attribute with highest InfoGain is " + key);
+                System.out.println("Attribute with highest InfoGain is " + key);
             }
         }
         double GXa=Collections.max(IG_collection.values());
         return GXa;
+    }
+
+    public static double Numberofevents(HashMap<String, Double> map) {
+        /* Method for finding # of examples*/
+        double number =0;
+        for (String key : map.keySet()) {
+            if (key.split("_")[1].equals("Label")) {
+                number += map.get(key);
+            }
+        }
+        return number;
+    }
+
+    public static double HoeffdingTreshold(double safety, double Numberofevents) {
+        /* Method for finding epsilon */
+        int R=2;
+        double epsilon=Math.sqrt((-R*R*Math.log(1-safety))/(2*Numberofevents));
+        return epsilon;
+    }
+
+    public static double HoeffdingSplit(double GXa, double Nullsplit, double epsilon) {
+        /* Method for testing Hoeffding Split Criterion */
+        if (GXa-Nullsplit>epsilon){
+            System.out.println("Split wird durchgeführt");
+        }
+        else {
+            System.out.println("Split wird nicht durchgeführt");
+        }
+        return 0;
     }
 
     public static void main(String[] args) {
@@ -98,12 +129,18 @@ public class EFDT_InfoGain {
         map.put("node_Label_0", 5.0);
         map.put("node_Label_1", 9.0);
 
-        //System.out.println(IG_Calc(map));
-        HashMap<String, Double> IG_collection = IG_Calc(map);
 
+        HashMap<String, Double> IG_collection = IG_Calc(map);
         System.out.println(IG_collection);
 
         double GXa= FindGXa(IG_collection);
+        double Numberofevents=Numberofevents(map);
+
+
+        double epsilon =  HoeffdingTreshold(0.95, Numberofevents);
+        //System.out.println(epsilon);
+
+        HoeffdingSplit(GXa,IG_collection.get("Nullsplit"),epsilon);
     }
 
 
