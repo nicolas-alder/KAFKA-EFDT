@@ -1,3 +1,5 @@
+//package.myapps
+
 import java.util.*;
 
 
@@ -103,6 +105,7 @@ public class EFDT_InfoGain {
         else {
             System.out.println("Split wird nicht durchgeführt");
         }
+        //do action
         return 0;
     }
 
@@ -135,10 +138,8 @@ public class EFDT_InfoGain {
 
         double GXa= FindGXa(IG_collection);
         double Numberofevents=Numberofevents(map);
-
-
         double epsilon =  HoeffdingTreshold(0.95, Numberofevents);
-        //System.out.println(epsilon);
+
 
         HoeffdingSplit(GXa,IG_collection.get("Nullsplit"),epsilon);
     }
