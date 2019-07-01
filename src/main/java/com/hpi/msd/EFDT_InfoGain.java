@@ -122,17 +122,12 @@ public class EFDT_InfoGain {
         return number;
     }
 
-    public static double HoeffdingSplit(double GXa, double Nullsplit, double epsilon) {
+    public static boolean HoeffdingSplit(double GXa, double Nullsplit, double epsilon) {
         /* Method for testing Hoeffding Split Criterion */
 
-        if (GXa-Nullsplit>epsilon){
-            System.out.println("Split will be executed");
-        }
-        else {
-            System.out.println("Split will not be executed");
-        }
-        //do action
-        return 0;
+        if (GXa-Nullsplit>epsilon){return true;}
+        return false;
+
     }
 
     public static double HoeffdingTreshold(double safety, double Numberofevents) {
@@ -211,5 +206,16 @@ public class EFDT_InfoGain {
         NodeStore.put("node2",map2);
         //System.out.println(NodeStore);
 
+    }
+
+    public static String FindGXaKey(HashMap<String, Double> IG_collection) {
+        /* Method for finding key of X_a */
+        String splitkey = null;
+        for (String key : IG_collection.keySet()){
+            if (IG_collection.get(key).equals(Collections.max(IG_collection.values()))){
+                splitkey = key;
+            }
+        }
+        return splitkey;
     }
 }
