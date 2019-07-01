@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Implementation.iml" filepath="$PROJECT_DIR$/Implementation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EFDT.iml" filepath="$PROJECT_DIR$/EFDT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/target/maven-archiver/maven-archiver.iml" filepath="$PROJECT_DIR$/target/maven-archiver/maven-archiver.iml" />
     </modules>
   </component>
 </project>

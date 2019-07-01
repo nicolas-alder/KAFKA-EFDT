@@ -49,7 +49,7 @@ public class ExampleProducer {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "com.hpi.msd.RecordSerializer");
-        Producer<String, Record> producer = new KafkaProducer<>(props);
+        Producer<String, HashMap> producer = new KafkaProducer<>(props);
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
@@ -58,12 +58,13 @@ public class ExampleProducer {
             while((values = reader.readMap()) != null){
 
                 // Zu versendener Record wird erstellt als Dictionary
-                HashMap<String,Integer> map = new HashMap<>();
+                HashMap<String,Double> map = new HashMap<>();
+                String label = values.get("label");
                 for (Map.Entry<String,String> value: values.entrySet()) {
-                    map.put(value.getKey()+"_"+value.getValue(),1);}
+                    map.put(value.getKey()+"_"+value.getValue()+"_"+label,1.0);}
 
                 // send record to topic
-                producer.send(new ProducerRecord<String, Record>("input", "record_seq", new Record(map)));
+                producer.send(new ProducerRecord<String, HashMap>("input", "record_seq", map));
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

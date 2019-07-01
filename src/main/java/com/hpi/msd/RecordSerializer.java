@@ -6,13 +6,14 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 
 /**
  * Created by nicolashoeck on 31.05.19.
  */
-public class RecordSerializer implements Serializer<Record> {
+public class RecordSerializer implements Serializer<HashMap> {
 
 
     @Override
@@ -21,12 +22,12 @@ public class RecordSerializer implements Serializer<Record> {
     }
 
     @Override
-    public byte[] serialize(String s, Record o) {
+    public byte[] serialize(String s, HashMap o) {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream(5000);
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new BufferedOutputStream(byteStream));
-            oos.writeObject(o.getMap());
+            oos.writeObject(o);
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();

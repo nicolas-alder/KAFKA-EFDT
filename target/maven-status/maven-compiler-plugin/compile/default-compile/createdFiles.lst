@@ -7,5 +7,4 @@ com/hpi/msd/AttributeCountProcessorAPI.class
 com/hpi/msd/Main.class
 com/hpi/msd/RecordSerializer.class
 com/hpi/msd/ExampleProducer.class
-com/hpi/msd/AggergateInitializer.class
 com/hpi/msd/Main$2.class
