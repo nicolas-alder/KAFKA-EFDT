@@ -138,6 +138,28 @@ public class EFDT_InfoGain {
         return epsilon;
     }
 
+    public static String Classlabel(HashMap<String,Double> map) {
+        /* Find majority class at l */
+
+        for (String key : map.keySet()){
+            double key1 = 0.0;
+            double key2 = 0.0;
+            if (key.contains("Label_0")){
+                key1 = map.get(key);
+            }
+            else if (key.contains("Label_1")){
+                key2 =map.get(key);
+            }
+            if (key1>key2){
+                //smth
+            }
+            else {
+                //smth
+            }
+        }
+        return "ENDE";
+    }
+
 
     public static void main(String[] args) {
         /* main with example dict */
@@ -198,7 +220,11 @@ public class EFDT_InfoGain {
 
         HoeffdingSplit(GXa_avg,GX0_avg,Epsilon);
 
+        System.out.println(map);
 
+        System.out.println(Classlabel(map));
+
+        System.out.println(map.containsKey("Label"));
 
         //TEST AREA
         HashMap<String,HashMap<String,Double>> NodeStore= new HashMap<>();
