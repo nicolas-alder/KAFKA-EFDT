@@ -92,6 +92,13 @@ public class EFDT_InfoGain {
         return sum;
     }
 
+    public static double avg(List<Double> list) {
+
+        Double avg= sum(list)/list.size();
+
+        return avg;
+    }
+
     public static double FindGXa(HashMap<String, Double> IG_collection) {
         /* Method for finding X_a */
 
@@ -119,10 +126,10 @@ public class EFDT_InfoGain {
         /* Method for testing Hoeffding Split Criterion */
 
         if (GXa-Nullsplit>epsilon){
-            System.out.println("Split wird durchgeführt");
+            System.out.println("Split will be executed");
         }
         else {
-            System.out.println("Split wird nicht durchgeführt");
+            System.out.println("Split will not be executed");
         }
         //do action
         return 0;
@@ -135,7 +142,6 @@ public class EFDT_InfoGain {
         double epsilon=Math.sqrt((-R*R*Math.log(1-safety))/(2*Numberofevents));
         return epsilon;
     }
-
 
 
     public static void main(String[] args) {
@@ -165,15 +171,45 @@ public class EFDT_InfoGain {
         map.put("node_Label_0", 5.0);
         map.put("node_Label_1", 9.0);
 
+        HashMap<String, Double> map2 = new HashMap<String, Double>();
+        map2.put("node_Outlook_Sunny_0", 2.0);
+        map2.put("node_Outlook_Sunny_1", 3.0);
+        map2.put("node_Outlook_Normal_0", 0.0);
+        map2.put("node_Outlook_Normal_1", 4.0);
+        map2.put("node_Outlook_Rainy_0", 3.0);
+        map2.put("node_Outlook_Rainy_1", 2.0);
+        map2.put("node_Label_0", 5.0);
+        map2.put("node_Label_1", 9.0);
 
+
+        List GXa_List = new ArrayList<Double>();
+        List GX0_List = new ArrayList<Double>();
+
+        //per node
         HashMap<String,Double> IGs= IG(map);
         System.out.println(IGs);
-
-
         double GXa= FindGXa(IGs);
-        double Numberofevents=Numberofevents(map);
-        double epsilon = HoeffdingTreshold(0.95, Numberofevents);
+        System.out.println(GXa);
 
-        HoeffdingSplit(GXa,IGs.get("Nullsplit"),epsilon);
+
+        GX0_List.add(IGs.get("Nullsplit"));
+        GXa_List.add(GXa);
+
+        Double GXa_avg=avg(GX0_List);
+        Double GX0_avg=avg(GXa_List);
+
+        double Numberofevents=Numberofevents(map);
+        double Epsilon = HoeffdingTreshold(0.95, Numberofevents);
+
+        HoeffdingSplit(GXa_avg,GX0_avg,Epsilon);
+
+
+
+        //TEST AREA
+        HashMap<String,HashMap<String,Double>> NodeStore= new HashMap<>();
+        NodeStore.put("node1",map);
+        NodeStore.put("node2",map2);
+        //System.out.println(NodeStore);
+
     }
 }
