@@ -19,6 +19,7 @@ package com.hpi.msd;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Range;
+import javafx.util.Pair;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.processor.*;
@@ -105,7 +106,7 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
 
         // Check if node is leaf
         if(tree.get("node".concat(Integer.toString(2* node))) == null){
-            //attemptToSplit
+            attemptToSplit(node, tree);
         }else{
             //reevaluate Split
 
@@ -136,7 +137,7 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
         HashMap<String,Double> IGs= EFDT_InfoGain.IG(attributeHashMap);
         double GXa= EFDT_InfoGain.FindGXa(IGs);
         String GXa_key = EFDT_InfoGain.FindGXaKey(IGs);
-        System.out.println(GXa);
+       // System.out.println(GXa);
 
         nodeMap.put("GXA",GXa);
         nodeMap.put("GX0",IGs.get("Nullsplit"));
@@ -167,11 +168,13 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
 
        // Initialisiere neue Kinder
         childsIterator = childs.entrySet().iterator();
-
-
+       while(childsIterator.hasNext()){
+           Map.Entry pair = (Map.Entry)childsIterator.next();
+           createNewNode((int) pair.getValue(),tree);
+       }
         tree.put("childList", childs);
 
-
+        return;
 
 
 
@@ -202,6 +205,25 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
         multimap.put("splitAttribute", "0");
         multimap.put("childList", new HashMap<>());
         this.kvStore.put("node".concat(Integer.toString(nodeID)),multimap);
+    }
+
+    public void reEvaluateBestSplit(int node, KeyValueStore tree){
+        Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
+        Iterator nodeMapIterator = nodeMap.keySet().iterator();
+        HashMap<String, Double> attributeHashMap = new HashMap();
+
+        while (nodeMapIterator.hasNext()){
+            String key = (String) nodeMapIterator.next();
+            if((key.equalsIgnoreCase("splitAttribute") || key.equalsIgnoreCase("GXA") || key.equalsIgnoreCase("GX0"))|| key.equalsIgnoreCase("childList")){continue;}
+            attributeHashMap.put(key, (Double) nodeMap.get(key).iterator().next());
+        }
+
+        HashMap<String,Double> IGs= EFDT_InfoGain.IG(attributeHashMap);
+        double GXa= EFDT_InfoGain.FindGXa(IGs);
+        String GXa_key = EFDT_InfoGain.FindGXaKey(IGs);
+
+        //hier gehts weiter
+
     }
 
 
