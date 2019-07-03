@@ -111,6 +111,12 @@ public class EFDT_InfoGain {
         return GXa;
     }
 
+    public static double FindXCurrent(HashMap<String, Double> IG_collection, String attribute) {
+        /* Method for finding X_Current */
+        return IG_collection.get(attribute);
+
+    }
+
     public static double Numberofevents(HashMap<String, Double> map) {
         /* Method for finding # of examples*/
         double number =0;

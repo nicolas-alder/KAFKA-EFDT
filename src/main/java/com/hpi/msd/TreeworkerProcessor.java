@@ -31,6 +31,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.hpi.msd.EFDT_InfoGain.avg;
+
 public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap> {
 
     private ProcessorContext context;
@@ -45,6 +47,7 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
         multimap.put("GXA",null);
         multimap.put("GX0",0.5);
         multimap.put("splitAttribute", "0");
+        multimap.put("XCurrent",null);
         multimap.put("childList", new HashMap<>());
         this.kvStore.put("node0",multimap);
         ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
@@ -142,8 +145,8 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
         nodeMap.put("GXA",GXa);
         nodeMap.put("GX0",IGs.get("Nullsplit"));
 
-        Double GXa_avg=EFDT_InfoGain.avg((List<Double>) nodeMap.get("GXA"));
-        Double GX0_avg=EFDT_InfoGain.avg((List<Double>) nodeMap.get("GX0"));
+        Double GXa_avg= avg((List<Double>) nodeMap.get("GXA"));
+        Double GX0_avg= avg((List<Double>) nodeMap.get("GX0"));
 
         double numberofevents=EFDT_InfoGain.Numberofevents(attributeHashMap);
         double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.95, numberofevents);
@@ -221,6 +224,19 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
         HashMap<String,Double> IGs= EFDT_InfoGain.IG(attributeHashMap);
         double GXa= EFDT_InfoGain.FindGXa(IGs);
         String GXa_key = EFDT_InfoGain.FindGXaKey(IGs);
+        String xCurrent = (String) nodeMap.get("splitAttribute").iterator().next();
+        double XCurrent_Infogain = EFDT_InfoGain.FindXCurrent(IGs, xCurrent);
+        nodeMap.put("XCurrent",XCurrent_Infogain);
+        nodeMap.put("GXA",GXa);
+
+        double XCurrent_average = EFDT_InfoGain.avg((List<Double>) nodeMap.get("XCurrent"));
+        double GXA_average  =EFDT_InfoGain.avg((List<Double>) nodeMap.get("GXA"));
+
+        double treshold = EFDT_InfoGain.HoeffdingTreshold(0.95,EFDT_InfoGain.Numberofevents(attributeHashMap));
+        if(!((GXA_average-XCurrent_average)>treshold)){return;}
+
+
+
 
         //hier gehts weiter
 
