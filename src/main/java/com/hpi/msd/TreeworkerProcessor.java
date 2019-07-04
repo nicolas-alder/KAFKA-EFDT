@@ -33,7 +33,7 @@ import java.util.stream.IntStream;
 
 import static com.hpi.msd.EFDT_InfoGain.avg;
 
-public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap> {
+public class TreeworkerProcessor implements Processor<String,HashMap> {
 
     private ProcessorContext context;
     private KeyValueStore<String, ListMultimap> kvStore;
@@ -49,10 +49,11 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
         multimap.put("splitAttribute", "0");
         multimap.put("XCurrent",null);
         multimap.put("childList", new HashMap<>());
-        this.kvStore.put("node0",multimap);
+        KeyValueStore kvStore = (KeyValueStore) context.getStateStore("treeStructure");
+        kvStore.put("node0",multimap);
         ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
         savedNodes.put("savedNodes",1);
-        this.kvStore.put("savedNodes",savedNodes);
+        kvStore.put("savedNodes",savedNodes);
 
         // retrieve the key-value store named "nodeStatistics"
         //kvStore = (KeyValueStore) context.getStateStore("nodeStatistics");
@@ -60,7 +61,7 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
     }
 
     @Override
-    public void process(Windowed<String> key, HashMap value) {
+    public void process(String key, HashMap value) {
         kvStore = (KeyValueStore) context.getStateStore("treeStructure");
         System.out.println("Key: " + key + " Record: "+value.toString());
         iterateTree(0,kvStore,value);
@@ -99,10 +100,10 @@ public class TreeworkerProcessor implements Processor<Windowed<String>, HashMap>
             double oldvalue;
             Collection oldValuesCollection;
             oldvalue = 0.0;
-            if(!(oldValuesCollection = nodeMap.get(pair.getKey())).equals(null)){
+            if((oldValuesCollection = nodeMap.get(pair.getKey())).equals(null)){
                 oldvalue = (double) oldValuesCollection.iterator().next();}
 
-            nodeMap.put(pair.getKey(), oldvalue + (double) pair.getValue());
+               nodeMap.put(pair.getKey(), oldvalue + (double) pair.getValue());
         }
         tree.put("node".concat(Integer.toString(node)),nodeMap);
         String splitAttribute = (String) nodeMap.get("splitAttribute").iterator().next();

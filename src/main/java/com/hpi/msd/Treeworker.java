@@ -1,5 +1,6 @@
 package com.hpi.msd;
 
+import com.google.common.collect.Multimap;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -34,7 +35,7 @@ public class Treeworker {
                Properties props = new Properties();
                props.put(StreamsConfig.APPLICATION_ID_CONFIG, "treeworker");
                props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-               props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, windowedSerde);
+               props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass()); // windowedSerde.getClass()
                props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, RecordSerde.class);
             //   props.put("value.deserializer", "com.hpi.msd.RecordDeserializer");
               // props.put("value.serializer", "com.hpi.msd.RecordSerializer");
@@ -56,12 +57,17 @@ public class Treeworker {
 
 
 
+        StoreBuilder<KeyValueStore<String, Multimap>> treeStructure = Stores.keyValueStoreBuilder(
+                Stores.inMemoryKeyValueStore("treeStructure"),
+                Serdes.String(),
+                new MultimapSerde())
+                .withLoggingDisabled(); // disable backing up the store to a changelog topic
 
         // add the source processor node that takes Kafka topic "source-topic" as input
-        topology.addSource("inputTreeworker",  "aggregatedInput")
+        topology.addSource("inputTreeworker",  "aggregatedinput")
 
                 // add the AttributeCountProcessorAPI node which takes the source processor as its upstream processor
-                .addProcessor("treeworker", () -> new TreeworkerProcessor(), "inputTreeworker");
+                .addProcessor("treeworker", () -> new TreeworkerProcessor(), "inputTreeworker").addStateStore(treeStructure,"treeworker");
 
                 // add the count store associated with the AttributeCountProcessorAPI processor
                 //  .addStateStore(countStoreSupplier, "treeStore")
@@ -73,12 +79,8 @@ public class Treeworker {
 
 
 
-                StoreBuilder<KeyValueStore<String, HashMap>> treeStructure = Stores.keyValueStoreBuilder(
-                Stores.inMemoryKeyValueStore("treeStructure"),
-                Serdes.String(),
-                new RecordSerde())
-                .withLoggingDisabled(); // disable backing up the store to a changelog topic
-                 KafkaStreams streaming = new KafkaStreams(topology, props);
+
+                KafkaStreams streaming = new KafkaStreams(topology, props);
                 streaming.cleanUp();
                 streaming.start();
 

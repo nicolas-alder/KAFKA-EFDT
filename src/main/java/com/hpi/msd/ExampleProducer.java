@@ -64,12 +64,14 @@ public class ExampleProducer {
                     map.put(value.getKey()+"_"+value.getValue()+"_"+label,1.0);}
 
                 // send record to topic
-                producer.send(new ProducerRecord<String, HashMap>("input", "record_seq", map));
-                try {
+                producer.send(new ProducerRecord<String, HashMap>("aggregatedinput", "record_seq", map));
+                System.out.println("LOS!");
+               /* try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                */
             }
 
         } catch (IOException e) {
