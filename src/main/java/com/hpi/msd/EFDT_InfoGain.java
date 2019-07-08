@@ -30,8 +30,8 @@ public class EFDT_InfoGain {
 
         ArrayList<String> AttributeList = new ArrayList<String>();
         for (String key : map.keySet()) {
-            if (!AttributeList.contains(key.split("_")[1]) && !key.split("_")[1].equals("Label")) {
-                AttributeList.add(key.split("_")[1]);
+            if (!AttributeList.contains(key.split("_")[1]) && !key.split("_")[0].equals("label")) {
+                AttributeList.add(key.split("_")[0].concat("_").concat(key.split("_")[1]));
             }
         }
 
@@ -42,10 +42,10 @@ public class EFDT_InfoGain {
             Atts.clear();
             Lab.clear();
             for (String key : multimap.keySet()) {
-                if (key.split("_")[1].equals(Att)) {
+                if (key.equals(Att)) {
                     Atts.add(multimap.get(key));
                 }
-                if (key.split("_")[1].equals("Label")) {
+                if (key.equals("label")) {
                     Lab.add(multimap.get(key));
                 }
             }
@@ -63,10 +63,22 @@ public class EFDT_InfoGain {
         /* Method for calculating the InformationGain */
 
         double log2 = Math.log(2);
-        double Labsum=(Lab.get(0).get(1)+Lab.get(0).get(0));
+        double Labsum;
+        try{
+            Labsum=(Lab.get(0).get(1)+Lab.get(0).get(0));
+        }catch (IndexOutOfBoundsException e){
+            Labsum=(0+Lab.get(0).get(0));
+        }
 
-        double p0 = (Lab.get(0).get(1)/Labsum);
+        double p0;
+        try{
+            p0 = (Lab.get(0).get(1)/Labsum);
+        }catch (IndexOutOfBoundsException e){
+            p0 = 0.0;
+
+        }
         double HT = -p0 * Math.log(p0) / log2 - (1 - p0) * Math.log(1 - p0) / log2;
+        if(java.lang.Double.isNaN(HT)){HT = 0;}
 
         double HTa=0;
         for (List<Double> values: Atts){
@@ -84,17 +96,17 @@ public class EFDT_InfoGain {
     }
 
     public static double sum(List<Double> list) {
-        double sum = 0;
-
-        for (double i : list)
-            sum = sum + i;
+        double sum = 0.0;
+        sum = list.stream().mapToDouble(Double::doubleValue).sum();
+        //for (double i : list){
+          //  sum = sum + i;}
 
         return sum;
     }
 
     public static double avg(List<Double> list) {
 
-        Double avg= sum(list)/list.size();
+        double avg= sum(list)/list.size();
 
         return avg;
     }
@@ -121,7 +133,7 @@ public class EFDT_InfoGain {
         /* Method for finding # of examples*/
         double number =0;
         for (String key : map.keySet()) {
-            if (key.split("_")[1].equals("Label")) {
+            if (key.split("_")[0].equals("label")) {
                 number += map.get(key);
             }
         }
@@ -150,10 +162,10 @@ public class EFDT_InfoGain {
         for (String key : map.keySet()){
             double key1 = 0.0;
             double key2 = 0.0;
-            if (key.contains("Label_0")){
+            if (key.contains("label_0")){
                 key1 = map.get(key);
             }
-            else if (key.contains("Label_1")){
+            else if (key.contains("label_1")){
                 key2 =map.get(key);
             }
             if (key1>key2){
@@ -191,8 +203,8 @@ public class EFDT_InfoGain {
         map.put("node_Windy_True_1", 3.0);
         map.put("node_Windy_False_0", 2.0);
         map.put("node_Windy_False_1", 6.0);
-        map.put("node_Label_0", 5.0);
-        map.put("node_Label_1", 9.0);
+        map.put("node_label_0", 5.0);
+        map.put("node_label_1", 9.0);
 
         HashMap<String, Double> map2 = new HashMap<String, Double>();
         map2.put("node_Outlook_Sunny_0", 2.0);
@@ -201,8 +213,8 @@ public class EFDT_InfoGain {
         map2.put("node_Outlook_Normal_1", 4.0);
         map2.put("node_Outlook_Rainy_0", 3.0);
         map2.put("node_Outlook_Rainy_1", 2.0);
-        map2.put("node_Label_0", 5.0);
-        map2.put("node_Label_1", 9.0);
+        map2.put("node_label_0", 5.0);
+        map2.put("node_label_1", 9.0);
 
 
         List GXa_List = new ArrayList<Double>();
@@ -230,7 +242,7 @@ public class EFDT_InfoGain {
 
         System.out.println(Classlabel(map));
 
-        System.out.println(map.containsKey("Label"));
+        System.out.println(map.containsKey("label"));
 
         //TEST AREA
         HashMap<String,HashMap<String,Double>> NodeStore= new HashMap<>();

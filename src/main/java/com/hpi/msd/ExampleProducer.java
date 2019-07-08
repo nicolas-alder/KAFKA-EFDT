@@ -50,6 +50,8 @@ public class ExampleProducer {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "com.hpi.msd.RecordSerializer");
         Producer<String, HashMap> producer = new KafkaProducer<>(props);
+        for (int i = 0; i < 100; i++) {
+
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
@@ -77,6 +79,7 @@ public class ExampleProducer {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Could not read file.");
+        }
         }
         producer.close();
 
