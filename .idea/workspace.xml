@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84cc7e6f-1e4a-4c9c-9eda-8bf346682cc6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hpi/msd/EFDT_InfoGain.class" afterPath="$PROJECT_DIR$/target/classes/com/hpi/msd/EFDT_InfoGain.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hpi/msd/ExampleProducer.class" afterPath="$PROJECT_DIR$/target/classes/com/hpi/msd/ExampleProducer.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -21,21 +17,51 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TreeworkerProcessor.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TreeworkerProcessor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="48" column="51" lean-forward="true" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
+            <state relative-caret-position="342">
+              <caret line="132" column="58" lean-forward="true" selection-start-line="132" selection-start-column="58" selection-end-line="132" selection-end-column="58" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EFDT_InfoGain.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HashMap.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="1468" column="0" lean-forward="false" selection-start-line="1468" selection-start-column="0" selection-end-line="1468" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="System.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/lang/System.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="397">
+              <caret line="519" column="30" lean-forward="true" selection-start-line="519" selection-start-column="30" selection-end-line="519" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RocksDB.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/rocksdb/rocksdbjni/5.15.10/rocksdbjni-5.15.10-sources.jar!/org/rocksdb/RocksDB.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="217">
+              <caret line="2251" column="24" lean-forward="false" selection-start-line="2251" selection-start-column="24" selection-end-line="2251" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EFDT_InfoGain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="129" column="5" lean-forward="true" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
+            <state relative-caret-position="190">
+              <caret line="128" column="30" lean-forward="false" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -103,7 +129,7 @@
       <file leaf-file-name="Treeworker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
+            <state relative-caret-position="599">
               <caret line="60" column="47" lean-forward="false" selection-start-line="60" selection-start-column="47" selection-end-line="60" selection-end-column="47" />
               <folding />
             </state>
@@ -114,14 +140,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>createne</find>
       <find>newNode</find>
       <find>init</find>
       <find>context.getStateStore</find>
-      <find>attempt</find>
-      <find>attemp</find>
       <find>IGs</find>
-      <find>IG</find>
       <find>XCUrren</find>
       <find>Xcurrent</find>
       <find>.avg</find>
@@ -130,6 +152,24 @@
       <find>iterate</find>
       <find>.put</find>
       <find>label_1_1</find>
+      <find>newN</find>
+      <find>GXA</find>
+      <find>GX0</find>
+      <find>XCurrent</find>
+      <find>IG</find>
+      <find>getNewNodeID</find>
+      <find>attribu</find>
+      <find>attributeHashMap</find>
+      <find>System.out</find>
+      <find>subtree</find>
+      <find>_seen</find>
+      <find>reeva</find>
+      <find>nodeI</find>
+      <find>splitAt</find>
+      <find>attemp</find>
+      <find>kill</find>
+      <find>attempt</find>
+      <find>115</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,8 +184,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" />
       </list>
     </option>
@@ -662,15 +702,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>135</line>
+          <line>383</line>
           <properties />
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>75</line>
-          <properties />
-          <option name="timeStamp" value="61" />
+          <option name="timeStamp" value="117" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -683,7 +717,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="62" />
+      <option name="time" value="126" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -862,26 +896,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="128" column="30" lean-forward="false" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/rocksdb/rocksdbjni/5.15.10/rocksdbjni-5.15.10-sources.jar!/org/rocksdb/RocksDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="2251" column="24" lean-forward="false" selection-start-line="2251" selection-start-column="24" selection-end-line="2251" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="519" column="30" lean-forward="true" selection-start-line="519" selection-start-column="30" selection-end-line="519" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
+        <state relative-caret-position="599">
           <caret line="60" column="47" lean-forward="false" selection-start-line="60" selection-start-column="47" selection-end-line="60" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="1468" column="0" lean-forward="false" selection-start-line="1468" selection-start-column="0" selection-end-line="1468" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="48" column="51" lean-forward="true" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="129" column="5" lean-forward="true" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
+        <state relative-caret-position="342">
+          <caret line="132" column="58" lean-forward="true" selection-start-line="132" selection-start-column="58" selection-end-line="132" selection-end-column="58" />
           <folding />
         </state>
       </provider>

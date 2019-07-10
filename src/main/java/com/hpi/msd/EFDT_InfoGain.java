@@ -123,6 +123,13 @@ public class EFDT_InfoGain {
         return GXa;
     }
 
+    public static double updateGX(double GX_avg, double GX,double GX_seen) {
+        /* Method for finding GX current */
+
+        double GX_new=(GX_seen-1)/GX_seen*GX_avg+1/GX_seen*GX;
+        return GX_new;
+    }
+
     public static double FindXCurrent(HashMap<String, Double> IG_collection, String attribute) {
         /* Method for finding X_Current */
         return IG_collection.get(attribute);
