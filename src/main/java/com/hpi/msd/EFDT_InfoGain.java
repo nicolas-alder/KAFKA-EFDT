@@ -31,7 +31,7 @@ public class EFDT_InfoGain {
         ArrayList<String> AttributeList = new ArrayList<String>();
         for (String key : map.keySet()) {
             if (!AttributeList.contains(key.split("_")[1]) && !key.split("_")[0].equals("label")) {
-                AttributeList.add(key.split("_")[0].concat("_").concat(key.split("_")[1]));
+                AttributeList.add(key.split("_")[0]);
             }
         }
 

@@ -58,7 +58,7 @@ public class Treeworker {
 
 
         StoreBuilder<KeyValueStore<String, Multimap>> treeStructure = Stores.keyValueStoreBuilder(
-                Stores.inMemoryKeyValueStore("treeStructure"),
+                Stores.persistentKeyValueStore("treestructure"),
                 Serdes.String(),
                 new MultimapSerde())
                 .withLoggingDisabled(); // disable backing up the store to a changelog topic

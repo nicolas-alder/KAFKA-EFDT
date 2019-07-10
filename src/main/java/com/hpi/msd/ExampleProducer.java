@@ -67,7 +67,7 @@ public class ExampleProducer {
 
                 // send record to topic
                 producer.send(new ProducerRecord<String, HashMap>("aggregatedinput", "record_seq", map));
-                System.out.println("LOS!");
+                System.out.println("Send!");
                /* try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

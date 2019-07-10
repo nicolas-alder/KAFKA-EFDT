@@ -16,15 +16,12 @@
  */
 package com.hpi.msd;
 
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Range;
+import com.google.common.collect.*;
 import javafx.util.Pair;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.processor.*;
 import org.apache.kafka.streams.state.KeyValueStore;
-import com.google.common.collect.ArrayListMultimap;
 
 
 import java.util.*;
@@ -42,21 +39,28 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
     @SuppressWarnings("unchecked")
     public void init(ProcessorContext context) {
         // keep the processor context locally because we need it in punctuate() and commit()
-        this.context = context;
-        ListMultimap<String, Object> multimap = ArrayListMultimap.create();
-        multimap.put("GXA",0.6); // null nicht möglich, weil dann Fehler in sum von avg berechnun von GXA nullpointerexception
-        multimap.put("GX0",0.5); // GXO Berechnung wahrscheinlich falsch (von: Henrik)
-        multimap.put("splitAttribute", "0");
-        multimap.put("XCurrent",null);
-        multimap.put("childList", new HashMap<>());
-        multimap.put("label_1_1",0.0);
-        multimap.put("label_0_0",0.0);
-        KeyValueStore kvStore = (KeyValueStore) context.getStateStore("treeStructure");
+        //this.context = context;
+        this.kvStore = (KeyValueStore) context.getStateStore("treestructure");
 
-        kvStore.put("node0",multimap);
-        ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
-        savedNodes.put("savedNodes",1);
-        kvStore.put("savedNodes",savedNodes);
+
+            ListMultimap<String, Object> multimap = ArrayListMultimap.create();
+            multimap.put("GXA",0.6); // null nicht möglich, weil dann Fehler in sum von avg berechnun von GXA nullpointerexception
+            multimap.put("GXA_seen",1.0);
+            multimap.put("GX0",0.5); // GXO Berechnung wahrscheinlich falsch (von: Henrik)
+            multimap.put("GX0_seen",1.0);
+            multimap.put("splitAttribute", "0");
+            multimap.put("XCurrent",0.4);
+            multimap.put("XCurrent_seen",1.0);
+            multimap.put("childList", new HashMap<>());
+            multimap.put("label_1_1",0.0);
+            multimap.put("label_0_0",0.0);
+
+
+            this.kvStore.put("node0",multimap);
+            ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
+            savedNodes.put("savedNodes",1);
+            this.kvStore.put("savedNodes",savedNodes);
+
 
         // retrieve the key-value store named "nodeStatistics"
         //kvStore = (KeyValueStore) context.getStateStore("nodeStatistics");
@@ -65,11 +69,13 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
     @Override
     public void process(String key, HashMap value) {
-        kvStore = (KeyValueStore) context.getStateStore("treeStructure");
+       // KeyValueStore tree = (KeyValueStore) this.context.getStateStore("treestructure");
         System.out.println("Key: " + key + " Record: "+value.toString());
-        iterateTree(0,kvStore,value);
-        context.forward(key,value);
-        context.commit();
+        iterateTree(0,this.kvStore,value);
+       Multimap nodeMap = (Multimap) this.kvStore.get("node".concat(Integer.toString(0)));
+       System.out.println("Bla");
+    //    context.forward(key,value);
+        //context.commit( );
          /* Iterator it = value.getMap().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
@@ -94,7 +100,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         System.out.println(node);
         Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
-
+        String angefragteNode = "node".concat(Integer.toString(node));
         //update statistics
         Iterator itValue = value.entrySet().iterator();
 
@@ -114,9 +120,10 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         }
         tree.put("node".concat(Integer.toString(node)),nodeMap);
         String splitAttribute = (String) nodeMap.get("splitAttribute").iterator().next();
+        //Multimap testMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
 
 
-       HashMap currentNodeChildList =  (HashMap) nodeMap.get("childList").iterator().next();
+        HashMap currentNodeChildList =  (HashMap) nodeMap.get("childList").iterator().next();
        boolean hasNoChild = currentNodeChildList.isEmpty();
         // Check if node is leaf
         if(hasNoChild){
@@ -261,11 +268,11 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         HashMap<String,Double> IGs= EFDT_InfoGain.IG(attributeHashMap);
         double GXa= EFDT_InfoGain.FindGXa(IGs);
         String GXa_key = EFDT_InfoGain.FindGXaKey(IGs);
-        String xCurrent = (String) nodeMap.get("splitAttribute").iterator().next();
+
+        String xCurrent = (String) Iterables.getLast(((List) nodeMap.get("splitAttribute")));
         double XCurrent_Infogain = EFDT_InfoGain.FindXCurrent(IGs, xCurrent);
         nodeMap.put("XCurrent",XCurrent_Infogain);
         nodeMap.put("GXA",GXa);
-
         double XCurrent_average = EFDT_InfoGain.avg((List<Double>) nodeMap.get("XCurrent"));
         double GXA_average  =EFDT_InfoGain.avg((List<Double>) nodeMap.get("GXA"));
 
