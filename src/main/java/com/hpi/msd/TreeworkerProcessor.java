@@ -104,8 +104,10 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         while(current_node<=max_node){
             ListMultimap<String, Object> nodeMultimap = (ListMultimap<String, Object>) treeStore.get("node".concat(Integer.toString(current_node)));
-            if(nodeMultimap == null) {current_node++;continue;}
-            HashMap childs = (HashMap) nodeMultimap.get("childList").iterator().next();
+            if(nodeMultimap == null) {
+                current_node++;
+            continue;}
+
             try{
                 graph.addNode(Integer.toString(current_node));
                 Node node = graph.getNode(Integer.toString(current_node));
@@ -115,21 +117,22 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
             }
 
+            HashMap childs = (HashMap) nodeMultimap.get("childList").iterator().next();
             Iterator child_iterator = childs.entrySet().iterator();
             while (child_iterator.hasNext()) {
                 Map.Entry pair = (Map.Entry)child_iterator.next();
                 try{
                     graph.addNode(Integer.toString((int) pair.getValue()));
                     Node node = graph.getNode(Integer.toString((int) pair.getValue()));
-                    node.addAttribute("ui.label", node.getId());
+                    node.addAttribute("ui.label", Integer.toString((int) pair.getValue()));
 
                 }catch (Exception e){
                     System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
                 }
                 try{
-                    graph.addEdge((String) pair.getKey(),Integer.toString(current_node),Integer.toString((int) pair.getValue()));
+                    graph.addEdge(((String) pair.getKey()).concat(Integer.toString((int) pair.getValue())),Integer.toString(current_node),Integer.toString((int) pair.getValue()));
                     Edge edge = graph.getEdge((String) pair.getKey());
-                    edge.addAttribute("ui.label", edge.getId());
+                    edge.addAttribute("ui.label", (String) pair.getKey());
 
                 }catch (Exception e){
                     System.out.println("Edge " + Integer.toString(current_node) + " bereits angelegt");
@@ -243,7 +246,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         double count_label0 = attributeHashMap.get("label_0_0");
         double count_label1 = attributeHashMap.get("label_1_1");
         if(count_label0>count_label1){nodeMap.removeAll("splitAttribute");nodeMap.put("splitAttribute", "0");}else{nodeMap.removeAll("splitAttribute");nodeMap.put("splitAttribute", "1");}
-        tree.put("node".concat(Integer.toString(node)),nodeMap);
+        //tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         //if(count_label0 == 0 || count_label1 == 0){return;}
 
@@ -269,12 +272,11 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         nodeMap.put("GX0",GX0_average);
 
         double numberofevents=EFDT_InfoGain.Numberofevents(attributeHashMap);
-        double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.001, numberofevents);
+        double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.1, numberofevents);
         System.out.println(epsilon);
-        tree.put("node".concat(Integer.toString(node)),nodeMap);
         System.out.println("GXA: "+GXA_average);
         System.out.println("GXO: "+GX0_average);
-        if(!(EFDT_InfoGain.HoeffdingSplit(GXA_average,GX0_average,epsilon) && !GXa_key.equalsIgnoreCase("Nullsplit"))){return;}
+        if(!(EFDT_InfoGain.HoeffdingSplit(GXA_average,GX0_average,epsilon) && !GXa_key.equalsIgnoreCase("Nullsplit"))){tree.put("node".concat(Integer.toString(node)),nodeMap);return;}
 
         // Schreibe in childList alle neuen Kinder des Splits nach dem Schema "attributausprägung: KindknotenID"
         String best_attribute = GXa_key.split("_")[0];
@@ -287,7 +289,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 childs.put(attribute_value,null);
             }
         }
-        tree.put("node".concat(Integer.toString(node)),nodeMap);
+        //tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         // Weise den Kindern jeweils ihre eigene KnotenID zu
        Iterator childsIterator = childs.entrySet().iterator();
@@ -310,6 +312,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
        }
         nodeMap.removeAll("childList");
         nodeMap.put("childList", childs);
+
         tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         return;
@@ -389,7 +392,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         tree.put("node".concat(Integer.toString(node)), nodeMap);
 
-        double treshold = EFDT_InfoGain.HoeffdingTreshold(0.001,EFDT_InfoGain.Numberofevents(attributeHashMap));
+        double treshold = EFDT_InfoGain.HoeffdingTreshold(0.1,EFDT_InfoGain.Numberofevents(attributeHashMap));
         if(!((GXA_average-XCurrent_average)>treshold)){
             return true;}
 
