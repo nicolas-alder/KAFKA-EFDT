@@ -26,7 +26,10 @@ public class Treeworker {
                props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
                props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass()); // windowedSerde.getClass()
                props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, RecordSerde.class);
-            //   props.put("value.deserializer", "com.hpi.msd.RecordDeserializer");
+               props.put(StreamsConfig.NUM_STREAM_THREADS_CONFIG, 1);
+               props.put(StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG, 1);
+
+        //   props.put("value.deserializer", "com.hpi.msd.RecordDeserializer");
               // props.put("value.serializer", "com.hpi.msd.RecordSerializer");
 
 

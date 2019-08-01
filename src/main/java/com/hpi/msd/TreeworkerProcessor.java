@@ -17,13 +17,26 @@
 package com.hpi.msd;
 
 import com.google.common.collect.*;
+import com.opencsv.CSVReaderHeaderAware;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import javafx.util.Pair;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.Windowed;
 import org.apache.kafka.streams.processor.*;
 import org.apache.kafka.streams.state.KeyValueStore;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
+import org.graphstream.stream.file.FileSinkImages;
+import org.graphstream.stream.file.FileSource;
+import org.graphstream.stream.file.FileSourceDGS;
+import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.ViewerPipe;
 
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,6 +47,8 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
     private ProcessorContext context;
     private KeyValueStore<String, ListMultimap> kvStore;
+    private Graph graph;
+    private Viewer viewer;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -52,27 +67,82 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             multimap.put("XCurrent",0.6);
             multimap.put("XCurrent_seen",1.0);
             multimap.put("childList", new HashMap<>());
-            multimap.put("label_1_1",0.0);
-            multimap.put("label_0_0",0.0);
+         //   multimap.put("label_1_1",0.0);
+         //   multimap.put("label_0_0",0.0);
+           initializeNodeAttributes(multimap);
+
 
 
             this.kvStore.put("node0",multimap);
             ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
-            savedNodes.put("savedNodes",1);
+            savedNodes.put("savedNodes",0);
             this.kvStore.put("savedNodes",savedNodes);
 
-
-        // retrieve the key-value store named "nodeStatistics"
-        //kvStore = (KeyValueStore) context.getStateStore("nodeStatistics");
-
+        // We do as usual to display a graph. This
+        // connect the graph outputs to the viewer.
+        // The viewer is a sink of the graph.
+        this.graph = new SingleGraph("efdtGraph");
+        this.viewer = graph.display();
+        viewer.enableAutoLayout();
     }
 
     @Override
     public void process(String key, HashMap value) {
        // KeyValueStore tree = (KeyValueStore) this.context.getStateStore("treestructure");
+        KeyValueStore treeStore = kvStore;
         System.out.println("Key: " + key + " Record: "+value.toString());
-        iterateTree(0,this.kvStore,value);
-       Multimap nodeMap = (Multimap) this.kvStore.get("node".concat(Integer.toString(0)));
+        Multimap nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
+        iterateTree(0,treeStore,value);
+        nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
+
+
+        ListMultimap<String, Object> savedNodesMultimap = (ListMultimap) treeStore.get("savedNodes");
+        int max_node = (int) savedNodesMultimap.get("savedNodes").get(savedNodesMultimap.get("savedNodes").size()-1);
+
+        int current_node = 0;
+        graph.clear();
+
+        while(current_node<=max_node){
+            ListMultimap<String, Object> nodeMultimap = (ListMultimap<String, Object>) treeStore.get("node".concat(Integer.toString(current_node)));
+            if(nodeMultimap == null) {current_node++;continue;}
+            HashMap childs = (HashMap) nodeMultimap.get("childList").iterator().next();
+            try{
+                graph.addNode(Integer.toString(current_node));
+                Node node = graph.getNode(Integer.toString(current_node));
+                node.addAttribute("ui.label", node.getId());
+
+            }catch (Exception e){
+                System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
+            }
+
+            Iterator child_iterator = childs.entrySet().iterator();
+            while (child_iterator.hasNext()) {
+                Map.Entry pair = (Map.Entry)child_iterator.next();
+                try{
+                    graph.addNode(Integer.toString((int) pair.getValue()));
+                    Node node = graph.getNode(Integer.toString((int) pair.getValue()));
+                    node.addAttribute("ui.label", node.getId());
+
+                }catch (Exception e){
+                    System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
+                }
+                try{
+                    graph.addEdge((String) pair.getKey(),Integer.toString(current_node),Integer.toString((int) pair.getValue()));
+                    Edge edge = graph.getEdge((String) pair.getKey());
+                    edge.addAttribute("ui.label", edge.getId());
+
+                }catch (Exception e){
+                    System.out.println("Edge " + Integer.toString(current_node) + " bereits angelegt");
+                }
+
+            }
+            current_node++;
+        }
+        nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
+        System.out.println("bla");
+
+
+
     //    context.forward(key,value);
         //context.commit( );
          /* Iterator it = value.getMap().entrySet().iterator();
@@ -96,6 +166,10 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
     }
 
     public void iterateTree(int node, KeyValueStore tree, HashMap value){
+        Multimap ssssss = (Multimap) tree.get("savedNodes");
+        Multimap childmulti = (ListMultimap) tree.get("node".concat(Integer.toString(node)));
+        HashMap childListProof = (HashMap) childmulti.get("childList").iterator().next();
+        graph.addAttribute("ui.screenshot", "/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/screenshot.png");
 
         System.out.println(node);
         Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
@@ -138,6 +212,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                     if(value.containsKey(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_1"))){
                         value.remove(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_1"));
                         iterateTree((int) pair.getValue(), tree,value);
+
                     }else if(value.containsKey(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_0"))){
                         value.remove(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_0"));
                         iterateTree((int) pair.getValue(), tree,value);
@@ -145,7 +220,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                      }
 
             }
-            //falls reevaluate subtree gekillt hat/veärndert hat, sind wir fertig in der iteration
+            //falls reevaluate subtree gekillt hat/veraendert hat, sind wir fertig in der iteration
             return;
 
         }
@@ -212,6 +287,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 childs.put(attribute_value,null);
             }
         }
+        tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         // Weise den Kindern jeweils ihre eigene KnotenID zu
        Iterator childsIterator = childs.entrySet().iterator();
@@ -230,7 +306,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         childsIterator = childs.entrySet().iterator();
        while(childsIterator.hasNext()){
            Map.Entry pair = (Map.Entry)childsIterator.next();
-           createNewNode((int) pair.getValue(),tree);
+           createNewNode((int) pair.getValue(),tree, node);
        }
         nodeMap.removeAll("childList");
         nodeMap.put("childList", childs);
@@ -249,14 +325,15 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         int max = Collections.max(savedNodes);
         for (int j = 1; j<=amount;j++){
             returnNodes.add(max+j);
-            encapsulatedSavedNodes.put("savedNodes", Collections.max(savedNodes)+j);
-            tree.put("savedNodes",encapsulatedSavedNodes);
+            encapsulatedSavedNodes.put("savedNodes", Collections.max(savedNodes)+1);
+
         }
+        tree.put("savedNodes",encapsulatedSavedNodes);
         return returnNodes;
 
     }
 
-    public void createNewNode(int nodeID, KeyValueStore tree){
+    public void createNewNode(int nodeID, KeyValueStore tree, int parentnode){
         ListMultimap<String, Object> multimap = ArrayListMultimap.create();
         multimap.put("GXA",0.6);
         multimap.put("GXA_seen",1.0);
@@ -264,15 +341,17 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         multimap.put("GX0_seen",1.0);
         multimap.put("splitAttribute", "0");
         multimap.put("childList", new HashMap<>());
-        multimap.put("label_1_1",0.0);
-        multimap.put("label_0_0",0.0);
+        // multimap.put("label_1_1",0.0);
+        //   multimap.put("label_0_0",0.0);
         multimap.put("XCurrent",0.4);
         multimap.put("XCurrent_seen",1.0);
+        initializeNodeAttributes(multimap, (ListMultimap) tree.get("node".concat(Integer.toString(parentnode))));
+
         tree.put("node".concat(Integer.toString(nodeID)),multimap);
     }
 
     public boolean reEvaluateBestSplit(int node, KeyValueStore tree){
-        Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
+        ListMultimap nodeMap = (ListMultimap) tree.get("node".concat(Integer.toString(node)));
         Iterator nodeMapIterator = nodeMap.keySet().iterator();
         HashMap<String, Double> attributeHashMap = new HashMap();
 
@@ -297,6 +376,9 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         nodeMap.removeAll("GXA_seen");
         nodeMap.put("GXA_seen",gxa_seen+1.0);
 
+
+        System.out.println( nodeMap.get("XCurrent").iterator().next());
+
         double XCurrent_average= EFDT_InfoGain.updateGX((double) nodeMap.get("XCurrent").iterator().next(),XCurrent_Infogain,(double) nodeMap.get("XCurrent_seen").iterator().next());
         double GXA_average= EFDT_InfoGain.updateGX((double) nodeMap.get("GXA").iterator().next(),GXa_single,(double) nodeMap.get("GXA_seen").iterator().next());
 
@@ -308,7 +390,8 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         tree.put("node".concat(Integer.toString(node)), nodeMap);
 
         double treshold = EFDT_InfoGain.HoeffdingTreshold(0.001,EFDT_InfoGain.Numberofevents(attributeHashMap));
-        if(!((GXA_average-XCurrent_average)>treshold)){return true;}
+        if(!((GXA_average-XCurrent_average)>treshold)){
+            return true;}
 
         if(GXa_key.equals("Nullsplit")){
             killSubtree(node, tree);
@@ -327,8 +410,9 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             multimap.put("XCurrent",0.6);
             multimap.put("XCurrent_seen",1.0);
             multimap.put("childList", new HashMap<>());
-            multimap.put("label_1_1",0.0);
-            multimap.put("label_0_0",0.0);
+            //     multimap.put("label_1_1",0.0);
+            //   multimap.put("label_0_0",0.0);
+            initializeNodeAttributes(multimap, nodeMap);
             tree.put("node".concat(Integer.toString(node)),multimap);
             return false;
         }else if(!GXa_key.equals(xCurrent)){
@@ -344,11 +428,12 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             multimap.put("GX0",0.5);
             multimap.put("GX0_seen",1.0);
             multimap.put("splitAttribute", GXa_key.split("_")[0]);
-            multimap.put("XCurrent",GXa_key.split("_")[0]);
+            multimap.put("XCurrent",GXA_average);
             multimap.put("XCurrent_seen",1.0);
             multimap.put("childList", new HashMap<>());
-            multimap.put("label_1_1",0.0);
-            multimap.put("label_0_0",0.0);
+            //      multimap.put("label_1_1",0.0);
+            //   multimap.put("label_0_0",0.0);
+            initializeNodeAttributes(multimap, nodeMap);
 
             // Schreibe in childList alle neuen Kinder des Splits nach dem Schema "attributausprägung: KindknotenID"
             HashMap childs = new HashMap();
@@ -376,7 +461,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             childsIterator = childs.entrySet().iterator();
             while(childsIterator.hasNext()){
                 Map.Entry pair = (Map.Entry)childsIterator.next();
-                createNewNode((int) pair.getValue(),tree);
+                createNewNode((int) pair.getValue(),tree, node);
             }
             multimap.removeAll("childList");
             multimap.put("childList", childs);
@@ -401,4 +486,72 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
     }
 
 
+
+    public void initializeNodeAttributes(ListMultimap<String,Object> multimap){
+
+        HashSet attribute_combinations = new HashSet();
+
+        try {
+            // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/new_KreditD2.csv"));
+            Map<String, String> values;
+
+            while((values = reader.readMap()) != null){
+                // Zu versendener Record wird erstellt als Dictionary
+                String label = values.get("label");
+
+                for (Map.Entry<String,String> value: values.entrySet()) {
+                    //Sortiere alle Statistiken aus, die auf dem Weg durch Splitattribute aussortiert werden
+                        attribute_combinations.add(value.getKey() + "_" + value.getValue() + "_" + label);
+
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Could not read file.");
+        }
+        Iterator attribute_combinations_iterator = attribute_combinations.iterator();
+        while(attribute_combinations_iterator.hasNext()) {
+            multimap.put((String) attribute_combinations_iterator.next(),0.0);
+        }
+
+    }
+
+    public void initializeNodeAttributes(ListMultimap<String,Object> multimap, ListMultimap parentAttributesMultiMap){
+        String splitattribute = (String) parentAttributesMultiMap.get("splitAttribute").iterator().next();
+        if (splitattribute.equalsIgnoreCase("0")||splitattribute.equalsIgnoreCase("1")){splitattribute="keinAttribut";}
+
+        HashSet attribute_combinations = new HashSet();
+
+        try {
+            // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/new_KreditD2.csv"));
+            Map<String, String> values;
+
+            while((values = reader.readMap()) != null){
+                // Zu versendener Record wird erstellt als Dictionary
+                String label = values.get("label");
+
+                for (Map.Entry<String,String> value: values.entrySet()) {
+                    //Sortiere alle Statistiken aus, die auf dem Weg durch Splitattribute aussortiert werden
+                    if (parentAttributesMultiMap.containsKey(value.getKey() + "_" + value.getValue() + "_" + label) && !((value.getKey() + "_" + value.getValue() + "_" + label).contains(splitattribute))) {
+                        attribute_combinations.add(value.getKey() + "_" + value.getValue() + "_" + label);
+                    }
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Could not read file.");
+        }
+        Iterator attribute_combinations_iterator = attribute_combinations.iterator();
+        while(attribute_combinations_iterator.hasNext()) {
+            multimap.put((String) attribute_combinations_iterator.next(),0.0);
+        }
+
+    }
 }
+
