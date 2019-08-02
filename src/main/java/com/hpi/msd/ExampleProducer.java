@@ -55,7 +55,7 @@ public class ExampleProducer {
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/new_KreditD2.csv"));
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/shuffled_df.csv"));
             Map<String, String> values;
             while((values = reader.readMap()) != null){
 

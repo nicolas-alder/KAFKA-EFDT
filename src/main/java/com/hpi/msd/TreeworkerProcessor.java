@@ -30,6 +30,7 @@ import org.graphstream.graph.implementations.*;
 import org.graphstream.stream.file.FileSinkImages;
 import org.graphstream.stream.file.FileSource;
 import org.graphstream.stream.file.FileSourceDGS;
+import org.graphstream.ui.layout.HierarchicalLayout;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.ViewerPipe;
 
@@ -49,6 +50,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
     private KeyValueStore<String, ListMultimap> kvStore;
     private Graph graph;
     private Viewer viewer;
+    private HierarchicalLayout layout;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -82,8 +84,11 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         // connect the graph outputs to the viewer.
         // The viewer is a sink of the graph.
         this.graph = new SingleGraph("efdtGraph");
+        graph.addAttribute("ui.quality");
         this.viewer = graph.display();
-        viewer.enableAutoLayout();
+        HierarchicalLayout hl = new HierarchicalLayout();
+        this.layout = hl;
+        viewer.enableAutoLayout(this.layout);
     }
 
     @Override
@@ -110,8 +115,8 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
             try{
                 graph.addNode(Integer.toString(current_node));
-                Node node = graph.getNode(Integer.toString(current_node));
-                node.addAttribute("ui.label", node.getId());
+               // Node node = graph.getNode(Integer.toString(current_node));
+                //node.addAttribute("ui.label", node.getId());
 
             }catch (Exception e){
                 System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
@@ -123,22 +128,34 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 Map.Entry pair = (Map.Entry)child_iterator.next();
                 try{
                     graph.addNode(Integer.toString((int) pair.getValue()));
-                    Node node = graph.getNode(Integer.toString((int) pair.getValue()));
-                    node.addAttribute("ui.label", Integer.toString((int) pair.getValue()));
+                    if(current_node==0){this.layout.setRoots(Integer.toString((int) pair.getValue()));}
+                    //Node node = graph.getNode(Integer.toString((int) pair.getValue()));
+                    //node.addAttribute("ui.label", Integer.toString((int) pair.getValue()));
 
                 }catch (Exception e){
                     System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
                 }
                 try{
                     graph.addEdge(((String) pair.getKey()).concat(Integer.toString((int) pair.getValue())),Integer.toString(current_node),Integer.toString((int) pair.getValue()));
-                    Edge edge = graph.getEdge((String) pair.getKey());
+                    Edge edge = graph.getEdge(((String) pair.getKey()).concat(Integer.toString((int) pair.getValue())));
                     edge.addAttribute("ui.label", (String) pair.getKey());
+
 
                 }catch (Exception e){
                     System.out.println("Edge " + Integer.toString(current_node) + " bereits angelegt");
                 }
 
             }
+            //Annotiere mit Splitattribute/Label
+            try{
+                String label_splitAttribute = (String) nodeMultimap.get("splitAttribute").iterator().next();
+                Node node = graph.getNode(Integer.toString(current_node));
+                node.addAttribute("ui.label", label_splitAttribute);
+
+            }catch (Exception e){
+                System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
+            }
+
             current_node++;
         }
         nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
@@ -246,7 +263,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         double count_label0 = attributeHashMap.get("label_0_0");
         double count_label1 = attributeHashMap.get("label_1_1");
         if(count_label0>count_label1){nodeMap.removeAll("splitAttribute");nodeMap.put("splitAttribute", "0");}else{nodeMap.removeAll("splitAttribute");nodeMap.put("splitAttribute", "1");}
-        //tree.put("node".concat(Integer.toString(node)),nodeMap);
+        tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         //if(count_label0 == 0 || count_label1 == 0){return;}
 
@@ -272,7 +289,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         nodeMap.put("GX0",GX0_average);
 
         double numberofevents=EFDT_InfoGain.Numberofevents(attributeHashMap);
-        double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.1, numberofevents);
+        double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.9, numberofevents);
         System.out.println(epsilon);
         System.out.println("GXA: "+GXA_average);
         System.out.println("GXO: "+GX0_average);
@@ -289,7 +306,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 childs.put(attribute_value,null);
             }
         }
-        //tree.put("node".concat(Integer.toString(node)),nodeMap);
+        tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         // Weise den Kindern jeweils ihre eigene KnotenID zu
        Iterator childsIterator = childs.entrySet().iterator();
@@ -392,7 +409,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         tree.put("node".concat(Integer.toString(node)), nodeMap);
 
-        double treshold = EFDT_InfoGain.HoeffdingTreshold(0.1,EFDT_InfoGain.Numberofevents(attributeHashMap));
+        double treshold = EFDT_InfoGain.HoeffdingTreshold(0.99,EFDT_InfoGain.Numberofevents(attributeHashMap));
         if(!((GXA_average-XCurrent_average)>treshold)){
             return true;}
 
@@ -496,7 +513,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/new_KreditD2.csv"));
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/shuffled_df.csv"));
             Map<String, String> values;
 
             while((values = reader.readMap()) != null){
@@ -530,7 +547,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/new_KreditD2.csv"));
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/shuffled_df.csv"));
             Map<String, String> values;
 
             while((values = reader.readMap()) != null){
