@@ -88,15 +88,7 @@ public class Treeworker {
         streaming.start();
 
 
-        while (true) {
-            try {
-                ReadOnlyKeyValueStore<String, Record> store = streaming.store("treestructure", QueryableStoreTypes.keyValueStore());
-                break;
-            } catch (InvalidStateStoreException ignored) {
-                // store not yet ready for querying
-                Thread.sleep(1000);
-            }
-        }
+        
 
         restService.start();
 
