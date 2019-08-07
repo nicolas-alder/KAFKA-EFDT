@@ -2,13 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84cc7e6f-1e4a-4c9c-9eda-8bf346682cc6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/shuffled_df.csv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/com_google_code_gson_gson_2_8_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/javax_ws_rs_javax_ws_rs_api_2_1_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_eclipse_jetty_jetty_maven_plugin_9_0_0_v20130308.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_glassfish_jersey_inject_jersey_hk2_2_26.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/HostStoreInfo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/KeyValueBean.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/MetadataService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/screenshot.png" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/screenshot.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hpi/msd/ExampleProducer.class" afterPath="$PROJECT_DIR$/target/classes/com/hpi/msd/ExampleProducer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hpi/msd/TreeworkerProcessor.class" afterPath="$PROJECT_DIR$/target/classes/com/hpi/msd/TreeworkerProcessor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hpi/msd/Treeworker.class" afterPath="$PROJECT_DIR$/target/classes/com/hpi/msd/Treeworker.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EFDT.iml" afterPath="$PROJECT_DIR$/EFDT.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Record.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Record.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -22,11 +32,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TreeworkerProcessor.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TreeworkerProcessor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7377">
-              <caret line="539" column="5" lean-forward="true" selection-start-line="539" selection-start-column="5" selection-end-line="539" selection-end-column="5" />
+            <state relative-caret-position="150">
+              <caret line="187" column="3" lean-forward="true" selection-start-line="187" selection-start-column="3" selection-end-line="248" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -34,32 +44,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new_KreditD.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD.csv">
+      <file leaf-file-name="Treeworker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3">
-              <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+            <state relative-caret-position="479">
+              <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new_KreditD2.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD2.csv">
+      <file leaf-file-name="Record.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Record.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="76" lean-forward="true" selection-start-line="26" selection-start-column="76" selection-end-line="26" selection-end-column="76" />
+            <state relative-caret-position="225">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shuffled_df.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/shuffled_df.csv">
+      <file leaf-file-name="RecordSerde.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordSerde.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="38" />
+            <state relative-caret-position="105">
+              <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Query.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="106" column="41" lean-forward="true" selection-start-line="106" selection-start-column="41" selection-end-line="106" selection-end-column="41" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -67,8 +89,8 @@
       <file leaf-file-name="ExampleProducer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="57" column="155" lean-forward="false" selection-start-line="57" selection-start-column="155" selection-end-line="57" selection-end-column="155" />
+            <state relative-caret-position="366">
+              <caret line="72" column="50" lean-forward="false" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -77,98 +99,47 @@
       <file leaf-file-name="KreditD.csv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/KreditD.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="76" lean-forward="true" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
+            <state relative-caret-position="457">
+              <caret line="31" column="76" lean-forward="false" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Treeworker.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
+      <file leaf-file-name="HostStoreInfo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/HostStoreInfo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LockSupport.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/concurrent/locks/LockSupport.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2715">
-              <caret line="214" column="0" lean-forward="false" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+            <state relative-caret-position="423">
+              <caret line="37" column="12" lean-forward="false" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
               <folding>
-                <element signature="e#0#15121#0" expanded="false" />
-                <element signature="e#10983#10984#0" expanded="false" />
-                <element signature="e#11021#11022#0" expanded="false" />
-                <element signature="e#13575#13576#0" expanded="false" />
-                <element signature="e#13618#13619#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#756#757#0" expanded="true" />
+                <element signature="e#789#790#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractQueuedSynchronizer.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java">
+      <file leaf-file-name="KeyValueBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/KeyValueBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4743">
-              <caret line="2098" column="65" lean-forward="true" selection-start-line="2098" selection-start-column="65" selection-end-line="2098" selection-end-column="65" />
-              <folding />
+            <state relative-caret-position="503">
+              <caret line="67" column="34" lean-forward="false" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#857#858#0" expanded="true" />
+                <element signature="e#891#892#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScheduledThreadPoolExecutor.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/concurrent/ScheduledThreadPoolExecutor.java">
+      <file leaf-file-name="MultimapSerde.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/MultimapSerde.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15315">
-              <caret line="1092" column="0" lean-forward="false" selection-start-line="1092" selection-start-column="0" selection-end-line="1092" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#47363#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#6406#6407#0" expanded="false" />
-                <element signature="e#6446#6447#0" expanded="false" />
-                <element signature="e#8316#8317#0" expanded="false" />
-                <element signature="e#8386#8387#0" expanded="false" />
-                <element signature="e#9317#9318#0" expanded="false" />
-                <element signature="e#9359#9360#0" expanded="false" />
-                <element signature="e#18041#18042#0" expanded="false" />
-                <element signature="e#18114#18115#0" expanded="false" />
-                <element signature="e#23406#23407#0" expanded="false" />
-                <element signature="e#23455#23456#0" expanded="false" />
-                <element signature="e#23678#23679#0" expanded="false" />
-                <element signature="e#23731#23732#0" expanded="false" />
-                <element signature="e#24181#24182#0" expanded="false" />
-                <element signature="e#24234#24235#0" expanded="false" />
-                <element signature="e#27292#27293#0" expanded="false" />
-                <element signature="e#27330#27331#0" expanded="false" />
-                <element signature="e#27737#27738#0" expanded="false" />
-                <element signature="e#27774#27775#0" expanded="false" />
-                <element signature="e#28617#28618#0" expanded="false" />
-                <element signature="e#28649#28650#0" expanded="false" />
-                <element signature="e#29685#29686#0" expanded="false" />
-                <element signature="e#29727#29728#0" expanded="false" />
-                <element signature="e#30242#30243#0" expanded="false" />
-                <element signature="e#30281#30282#0" expanded="false" />
-                <element signature="e#37330#37331#0" expanded="false" />
-                <element signature="e#37372#37373#0" expanded="false" />
-                <element signature="e#37414#37415#0" expanded="false" />
-                <element signature="e#37462#37463#0" expanded="false" />
-                <element signature="e#38584#38585#0" expanded="false" />
-                <element signature="e#38616#38617#0" expanded="false" />
-                <element signature="e#38658#38659#0" expanded="false" />
-                <element signature="e#38697#38698#0" expanded="false" />
-                <element signature="e#38770#38771#0" expanded="false" />
-                <element signature="e#38809#38810#0" expanded="false" />
-                <element signature="e#46265#46266#0" expanded="false" />
-                <element signature="e#46331#46332#0" expanded="false" />
-                <element signature="e#46737#46738#0" expanded="false" />
-                <element signature="e#46787#46788#0" expanded="false" />
-                <element signature="e#46827#46828#0" expanded="false" />
-                <element signature="e#46887#46888#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="105">
+              <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -184,36 +155,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>createN</find>
-      <find>childlist</find>
-      <find>eps</find>
-      <find>Xcurre</find>
-      <find>XCurrent</find>
-      <find>XCur</find>
-      <find>epsi</find>
-      <find>createnew</find>
-      <find>kvstore</find>
-      <find>tree.put</find>
-      <find>getNewNode</find>
-      <find>props</find>
-      <find>create</find>
-      <find>saved</find>
-      <find>savedNodes</find>
-      <find>getnewNode</find>
-      <find>tree</find>
-      <find>tree.pu</find>
-      <find>createnewNode</find>
-      <find>killsubtre</find>
-      <find>createNewNode</find>
-      <find>getnewnode</find>
-      <find>createnewn</find>
-      <find>initialize</find>
-      <find>0.1</find>
-      <find>0.001</find>
-      <find>splitattri</find>
       <find>1,</find>
       <find>splitattr</find>
       <find>fg</find>
+      <find>storename</find>
+      <find>trees</find>
+      <find>4092</find>
+      <find>40</find>
+      <find>injection</find>
+      <find>plugin</find>
+      <find>rangeForKeyValueStore</find>
+      <find>tree</find>
+      <find>instances</find>
+      <find>add</find>
+      <find>addS</find>
+      <find>metadata</find>
+      <find>m</find>
+      <find>local</find>
+      <find>streaming</find>
+      <find>value</find>
+      <find>start</find>
+      <find>build</find>
+      <find>contextHandler</find>
+      <find>contexthandler</find>
+      <find>context</find>
+      <find>cke t</find>
+      <find>join</find>
+      <find>hostinfo</find>
+      <find>empty</find>
+      <find>record</find>
+      <find>iteratetree</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -230,17 +201,25 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/QueryTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD.csv" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/InteractiveQueries.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/RemoteQueryRestService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/MetadataService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/HostStoreInfo.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Record.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/KeyValueBean.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1920" />
-    <option name="height" value="1123" />
+    <option name="x" value="95" />
+    <option name="y" value="74" />
+    <option name="width" value="1440" />
+    <option name="height" value="823" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -257,6 +236,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -297,18 +279,15 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="Downloaded.Files.Path.Enabled" value="true" />
     <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
+    <property name="Repository.Attach.Sources" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
@@ -328,7 +307,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ExampleProducer">
+  <component name="RunManager" selected="Application.TreeWorker">
     <configuration default="false" name="ExampleProducer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -340,6 +319,26 @@
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EFDT" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Query" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.hpi.msd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.hpi.msd.Query" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -689,13 +688,15 @@
       <envs />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.TreeWorker" />
       <item index="1" class="java.lang.String" itemvalue="Application.ExampleProducer" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Query" />
     </list>
     <recent_temporary>
-      <list size="1">
+      <list size="2">
         <item index="0" class="java.lang.String" itemvalue="Application.ExampleProducer" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Query" />
       </list>
     </recent_temporary>
   </component>
@@ -736,34 +737,41 @@
       <option name="project" value="LOCAL" />
       <updated>1564678525601</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="component treeworker finished">
+      <created>1564752645666</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1564752645666</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1123" extended-state="6" />
+    <frame x="95" y="74" width="1440" height="823" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297769" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2967992" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297769" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29548565" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297769" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17310444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44519883" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25171" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -780,46 +788,59 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
     <MESSAGE value="first working version" />
-    <option name="LAST_COMMIT_MESSAGE" value="first working version" />
+    <MESSAGE value="component treeworker finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="component treeworker finished" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>233</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/KeyValueBean.java</url>
+          <line>67</line>
           <properties />
-          <option name="timeStamp" value="337" />
+          <option name="timeStamp" value="371" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>237</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>165</line>
           <properties />
-          <option name="timeStamp" value="338" />
+          <option name="timeStamp" value="372" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>542</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>166</line>
           <properties />
-          <option name="timeStamp" value="342" />
+          <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>559</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>156</line>
           <properties />
-          <option name="timeStamp" value="343" />
+          <option name="timeStamp" value="374" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>558</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>159</line>
           <properties />
-          <option name="timeStamp" value="344" />
+          <option name="timeStamp" value="375" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java</url>
-          <line>195</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>158</line>
           <properties />
-          <option name="timeStamp" value="346" />
+          <option name="timeStamp" value="376" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>160</line>
+          <properties />
+          <option name="timeStamp" value="377" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
+          <line>167</line>
+          <properties />
+          <option name="timeStamp" value="378" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -832,7 +853,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="347" />
+      <option name="time" value="379" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -841,87 +862,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/lang/System.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7785">
-          <caret line="519" column="30" lean-forward="true" selection-start-line="519" selection-start-column="30" selection-end-line="519" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/rocksdb/rocksdbjni/5.15.10/rocksdbjni-5.15.10-sources.jar!/org/rocksdb/RocksDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33765">
-          <caret line="2251" column="24" lean-forward="false" selection-start-line="2251" selection-start-column="24" selection-end-line="2251" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1920">
-          <caret line="128" column="30" lean-forward="false" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/ProcessorNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1740">
-          <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/StreamTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8160">
-          <caret line="544" column="0" lean-forward="false" selection-start-line="544" selection-start-column="0" selection-end-line="544" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="10" lean-forward="true" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" column="47" lean-forward="false" selection-start-line="60" selection-start-column="47" selection-end-line="60" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/ProcessorNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/StreamTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8160">
@@ -1047,14 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="111" column="22" lean-forward="false" selection-start-line="111" selection-start-column="22" selection-end-line="111" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5865">
@@ -1177,13 +1109,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/StreamThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="804" column="0" lean-forward="false" selection-start-line="804" selection-start-column="0" selection-end-line="804" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/TaskManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -1209,7 +1134,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5310">
           <caret line="381" column="29" lean-forward="false" selection-start-line="381" selection-start-column="29" selection-end-line="381" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1217,7 +1141,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7845">
           <caret line="564" column="23" lean-forward="false" selection-start-line="564" selection-start-column="23" selection-end-line="564" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1225,40 +1148,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44490">
           <caret line="3036" column="0" lean-forward="false" selection-start-line="3036" selection-start-column="0" selection-end-line="3036" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#149596#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#47555#47556#0" expanded="false" />
-            <element signature="e#47590#47591#0" expanded="false" />
-            <element signature="e#93619#93620#0" expanded="false" />
-            <element signature="e#93679#93680#0" expanded="false" />
-            <element signature="e#94570#94571#0" expanded="false" />
-            <element signature="e#94605#94606#0" expanded="false" />
-            <element signature="e#101371#101372#0" expanded="false" />
-            <element signature="e#101406#101407#0" expanded="false" />
-            <element signature="e#102146#102147#0" expanded="false" />
-            <element signature="e#102182#102183#0" expanded="false" />
-            <element signature="e#102237#102238#0" expanded="false" />
-            <element signature="e#102279#102280#0" expanded="false" />
-            <element signature="e#102333#102334#0" expanded="false" />
-            <element signature="e#102379#102380#0" expanded="false" />
-            <element signature="e#102428#102429#0" expanded="false" />
-            <element signature="e#102464#102465#0" expanded="false" />
-            <element signature="e#102519#102520#0" expanded="false" />
-            <element signature="e#102561#102562#0" expanded="false" />
-            <element signature="e#103068#103069#0" expanded="false" />
-            <element signature="e#103104#103105#0" expanded="false" />
-            <element signature="e#105395#105396#0" expanded="false" />
-            <element signature="e#105440#105441#0" expanded="false" />
-            <element signature="e#108775#108776#0" expanded="false" />
-            <element signature="e#108813#108814#0" expanded="false" />
-            <element signature="e#136744#136745#0" expanded="false" />
-            <element signature="e#136792#136793#0" expanded="false" />
-            <element signature="e#146418#146419#0" expanded="false" />
-            <element signature="e#146453#146454#0" expanded="false" />
-            <element signature="e#147898#147899#0" expanded="false" />
-            <element signature="e#147941#147942#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1266,56 +1155,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10380">
           <caret line="747" column="0" lean-forward="false" selection-start-line="747" selection-start-column="0" selection-end-line="747" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#79046#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#5559#5560#0" expanded="false" />
-            <element signature="e#5600#5601#0" expanded="false" />
-            <element signature="e#6682#6683#0" expanded="false" />
-            <element signature="e#6722#6723#0" expanded="false" />
-            <element signature="e#15020#15021#0" expanded="false" />
-            <element signature="e#15084#15085#0" expanded="false" />
-            <element signature="e#15704#15705#0" expanded="false" />
-            <element signature="e#15770#15771#0" expanded="false" />
-            <element signature="e#17246#17247#0" expanded="false" />
-            <element signature="e#17313#17314#0" expanded="false" />
-            <element signature="e#17619#17620#0" expanded="false" />
-            <element signature="e#17660#17661#0" expanded="false" />
-            <element signature="e#18578#18579#0" expanded="false" />
-            <element signature="e#18620#18621#0" expanded="false" />
-            <element signature="e#19132#19133#0" expanded="false" />
-            <element signature="e#19175#19176#0" expanded="false" />
-            <element signature="e#21475#21476#0" expanded="false" />
-            <element signature="e#21519#21520#0" expanded="false" />
-            <element signature="e#33588#33589#0" expanded="false" />
-            <element signature="e#33645#33646#0" expanded="false" />
-            <element signature="e#36709#36710#0" expanded="false" />
-            <element signature="e#36767#36768#0" expanded="false" />
-            <element signature="e#37304#37305#0" expanded="false" />
-            <element signature="e#37347#37348#0" expanded="false" />
-            <element signature="e#38621#38622#0" expanded="false" />
-            <element signature="e#38666#38667#0" expanded="false" />
-            <element signature="e#42956#42957#0" expanded="false" />
-            <element signature="e#42987#42988#0" expanded="false" />
-            <element signature="e#43969#43970#0" expanded="false" />
-            <element signature="e#43996#43997#0" expanded="false" />
-            <element signature="e#44253#44254#0" expanded="false" />
-            <element signature="e#44281#44282#0" expanded="false" />
-            <element signature="e#45139#45140#0" expanded="false" />
-            <element signature="e#45208#45209#0" expanded="false" />
-            <element signature="e#46541#46542#0" expanded="false" />
-            <element signature="e#46614#46615#0" expanded="false" />
-            <element signature="e#51076#51077#0" expanded="false" />
-            <element signature="e#51138#51139#0" expanded="false" />
-            <element signature="e#52232#52233#0" expanded="false" />
-            <element signature="e#52261#52262#0" expanded="false" />
-            <element signature="e#66012#66013#0" expanded="false" />
-            <element signature="e#66038#66039#0" expanded="false" />
-            <element signature="e#76018#76019#0" expanded="false" />
-            <element signature="e#76090#76091#0" expanded="false" />
-            <element signature="e#77276#77277#0" expanded="false" />
-            <element signature="e#77311#77312#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1323,50 +1162,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15135">
           <caret line="1066" column="0" lean-forward="false" selection-start-line="1066" selection-start-column="0" selection-end-line="1066" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#80896#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#16480#16481#0" expanded="false" />
-            <element signature="e#16508#16509#0" expanded="false" />
-            <element signature="e#16568#16569#0" expanded="false" />
-            <element signature="e#16597#16598#0" expanded="false" />
-            <element signature="e#16644#16645#0" expanded="false" />
-            <element signature="e#16679#16680#0" expanded="false" />
-            <element signature="e#16824#16825#0" expanded="false" />
-            <element signature="e#16884#16885#0" expanded="false" />
-            <element signature="e#17029#17030#0" expanded="false" />
-            <element signature="e#17089#17090#0" expanded="false" />
-            <element signature="e#17336#17337#0" expanded="false" />
-            <element signature="e#17409#17410#0" expanded="false" />
-            <element signature="e#25063#25064#0" expanded="false" />
-            <element signature="e#25102#25103#0" expanded="false" />
-            <element signature="e#25293#25294#0" expanded="false" />
-            <element signature="e#25339#25340#0" expanded="false" />
-            <element signature="e#31552#31553#0" expanded="false" />
-            <element signature="e#31595#31596#0" expanded="false" />
-            <element signature="e#31948#31949#0" expanded="false" />
-            <element signature="e#32004#32005#0" expanded="false" />
-            <element signature="e#57238#57239#0" expanded="false" />
-            <element signature="e#57283#57284#0" expanded="false" />
-            <element signature="e#57976#57977#0" expanded="false" />
-            <element signature="e#58037#58038#0" expanded="false" />
-            <element signature="e#58750#58751#0" expanded="false" />
-            <element signature="e#58776#58777#0" expanded="false" />
-            <element signature="e#59415#59416#0" expanded="false" />
-            <element signature="e#59451#59452#0" expanded="false" />
-            <element signature="e#60105#60106#0" expanded="false" />
-            <element signature="e#60135#60136#0" expanded="false" />
-            <element signature="e#61630#61631#0" expanded="false" />
-            <element signature="e#61665#61666#0" expanded="false" />
-            <element signature="e#63465#63466#0" expanded="false" />
-            <element signature="e#63510#63511#0" expanded="false" />
-            <element signature="e#65777#65778#0" expanded="false" />
-            <element signature="e#65815#65816#0" expanded="false" />
-            <element signature="e#67446#67447#0" expanded="false" />
-            <element signature="e#67518#67519#0" expanded="false" />
-            <element signature="e#67915#67916#0" expanded="false" />
-            <element signature="e#67947#67948#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1374,7 +1169,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4620">
           <caret line="353" column="23" lean-forward="false" selection-start-line="353" selection-start-column="23" selection-end-line="353" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1382,13 +1176,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2715">
           <caret line="214" column="0" lean-forward="false" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15121#0" expanded="false" />
-            <element signature="e#10983#10984#0" expanded="false" />
-            <element signature="e#11021#11022#0" expanded="false" />
-            <element signature="e#13575#13576#0" expanded="false" />
-            <element signature="e#13618#13619#0" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30555">
+          <caret line="2098" column="65" lean-forward="false" selection-start-line="2098" selection-start-column="65" selection-end-line="2098" selection-end-column="65" />
         </state>
       </provider>
     </entry>
@@ -1396,98 +1197,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15315">
           <caret line="1092" column="0" lean-forward="false" selection-start-line="1092" selection-start-column="0" selection-end-line="1092" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#47363#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#6406#6407#0" expanded="false" />
-            <element signature="e#6446#6447#0" expanded="false" />
-            <element signature="e#8316#8317#0" expanded="false" />
-            <element signature="e#8386#8387#0" expanded="false" />
-            <element signature="e#9317#9318#0" expanded="false" />
-            <element signature="e#9359#9360#0" expanded="false" />
-            <element signature="e#18041#18042#0" expanded="false" />
-            <element signature="e#18114#18115#0" expanded="false" />
-            <element signature="e#23406#23407#0" expanded="false" />
-            <element signature="e#23455#23456#0" expanded="false" />
-            <element signature="e#23678#23679#0" expanded="false" />
-            <element signature="e#23731#23732#0" expanded="false" />
-            <element signature="e#24181#24182#0" expanded="false" />
-            <element signature="e#24234#24235#0" expanded="false" />
-            <element signature="e#27292#27293#0" expanded="false" />
-            <element signature="e#27330#27331#0" expanded="false" />
-            <element signature="e#27737#27738#0" expanded="false" />
-            <element signature="e#27774#27775#0" expanded="false" />
-            <element signature="e#28617#28618#0" expanded="false" />
-            <element signature="e#28649#28650#0" expanded="false" />
-            <element signature="e#29685#29686#0" expanded="false" />
-            <element signature="e#29727#29728#0" expanded="false" />
-            <element signature="e#30242#30243#0" expanded="false" />
-            <element signature="e#30281#30282#0" expanded="false" />
-            <element signature="e#37330#37331#0" expanded="false" />
-            <element signature="e#37372#37373#0" expanded="false" />
-            <element signature="e#37414#37415#0" expanded="false" />
-            <element signature="e#37462#37463#0" expanded="false" />
-            <element signature="e#38584#38585#0" expanded="false" />
-            <element signature="e#38616#38617#0" expanded="false" />
-            <element signature="e#38658#38659#0" expanded="false" />
-            <element signature="e#38697#38698#0" expanded="false" />
-            <element signature="e#38770#38771#0" expanded="false" />
-            <element signature="e#38809#38810#0" expanded="false" />
-            <element signature="e#46265#46266#0" expanded="false" />
-            <element signature="e#46331#46332#0" expanded="false" />
-            <element signature="e#46737#46738#0" expanded="false" />
-            <element signature="e#46787#46788#0" expanded="false" />
-            <element signature="e#46827#46828#0" expanded="false" />
-            <element signature="e#46887#46888#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/KreditD.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="76" lean-forward="true" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/concurrent/locks/AbstractQueuedSynchronizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4743">
-          <caret line="2098" column="65" lean-forward="true" selection-start-line="2098" selection-start-column="65" selection-end-line="2098" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD2.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="76" lean-forward="true" selection-start-line="26" selection-start-column="76" selection-end-line="26" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="57" column="155" lean-forward="false" selection-start-line="57" selection-start-column="155" selection-end-line="57" selection-end-column="155" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1495,14 +1204,173 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/InteractiveQueries.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RemoteQueryRestService.java" />
+    <entry file="file://$PROJECT_DIR$/Implementation.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/new_KreditD2.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="76" lean-forward="false" selection-start-line="26" selection-start-column="76" selection-end-line="26" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1770">
+          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/MetadataService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="92" column="5" lean-forward="false" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1266#1267#0" expanded="true" />
+            <element signature="e#1304#1305#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-streams/2.2.0/kafka-streams-2.2.0-sources.jar!/org/apache/kafka/streams/processor/internals/StreamThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10455">
+          <caret line="773" column="0" lean-forward="false" selection-start-line="773" selection-start-column="0" selection-end-line="773" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#59722#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#6184#6185#0" expanded="false" />
+            <element signature="e#6269#6270#0" expanded="false" />
+            <element signature="e#7407#7408#0" expanded="false" />
+            <element signature="e#7447#7448#0" expanded="false" />
+            <element signature="e#15676#15677#0" expanded="false" />
+            <element signature="e#15714#15715#0" expanded="false" />
+            <element signature="e#15764#15765#0" expanded="false" />
+            <element signature="e#15809#15810#0" expanded="false" />
+            <element signature="e#32811#32812#0" expanded="false" />
+            <element signature="e#32862#32863#0" expanded="false" />
+            <element signature="e#33138#33139#0" expanded="false" />
+            <element signature="e#33180#33181#0" expanded="false" />
+            <element signature="e#54547#54548#0" expanded="false" />
+            <element signature="e#54585#54586#0" expanded="false" />
+            <element signature="e#54765#54766#0" expanded="false" />
+            <element signature="e#54802#54803#0" expanded="false" />
+            <element signature="e#56786#56787#0" expanded="false" />
+            <element signature="e#56834#56835#0" expanded="false" />
+            <element signature="e#57110#57111#0" expanded="false" />
+            <element signature="e#57145#57146#0" expanded="false" />
+            <element signature="e#59339#59340#0" expanded="false" />
+            <element signature="e#59369#59370#0" expanded="false" />
+            <element signature="e#59402#59403#0" expanded="false" />
+            <element signature="e#59436#59437#0" expanded="false" />
+            <element signature="e#59518#59519#0" expanded="false" />
+            <element signature="e#59555#59556#0" expanded="false" />
+            <element signature="e#59589#59590#0" expanded="false" />
+            <element signature="e#59625#59626#0" expanded="false" />
+            <element signature="e#59682#59683#0" expanded="false" />
+            <element signature="e#59718#59719#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/HostStoreInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="37" column="12" lean-forward="false" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#789#790#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Record.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordSerde.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/MultimapSerde.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/KreditD.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="31" column="76" lean-forward="false" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/KeyValueBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="67" column="34" lean-forward="false" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
+            <element signature="e#891#892#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="72" column="50" lean-forward="false" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7377">
-          <caret line="539" column="5" lean-forward="true" selection-start-line="539" selection-start-column="5" selection-end-line="539" selection-end-column="5" />
+        <state relative-caret-position="150">
+          <caret line="187" column="3" lean-forward="true" selection-start-line="187" selection-start-column="3" selection-end-line="248" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="106" column="41" lean-forward="true" selection-start-line="106" selection-start-column="41" selection-end-line="106" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1587,7 +1455,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: com.101tec:zkclient:0.10</last-edited>
+          <last-edited>javax.ws.rs:javax.ws.rs-api:2.1.1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

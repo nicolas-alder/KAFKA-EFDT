@@ -19,4 +19,5 @@ public class Record {
     public void setMap(HashMap<String, Integer> map) {
         this.map = map;
     }
+
 }
