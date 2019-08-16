@@ -55,7 +55,7 @@ public class ExampleProducer {
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/shuffled_df.csv"));
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/Downloads/Datensaetze/Bank/Shuffled/Bank_S_train1.csv"));
             Map<String, String> values;
             while((values = reader.readMap()) != null){
 
@@ -67,7 +67,8 @@ public class ExampleProducer {
 
                 // send record to topic
                 producer.send(new ProducerRecord<String, HashMap>("aggregatedinput", "record_seq", map));
-                System.out.println("Send!");
+                System.out.println(map);
+                //System.out.println(map);
                /* try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

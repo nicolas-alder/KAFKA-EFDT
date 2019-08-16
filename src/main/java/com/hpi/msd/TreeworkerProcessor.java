@@ -63,7 +63,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             ListMultimap<String, Object> multimap = ArrayListMultimap.create();
             multimap.put("GXA",0.6); // null nicht möglich, weil dann Fehler in sum von avg berechnun von GXA nullpointerexception
             multimap.put("GXA_seen",1.0);
-            multimap.put("GX0",0.5); // GXO Berechnung wahrscheinlich falsch (von: Henrik)
+            multimap.put("GX0",0.5);
             multimap.put("GX0_seen",1.0);
             multimap.put("splitAttribute", "0");
             multimap.put("XCurrent",0.6);
@@ -513,7 +513,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/shuffled_df.csv"));
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/Downloads/Datensaetze/Bank/Shuffled/Bank_S_train1.csv"));
             Map<String, String> values;
 
             while((values = reader.readMap()) != null){
@@ -525,6 +525,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                         attribute_combinations.add(value.getKey() + "_" + value.getValue() + "_" + label);
 
                 }
+
 
             }
 
@@ -547,7 +548,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         try {
             // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/shuffled_df.csv"));
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/Downloads/Datensaetze/Bank/Shuffled/Bank_S_train1.csv"));
             Map<String, String> values;
 
             while((values = reader.readMap()) != null){

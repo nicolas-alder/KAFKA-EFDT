@@ -4,8 +4,12 @@ package com.hpi.msd;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.state.*;
 import org.eclipse.jetty.server.Server;
 
@@ -26,6 +30,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.util.parsing.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
@@ -34,6 +39,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
@@ -103,7 +109,7 @@ public class Query {
 
 
     @GET
-    @Path("/{record}")
+    @Path("/query/{record}")
     @Produces(MediaType.APPLICATION_JSON)
     public String valueByKey(
             @PathParam("record") final String record,
@@ -145,6 +151,34 @@ public class Query {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(new GenericType<KeyValueBean>(){});
     }
+
+    @GET
+    @Path("/insert/{input}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public int insertRecord(
+            @PathParam("input") final String input,
+            @Context UriInfo uriInfo
+    ) {
+        System.out.println(input);
+        String attributes = StringUtils.substringBetween(input, "{", "}").replace(" ","");
+        ArrayList<String> attribute_list = new ArrayList<>();              //split the string to create key-value pairs
+        attribute_list.addAll(Arrays.asList(attributes.split(",")));
+
+        HashMap<String, Double> insertion = new HashMap<>();
+        for (String attribute:attribute_list) {System.out.println(attribute);insertion.put(attribute, 1.0);}
+        System.out.println(insertion);
+        Properties props = new Properties();
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "com.hpi.msd.RecordSerializer");
+        Producer<String, HashMap> producer = new KafkaProducer<>(props);
+        producer.send(new ProducerRecord<String, HashMap>("aggregatedinput", "record_seq", insertion));
+        producer.close();
+
+        //System.out.println("Sent: " + insertion.toString());
+        return 1;
+    }
+
 
 
 

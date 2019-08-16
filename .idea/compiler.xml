@@ -7,12 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EFDT" />
-        <module name="maven-archiver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="EFDT" target="1.8" />
-      <module name="maven-archiver" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
