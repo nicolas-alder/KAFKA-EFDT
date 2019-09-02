@@ -1,4 +1,5 @@
-# Extremely Fast Decision Trees <\br> - An Apache Kafka Implementation -
+# Extremely Fast Decision Trees 
+# - An Apache Kafka Implementation -
 
 ## Setup
 
