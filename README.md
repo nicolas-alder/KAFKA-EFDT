@@ -1,13 +1,17 @@
 # Extremely Fast Decision Trees 
 # - An Apache Kafka Implementation -
 
-## Setup
+## Build & Run Project
 
-## Motivation (oft holt man sich von anderen die Referenzen)
+## Motivation 
 
 ## Related Work
 
-## Approach
+## Approach/Implementation
+- Architecture
+- Problems
+-> Parallelization
+-> Scaling...
 
 ## Goals/Contributions/Research Question
 
