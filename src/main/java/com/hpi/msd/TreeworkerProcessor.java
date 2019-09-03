@@ -108,9 +108,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
     public void iterateTree(int node, KeyValueStore tree, HashMap value){
         TreeworkerStatus.getInstance().setLast_insertion(new Timestamp(System.currentTimeMillis()));
-        graph.addAttribute("ui.screenshot", "/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/screenshot.png");
 
-        //System.out.println(node);
         Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
 
         //update statistics
