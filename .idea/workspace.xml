@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2ed1932c-d88f-46ac-b9e2-ad79af6ed427" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -797,7 +796,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567522700405</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="STATUS REST API ADDED">
+      <created>1567522808446</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1567522808446</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -859,7 +865,8 @@
     <MESSAGE value="REST PATH UPDATE" />
     <MESSAGE value="MAVEN BUILD WORKS + CODE PARAMETRIZATION" />
     <MESSAGE value="Add Dependency to work around error message" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Dependency to work around error message" />
+    <MESSAGE value="STATUS REST API ADDED" />
+    <option name="LAST_COMMIT_MESSAGE" value="STATUS REST API ADDED" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
