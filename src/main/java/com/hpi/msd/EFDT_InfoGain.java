@@ -51,7 +51,10 @@ public class EFDT_InfoGain {
             IGS.put(Att,IG_calc(Atts,Lab));
         }
 
-        double Nullsplit=Collections.min(Lab.get(0))/Collections.max(Lab.get(0));
+        double Nullsplit = 1.5;
+        if(!Lab.isEmpty()){
+        Nullsplit=Collections.min(Lab.get(0))/Collections.max(Lab.get(0));}else{
+        }
         IGS.put("Nullsplit", Nullsplit);
 
         return IGS;

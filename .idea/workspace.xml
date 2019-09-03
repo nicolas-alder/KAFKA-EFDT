@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ed1932c-d88f-46ac-b9e2-ad79af6ed427" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/hpi/msd/TreeworkerProcessorTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EFDT.iml" afterPath="$PROJECT_DIR$/EFDT.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java" afterPath="$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -16,11 +20,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Query.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Query.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-279">
-              <caret line="139" column="17" lean-forward="true" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
+            <state relative-caret-position="273">
+              <caret line="130" column="12" lean-forward="false" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,7 +47,7 @@
       <file leaf-file-name="RecordDeserializer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordDeserializer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="215">
               <caret line="24" column="19" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -52,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TreeworkerProcessor.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TreeworkerProcessor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1139">
-              <caret line="24" column="26" lean-forward="false" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="26" />
+            <state relative-caret-position="294">
+              <caret line="175" column="64" lean-forward="false" selection-start-line="175" selection-start-column="64" selection-end-line="175" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -64,13 +68,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecordSerde.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordSerde.java">
+      <file leaf-file-name="TreeworkerProcessorTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/hpi/msd/TreeworkerProcessorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="19" lean-forward="false" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+            <state relative-caret-position="330">
+              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#402#403#0" expanded="true" />
+                <element signature="e#452#453#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,8 +85,8 @@
       <file leaf-file-name="EFDT_InfoGain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2130">
-              <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+            <state relative-caret-position="421">
+              <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -146,12 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>weitkred_RK3_0</find>
-      <find>initialize</find>
-      <find>initiali</find>
-      <find>props</find>
-      <find>label_0_0</find>
-      <find>label_0</find>
       <find>get</find>
       <find>oldvalue</find>
       <find>old</find>
@@ -169,13 +169,19 @@
       <find>highest</find>
       <find>attribute with hi</find>
       <find>xcurrent</find>
-      <find>system.out</find>
       <find>logg</find>
       <find>csv</find>
       <find>sys</find>
       <find>logger</find>
       <find>//</find>
       <find>set</find>
+      <find>epsilon</find>
+      <find>print</find>
+      <find>xCurrent</find>
+      <find>system.out</find>
+      <find>label</find>
+      <find>attempttosplit</find>
+      <find>lab</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,13 +208,14 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/HostStoreInfo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/ExampleProducer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/AggregateApp.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Treeworker.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/DatasetPath.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerStatus.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/hpi/msd/TreeworkerProcessorTest.java" />
       </list>
     </option>
   </component>
@@ -268,6 +275,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="msd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EFDT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="KAFKA-EFDT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -302,7 +331,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.41883767" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
@@ -803,7 +832,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567522808446</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="STATUS REST API ADDED">
+      <created>1567522831172</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1567522831172</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -870,20 +906,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
-          <line>176</line>
-          <properties />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java</url>
-          <line>174</line>
-          <properties />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="17" />
     </breakpoint-manager>
     <watches-manager />
@@ -893,16 +915,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3375">
-          <caret line="225" column="20" lean-forward="false" selection-start-line="225" selection-start-column="20" selection-end-line="225" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1260">
@@ -1242,16 +1254,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordDeserializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="19" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordSerde.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -1285,16 +1287,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2130">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
@@ -1321,10 +1313,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/RecordDeserializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1139">
-          <caret line="24" column="26" lean-forward="false" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="215">
+          <caret line="24" column="19" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1333,8 +1325,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/Query.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-279">
-          <caret line="139" column="17" lean-forward="true" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
+        <state relative-caret-position="273">
+          <caret line="130" column="12" lean-forward="false" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/EFDT_InfoGain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/hpi/msd/TreeworkerProcessorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#402#403#0" expanded="true" />
+            <element signature="e#452#453#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hpi/msd/TreeworkerProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="175" column="64" lean-forward="false" selection-start-line="175" selection-start-column="64" selection-end-line="175" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1398,7 +1422,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.41883767" />
                 <option value="0.6" />
               </list>
             </option>

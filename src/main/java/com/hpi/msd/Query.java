@@ -126,7 +126,9 @@ public class Query {
         attribute_list.addAll(Arrays.asList(attributes.split(",")));
 
         HashMap<String, Double> insertion = new HashMap<>();
-        for (String attribute:attribute_list) {System.out.println(attribute);insertion.put(attribute, 1.0);}
+        for (String attribute:attribute_list) {
+            //System.out.println(attribute);
+            insertion.put(attribute, 1.0);}
         Properties props = new Properties();
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
