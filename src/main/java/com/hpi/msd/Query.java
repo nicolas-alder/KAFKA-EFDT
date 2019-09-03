@@ -28,6 +28,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Path("messages")
@@ -134,6 +135,8 @@ public class Query {
         producer.send(new ProducerRecord<String, HashMap>("aggregatedinput", "record_seq", insertion));
         producer.close();
 
+        TreeworkerStatus.getInstance().setLast_insertion(new Timestamp(System.currentTimeMillis()));
+
         return 1;
     }
 
@@ -161,5 +164,21 @@ public class Query {
                  }
         }
         return -1;
+    }
+
+    @GET
+    @Path("/status")
+    @Produces(MediaType.APPLICATION_JSON)
+    public int insertRecord(
+            @Context UriInfo uriInfo
+    ) {
+        long seconds_since_last_insertion = new Timestamp(System.currentTimeMillis()).getTime() - TreeworkerStatus.getInstance().getLast_insertion().getTime();
+
+        if(seconds_since_last_insertion/1000.0 < 10.0){
+            // Status 1:  insertion operations within the last 10 seconds
+            return 1;
+        }
+        // Status 0: No insertion operations within the last 10 seconds
+        return 0;
     }
 }

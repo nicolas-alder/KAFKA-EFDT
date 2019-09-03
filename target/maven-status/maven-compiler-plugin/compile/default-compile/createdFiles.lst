@@ -17,4 +17,5 @@ com/hpi/msd/TreeworkerProcessor.class
 com/hpi/msd/MetadataService.class
 com/hpi/msd/RecordSerializer.class
 com/hpi/msd/ExampleProducer.class
+com/hpi/msd/TreeworkerStatus.class
 com/hpi/msd/MultimapSerializer.class
