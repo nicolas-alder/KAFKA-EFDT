@@ -1,8 +1,5 @@
 package com.hpi.msd;
 
-/**
- * Created by nicolashoeck on 05.08.19.
- */
 import com.google.common.collect.ListMultimap;
 
 import java.util.Objects;
@@ -26,10 +23,7 @@ public class KeyValueBean {
         this.value = value;
     }
 
-    public String getKey() {
-
-        return key;
-    }
+    public String getKey() { return key; }
 
     public void setKey(final String key) {
         this.key = key;

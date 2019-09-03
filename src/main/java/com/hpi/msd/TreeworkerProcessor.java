@@ -1,48 +1,18 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.hpi.msd;
 
 import com.google.common.collect.*;
 import com.opencsv.CSVReaderHeaderAware;
-import com.sun.org.apache.xpath.internal.operations.Mult;
-import javafx.util.Pair;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.streams.*;
-import org.apache.kafka.streams.kstream.Windowed;
+
 import org.apache.kafka.streams.processor.*;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
-import org.graphstream.stream.file.FileSinkImages;
-import org.graphstream.stream.file.FileSource;
-import org.graphstream.stream.file.FileSourceDGS;
 import org.graphstream.ui.layout.HierarchicalLayout;
 import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.view.ViewerPipe;
-
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.Key;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static com.hpi.msd.EFDT_InfoGain.avg;
 
 public class TreeworkerProcessor implements Processor<String,HashMap> {
 
@@ -51,38 +21,31 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
     private Graph graph;
     private Viewer viewer;
     private HierarchicalLayout layout;
+    private String dataset_path;
 
     @Override
     @SuppressWarnings("unchecked")
     public void init(ProcessorContext context) {
-        // keep the processor context locally because we need it in punctuate() and commit()
-        //this.context = context;
+        this.dataset_path = DatasetPath.getInstance().getDataset_path();
+
         this.kvStore = (KeyValueStore) context.getStateStore("treestructure");
 
+        ListMultimap<String, Object> multimap = ArrayListMultimap.create();
+        multimap.put("GXA",0.6); // null nicht möglich, weil dann Fehler in sum von avg berechnun von GXA nullpointerexception
+        multimap.put("GXA_seen",1.0);
+        multimap.put("GX0",0.5);
+        multimap.put("GX0_seen",1.0);
+        multimap.put("splitAttribute", "0");
+        multimap.put("XCurrent",0.6);
+        multimap.put("XCurrent_seen",1.0);
+        multimap.put("childList", new HashMap<>());
+        initializeNodeAttributes(multimap);
 
-            ListMultimap<String, Object> multimap = ArrayListMultimap.create();
-            multimap.put("GXA",0.6); // null nicht möglich, weil dann Fehler in sum von avg berechnun von GXA nullpointerexception
-            multimap.put("GXA_seen",1.0);
-            multimap.put("GX0",0.5);
-            multimap.put("GX0_seen",1.0);
-            multimap.put("splitAttribute", "0");
-            multimap.put("XCurrent",0.6);
-            multimap.put("XCurrent_seen",1.0);
-            multimap.put("childList", new HashMap<>());
-         //   multimap.put("label_1_1",0.0);
-         //   multimap.put("label_0_0",0.0);
-           initializeNodeAttributes(multimap);
+        this.kvStore.put("node0",multimap);
+        ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
+        savedNodes.put("savedNodes",0);
+        this.kvStore.put("savedNodes",savedNodes);
 
-
-
-            this.kvStore.put("node0",multimap);
-            ListMultimap<String, Object> savedNodes = ArrayListMultimap.create();
-            savedNodes.put("savedNodes",0);
-            this.kvStore.put("savedNodes",savedNodes);
-
-        // We do as usual to display a graph. This
-        // connect the graph outputs to the viewer.
-        // The viewer is a sink of the graph.
         this.graph = new SingleGraph("efdtGraph");
         graph.addAttribute("ui.quality");
         this.viewer = graph.display();
@@ -93,13 +56,8 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
     @Override
     public void process(String key, HashMap value) {
-       // KeyValueStore tree = (KeyValueStore) this.context.getStateStore("treestructure");
         KeyValueStore treeStore = kvStore;
-        System.out.println("Key: " + key + " Record: "+value.toString());
-        Multimap nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
         iterateTree(0,treeStore,value);
-        nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
-
 
         ListMultimap<String, Object> savedNodesMultimap = (ListMultimap) treeStore.get("savedNodes");
         int max_node = (int) savedNodesMultimap.get("savedNodes").get(savedNodesMultimap.get("savedNodes").size()-1);
@@ -109,94 +67,52 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         while(current_node<=max_node){
             ListMultimap<String, Object> nodeMultimap = (ListMultimap<String, Object>) treeStore.get("node".concat(Integer.toString(current_node)));
-            if(nodeMultimap == null) {
-                current_node++;
-            continue;}
+            if(nodeMultimap == null) {current_node++;continue;}
 
-            try{
-                graph.addNode(Integer.toString(current_node));
-               // Node node = graph.getNode(Integer.toString(current_node));
-                //node.addAttribute("ui.label", node.getId());
-
-            }catch (Exception e){
-                System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
+            try{graph.addNode(Integer.toString(current_node));}catch (Exception e){//System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
             }
 
             HashMap childs = (HashMap) nodeMultimap.get("childList").iterator().next();
             Iterator child_iterator = childs.entrySet().iterator();
             while (child_iterator.hasNext()) {
                 Map.Entry pair = (Map.Entry)child_iterator.next();
+
                 try{
                     graph.addNode(Integer.toString((int) pair.getValue()));
                     if(current_node==0){this.layout.setRoots(Integer.toString((int) pair.getValue()));}
-                    //Node node = graph.getNode(Integer.toString((int) pair.getValue()));
-                    //node.addAttribute("ui.label", Integer.toString((int) pair.getValue()));
-
-                }catch (Exception e){
-                    System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
+                }catch (Exception e){//System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
                 }
+
                 try{
                     graph.addEdge(((String) pair.getKey()).concat(Integer.toString((int) pair.getValue())),Integer.toString(current_node),Integer.toString((int) pair.getValue()));
                     Edge edge = graph.getEdge(((String) pair.getKey()).concat(Integer.toString((int) pair.getValue())));
                     edge.addAttribute("ui.label", (String) pair.getKey());
-
-
-                }catch (Exception e){
-                    System.out.println("Edge " + Integer.toString(current_node) + " bereits angelegt");
+                }catch (Exception e){//System.out.println("Edge " + Integer.toString(current_node) + " bereits angelegt");
                 }
-
             }
-            //Annotiere mit Splitattribute/Label
+
+            //Annotate with split attribute or label
             try{
                 String label_splitAttribute = (String) nodeMultimap.get("splitAttribute").iterator().next();
                 Node node = graph.getNode(Integer.toString(current_node));
                 node.addAttribute("ui.label", label_splitAttribute);
-
-            }catch (Exception e){
-                System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
+            }catch (Exception e){//System.out.println("Knoten " + Integer.toString(current_node) + " bereits angelegt");
             }
-
             current_node++;
         }
-        nodeMap = (Multimap) treeStore.get("node".concat(Integer.toString(0)));
-        System.out.println("bla");
-
-
-
-    //    context.forward(key,value);
-        //context.commit( );
-         /* Iterator it = value.getMap().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            String recordKey = (String) pair.getKey();
-            String recordValue = (String) pair.getValue();
-            String compound_key = recordKey.concat("_".concat(recordValue));
-            Integer current_count = this.kvStore.get(compound_key);
-            if (current_count == null){current_count=0;}
-            this.kvStore.put(compound_key,current_count+1);
-            System.out.println(compound_key + ": " + Integer.toString(current_count+1));
-
-        }
-        */
     }
 
     @Override
-    public void close() {
-        // nothing to do
-    }
+    public void close() {}
 
     public void iterateTree(int node, KeyValueStore tree, HashMap value){
-        Multimap ssssss = (Multimap) tree.get("savedNodes");
-        Multimap childmulti = (ListMultimap) tree.get("node".concat(Integer.toString(node)));
-        HashMap childListProof = (HashMap) childmulti.get("childList").iterator().next();
         graph.addAttribute("ui.screenshot", "/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/screenshot.png");
 
-        System.out.println(node);
+        //System.out.println(node);
         Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
-        String angefragteNode = "node".concat(Integer.toString(node));
+
         //update statistics
         Iterator itValue = value.entrySet().iterator();
-
         while (itValue.hasNext()) {
             HashMap.Entry pair = (HashMap.Entry)itValue.next();
             double oldvalue;
@@ -211,40 +127,36 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 nodeMap.removeAll(pair.getKey());
                 nodeMap.put(pair.getKey(), oldvalue + (double) pair.getValue());
         }
+
         tree.put("node".concat(Integer.toString(node)),nodeMap);
         String splitAttribute = (String) nodeMap.get("splitAttribute").iterator().next();
-        //Multimap testMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
-
 
         HashMap currentNodeChildList =  (HashMap) nodeMap.get("childList").iterator().next();
-       boolean hasNoChild = currentNodeChildList.isEmpty();
+        boolean hasNoChild = currentNodeChildList.isEmpty();
+
         // Check if node is leaf
-        if(hasNoChild){
-            attemptToSplit(node, tree);
+        if(hasNoChild){attemptToSplit(node, tree);
         }else{
-            //falls bei reevaluate kein split sich verändert und alles bleibt wie es ist:
+            //if no split at reevaluate and everything stays the same
             if(reEvaluateBestSplit(node, tree)){
                 HashMap childList = (HashMap) nodeMap.get("childList").iterator().next();
                 Iterator allChilds = childList.entrySet().iterator();
                 while(allChilds.hasNext()){
                     Map.Entry pair = (Map.Entry)allChilds.next();
-                    //rufe Methode rekursiv auf für Kindsknoten. nur attribute in hashmap weitergeben, die nach dem split übrigbleiben!
+
+                    //call method recursive for child nodes. only propagate attribute in hashmap that are left over after the split (no split attributes)
                     if(value.containsKey(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_1"))){
                         value.remove(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_1"));
                         iterateTree((int) pair.getValue(), tree,value);
-
                     }else if(value.containsKey(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_0"))){
                         value.remove(splitAttribute.concat("_").concat((String) pair.getKey()).concat("_0"));
                         iterateTree((int) pair.getValue(), tree,value);
                     }
-                     }
-
+                }
             }
-            //falls reevaluate subtree gekillt hat/veraendert hat, sind wir fertig in der iteration
+            // if reevaluate method killed a subtree/changed the tree, we are finished and do not need to iterate through any child nodes
             return;
-
         }
-
         return;
     }
 
@@ -265,13 +177,10 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         if(count_label0>count_label1){nodeMap.removeAll("splitAttribute");nodeMap.put("splitAttribute", "0");}else{nodeMap.removeAll("splitAttribute");nodeMap.put("splitAttribute", "1");}
         tree.put("node".concat(Integer.toString(node)),nodeMap);
 
-        //if(count_label0 == 0 || count_label1 == 0){return;}
-
         HashMap<String,Double> IGs= EFDT_InfoGain.IG(attributeHashMap);
         double GXa_single= EFDT_InfoGain.FindGXa(IGs);
         String GXa_key = EFDT_InfoGain.FindGXaKey(IGs);
         double GX0_single=IGs.get("Nullsplit");
-       // System.out.println(GXa);
 
         double gxa_seen = (double) nodeMap.get("GXA_seen").iterator().next();
         nodeMap.removeAll("GXA_seen");
@@ -290,12 +199,12 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         double numberofevents=EFDT_InfoGain.Numberofevents(attributeHashMap);
         double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.9, numberofevents);
-        System.out.println(epsilon);
-        System.out.println("GXA: "+GXA_average);
-        System.out.println("GXO: "+GX0_average);
+        System.out.println("Epsilon: " + epsilon);
+        System.out.println("GXA: "+GXA_average + "(" + GXa_key + ")");
+        System.out.println("GXO: "+GX0_average + "(Nullsplit)");
         if(!(EFDT_InfoGain.HoeffdingSplit(GXA_average,GX0_average,epsilon) && !GXa_key.equalsIgnoreCase("Nullsplit"))){tree.put("node".concat(Integer.toString(node)),nodeMap);return;}
 
-        // Schreibe in childList alle neuen Kinder des Splits nach dem Schema "attributausprägung: KindknotenID"
+        // write all new childs of the split to childlists with schema "discrete attribute value: child node id"
         String best_attribute = GXa_key.split("_")[0];
         nodeMap.removeAll("splitAttribute");
         nodeMap.put("splitAttribute", best_attribute);
@@ -308,52 +217,51 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         }
         tree.put("node".concat(Integer.toString(node)),nodeMap);
 
-        // Weise den Kindern jeweils ihre eigene KnotenID zu
-       Iterator childsIterator = childs.entrySet().iterator();
-       ArrayList<Integer> newNodes = getNewNodeID(tree, childs.entrySet().size());
-       Iterator newNodesIt = newNodes.iterator();
+        // give childs their own ids
+        Iterator childsIterator = childs.entrySet().iterator();
+        ArrayList<Integer> newNodes = getNewNodeID(tree, childs.entrySet().size());
+        Iterator newNodesIt = newNodes.iterator();
         HashMap newChilds = new HashMap();
         while(newNodesIt.hasNext()){
            Map.Entry pair = (Map.Entry)childsIterator.next();
            newChilds.put(pair.getKey(),newNodesIt.next());
-       }
+        }
         childs.putAll(newChilds);
 
-        // for (int newNode:newNodes) {childs.put(childsIterator.next(),newNode);}
 
-       // Initialisiere neue Kinder
+       // initialize new childs
         childsIterator = childs.entrySet().iterator();
-       while(childsIterator.hasNext()){
+        while(childsIterator.hasNext()){
            Map.Entry pair = (Map.Entry)childsIterator.next();
            createNewNode((int) pair.getValue(),tree, node);
-       }
+        }
         nodeMap.removeAll("childList");
         nodeMap.put("childList", childs);
 
         tree.put("node".concat(Integer.toString(node)),nodeMap);
 
         return;
-
-
-
     }
 
     public ArrayList<Integer> getNewNodeID(KeyValueStore tree, int amount){
+
         Multimap encapsulatedSavedNodes = (Multimap) tree.get("savedNodes");
         List<Integer> savedNodes = (List<Integer>) encapsulatedSavedNodes.get("savedNodes");
         ArrayList<Integer> returnNodes = new ArrayList<>();
         int max = Collections.max(savedNodes);
+
         for (int j = 1; j<=amount;j++){
             returnNodes.add(max+j);
             encapsulatedSavedNodes.put("savedNodes", Collections.max(savedNodes)+1);
-
         }
-        tree.put("savedNodes",encapsulatedSavedNodes);
-        return returnNodes;
 
+        tree.put("savedNodes",encapsulatedSavedNodes);
+
+        return returnNodes;
     }
 
     public void createNewNode(int nodeID, KeyValueStore tree, int parentnode){
+
         ListMultimap<String, Object> multimap = ArrayListMultimap.create();
         multimap.put("GXA",0.6);
         multimap.put("GXA_seen",1.0);
@@ -361,16 +269,14 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         multimap.put("GX0_seen",1.0);
         multimap.put("splitAttribute", "0");
         multimap.put("childList", new HashMap<>());
-        // multimap.put("label_1_1",0.0);
-        //   multimap.put("label_0_0",0.0);
         multimap.put("XCurrent",0.4);
         multimap.put("XCurrent_seen",1.0);
         initializeNodeAttributes(multimap, (ListMultimap) tree.get("node".concat(Integer.toString(parentnode))));
-
         tree.put("node".concat(Integer.toString(nodeID)),multimap);
     }
 
     public boolean reEvaluateBestSplit(int node, KeyValueStore tree){
+
         ListMultimap nodeMap = (ListMultimap) tree.get("node".concat(Integer.toString(node)));
         Iterator nodeMapIterator = nodeMap.keySet().iterator();
         HashMap<String, Double> attributeHashMap = new HashMap();
@@ -384,10 +290,8 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         HashMap<String,Double> IGs= EFDT_InfoGain.IG(attributeHashMap);
         double GXa_single= EFDT_InfoGain.FindGXa(IGs);
         String GXa_key = EFDT_InfoGain.FindGXaKey(IGs);
-
         String xCurrent = (String) Iterables.getLast(((List) nodeMap.get("splitAttribute")));
         double XCurrent_Infogain = EFDT_InfoGain.FindXCurrent(IGs, xCurrent);
-
 
         double xCurrent_seen = (double) nodeMap.get("XCurrent_seen").iterator().next();
         nodeMap.removeAll("XCurrent_seen");
@@ -396,8 +300,8 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         nodeMap.removeAll("GXA_seen");
         nodeMap.put("GXA_seen",gxa_seen+1.0);
 
-
-        System.out.println( nodeMap.get("XCurrent").iterator().next());
+        System.out.println("XCurrent: "+ xCurrent);
+        System.out.println("XCurrent: "+ nodeMap.get("XCurrent").iterator().next());
 
         double XCurrent_average= EFDT_InfoGain.updateGX((double) nodeMap.get("XCurrent").iterator().next(),XCurrent_Infogain,(double) nodeMap.get("XCurrent_seen").iterator().next());
         double GXA_average= EFDT_InfoGain.updateGX((double) nodeMap.get("GXA").iterator().next(),GXa_single,(double) nodeMap.get("GXA_seen").iterator().next());
@@ -410,15 +314,13 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         tree.put("node".concat(Integer.toString(node)), nodeMap);
 
         double treshold = EFDT_InfoGain.HoeffdingTreshold(0.99,EFDT_InfoGain.Numberofevents(attributeHashMap));
-        if(!((GXA_average-XCurrent_average)>treshold)){
-            return true;}
+        if(!((GXA_average-XCurrent_average)>treshold)){return true;}
 
         if(GXa_key.equals("Nullsplit")){
             killSubtree(node, tree);
             System.out.println("Subtree Kill XCurrent: "+XCurrent_average);
             System.out.println("Subtree Kill GXA: "+GXA_average);
             System.out.println("Subtree Kill Epsilon: "+treshold);
-
 
             //Change to Leaf
             ListMultimap<String, Object> multimap = ArrayListMultimap.create();
@@ -430,14 +332,15 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             multimap.put("XCurrent",0.6);
             multimap.put("XCurrent_seen",1.0);
             multimap.put("childList", new HashMap<>());
-            //     multimap.put("label_1_1",0.0);
-            //   multimap.put("label_0_0",0.0);
+
             initializeNodeAttributes(multimap, nodeMap);
             tree.put("node".concat(Integer.toString(node)),multimap);
-            return false;
-        }else if(!GXa_key.equals(xCurrent)){
-            killSubtree(node, tree);
 
+            return false;
+
+        }else if(!GXa_key.equals(xCurrent)){
+
+            killSubtree(node, tree);
             System.out.println("Subtree Kill XCurrent: "+XCurrent_average);
             System.out.println("Subtree Kill GXA: "+GXA_average);
             System.out.println("Subtree Kill Epsilon: "+treshold);
@@ -451,12 +354,11 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
             multimap.put("XCurrent",GXA_average);
             multimap.put("XCurrent_seen",1.0);
             multimap.put("childList", new HashMap<>());
-            //      multimap.put("label_1_1",0.0);
-            //   multimap.put("label_0_0",0.0);
             initializeNodeAttributes(multimap, nodeMap);
 
-            // Schreibe in childList alle neuen Kinder des Splits nach dem Schema "attributausprägung: KindknotenID"
+            // write all new child nodes of the split in childlist with schema "discrete attribute value : child node id"
             HashMap childs = new HashMap();
+
             for (String element:attributeHashMap.keySet()) {
                 if(element.split("_")[0].equalsIgnoreCase(GXa_key.split("_")[0])){
                     String attribute_value = element.split("_")[1];
@@ -464,7 +366,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 }
             }
 
-            // Weise den Kindern jeweils ihre eigene KnotenID zu
+            // Give childs their own child ids
             Iterator childsIterator = childs.entrySet().iterator();
             ArrayList<Integer> newNodes = getNewNodeID(tree, childs.entrySet().size());
             Iterator newNodesIt = newNodes.iterator();
@@ -473,30 +375,32 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
                 Map.Entry pair = (Map.Entry)childsIterator.next();
                 newChilds.put(pair.getKey(),newNodesIt.next());
             }
+
             childs.putAll(newChilds);
 
-            // for (int newNode:newNodes) {childs.put(childsIterator.next(),newNode);}
-
-            // Initialisiere neue Kinder
+            // initialize new childs
             childsIterator = childs.entrySet().iterator();
+
             while(childsIterator.hasNext()){
                 Map.Entry pair = (Map.Entry)childsIterator.next();
                 createNewNode((int) pair.getValue(),tree, node);
             }
+
             multimap.removeAll("childList");
             multimap.put("childList", childs);
             tree.put("node".concat(Integer.toString(node)),multimap);
+
             return false;
         }
-
         return true;
-
     }
 
     public void killSubtree(int node, KeyValueStore tree){
+
         Multimap nodeMap = (Multimap) tree.get("node".concat(Integer.toString(node)));
         HashMap<String, Integer> childList = (HashMap) nodeMap.get("childList").iterator().next();
         Iterator childIterator = childList.entrySet().iterator();
+
         while(childIterator.hasNext()){
             Map.Entry child = (Map.Entry)childIterator.next();
             killSubtree((int) child.getValue(),tree);
@@ -512,67 +416,56 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         HashSet attribute_combinations = new HashSet();
 
         try {
-            // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/Downloads/Datensaetze/Bank/Shuffled/Bank_S_train1.csv"));
+            // Read line by line. Result is dictionary with key = attribute and value = discrete attribute value.
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(this.dataset_path));
             Map<String, String> values;
 
             while((values = reader.readMap()) != null){
-                // Zu versendener Record wird erstellt als Dictionary
                 String label = values.get("label");
 
                 for (Map.Entry<String,String> value: values.entrySet()) {
-                    //Sortiere alle Statistiken aus, die auf dem Weg durch Splitattribute aussortiert werden
-                        attribute_combinations.add(value.getKey() + "_" + value.getValue() + "_" + label);
-
-                }
-
-
+                    // Sort out statistics that are split attributes or unsuitable
+                        attribute_combinations.add(value.getKey() + "_" + value.getValue() + "_" + label);}
             }
-
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Could not read file.");
         }
-        Iterator attribute_combinations_iterator = attribute_combinations.iterator();
-        while(attribute_combinations_iterator.hasNext()) {
-            multimap.put((String) attribute_combinations_iterator.next(),0.0);
-        }
 
+        Iterator attribute_combinations_iterator = attribute_combinations.iterator();
+
+        while(attribute_combinations_iterator.hasNext()) {multimap.put((String) attribute_combinations_iterator.next(),0.0);}
     }
 
     public void initializeNodeAttributes(ListMultimap<String,Object> multimap, ListMultimap parentAttributesMultiMap){
+
         String splitattribute = (String) parentAttributesMultiMap.get("splitAttribute").iterator().next();
         if (splitattribute.equalsIgnoreCase("0")||splitattribute.equalsIgnoreCase("1")){splitattribute="keinAttribut";}
-
         HashSet attribute_combinations = new HashSet();
 
         try {
-            // Lese Zeile für Zeile ein. Ergebnis ist ein Dictionary mit Key = Attribut und Value = Attributausprägung
-            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader("/Users/nicolashoeck/Downloads/Datensaetze/Bank/Shuffled/Bank_S_train1.csv"));
+            // Read line by line. Result is dictionary with key = attribute and value = discrete attribute value.
+            CSVReaderHeaderAware reader = new CSVReaderHeaderAware(new FileReader(dataset_path));
             Map<String, String> values;
 
             while((values = reader.readMap()) != null){
-                // Zu versendener Record wird erstellt als Dictionary
                 String label = values.get("label");
 
                 for (Map.Entry<String,String> value: values.entrySet()) {
-                    //Sortiere alle Statistiken aus, die auf dem Weg durch Splitattribute aussortiert werden
+                    // Sort out statistics that are split attributes or unsuitable
                     if (parentAttributesMultiMap.containsKey(value.getKey() + "_" + value.getValue() + "_" + label) && !((value.getKey() + "_" + value.getValue() + "_" + label).contains(splitattribute))) {
                         attribute_combinations.add(value.getKey() + "_" + value.getValue() + "_" + label);
                     }
                 }
-
             }
 
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Could not read file.");
         }
-        Iterator attribute_combinations_iterator = attribute_combinations.iterator();
-        while(attribute_combinations_iterator.hasNext()) {
-            multimap.put((String) attribute_combinations_iterator.next(),0.0);
-        }
 
+        Iterator attribute_combinations_iterator = attribute_combinations.iterator();
+        while(attribute_combinations_iterator.hasNext()) {multimap.put((String) attribute_combinations_iterator.next(),0.0);}
     }
 }
 

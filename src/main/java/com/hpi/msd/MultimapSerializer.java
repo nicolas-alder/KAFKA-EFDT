@@ -7,20 +7,12 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * Created by nicolashoeck on 31.05.19.
- */
 public class MultimapSerializer implements Serializer<Multimap> {
 
-
     @Override
-    public void configure(Map map, boolean b) {
-
-    }
+    public void configure(Map map, boolean b) {}
 
     @Override
     public byte[] serialize(String s, Multimap o) {
@@ -38,7 +30,5 @@ public class MultimapSerializer implements Serializer<Multimap> {
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() {}
 }

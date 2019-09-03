@@ -1,13 +1,11 @@
 package com.hpi.msd;
 
-
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.state.*;
@@ -16,21 +14,11 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.apache.kafka.streams.KafkaStreams;
-
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.state.HostInfo;
-import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import scala.util.parsing.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
@@ -39,16 +27,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import java.io.UnsupportedEncodingException;
-import java.time.Instant;
+
 import java.util.*;
-import java.util.function.Function;
-
-
-/**
- * Created by nicolashoeck on 05.08.19.
- */
-
 
 @Path("messages")
 public class Query {
@@ -70,8 +50,7 @@ public class Query {
     }
 
     public void start() throws Exception {
-        ServletContextHandler context =
-                new ServletContextHandler(ServletContextHandler.SESSIONS);
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
         jettyServer = new Server(this.hostInfo.port());
@@ -85,7 +64,6 @@ public class Query {
         ServletHolder holder = new ServletHolder(sc);
         context.addServlet(holder, "/*");
 
-
         final ServerConnector connector = new ServerConnector(jettyServer);
         connector.setHost(hostInfo.host());
         connector.setPort(hostInfo.port());
@@ -94,8 +72,6 @@ public class Query {
         context.start();
 
         jettyServer.start();
-        //jettyServer.join();
-
     }
 
     public void stop() throws Exception {
@@ -116,28 +92,12 @@ public class Query {
             @Context UriInfo uriInfo
     ) {
         String attributes = StringUtils.substringBetween(record, "{", "}");
-        ArrayList<String> attribute_list = new ArrayList<>();              //split the string to creat key-value pairs
+        ArrayList<String> attribute_list = new ArrayList<>();              //split the string to create key-value pairs
         attribute_list.addAll(Arrays.asList(attributes.replace(" ","").split(",")));
 
-
-        // Get metadata for the instances of this Kafka Streams application hosting the store and
-        // potentially the value for key
-     //   final StreamsMetadata metadata =
-       //         streams.metadataForKey(this.storeName, key, Serdes.String().serializer());
-        //if (metadata == null) {
-          //  throw new NotFoundException();
-        //}
-
-      //  if (metadata.hostInfo() != this.hostInfo) {
-     //       return fetchValueFromRemoteHost(metadata.hostInfo(), uriInfo.getPath());
-     //   }
-
         // Get KeyValue Store --> Tree
-        final ReadOnlyKeyValueStore<String, ListMultimap> store =
-                streams.store(this.storeName, QueryableStoreTypes.keyValueStore());
-        if (store == null) {
-            throw new NotFoundException();
-        }
+        final ReadOnlyKeyValueStore<String, ListMultimap> store = streams.store(this.storeName, QueryableStoreTypes.keyValueStore());
+        if (store == null) { throw new NotFoundException();}
 
         return Integer.toString(iterateTree(0,store,attribute_list));
     }
@@ -166,7 +126,6 @@ public class Query {
 
         HashMap<String, Double> insertion = new HashMap<>();
         for (String attribute:attribute_list) {System.out.println(attribute);insertion.put(attribute, 1.0);}
-        System.out.println(insertion);
         Properties props = new Properties();
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -175,11 +134,8 @@ public class Query {
         producer.send(new ProducerRecord<String, HashMap>("aggregatedinput", "record_seq", insertion));
         producer.close();
 
-        //System.out.println("Sent: " + insertion.toString());
         return 1;
     }
-
-
 
 
     public int iterateTree(int node, ReadOnlyKeyValueStore tree, ArrayList<String> attributes){
@@ -189,22 +145,21 @@ public class Query {
         HashMap currentNodeChildList =  (HashMap) nodeMap.get("childList").iterator().next();
         boolean hasNoChild = currentNodeChildList.isEmpty();
         String splitattribute = (String) nodeMap.get("splitAttribute").iterator().next();
+
         // Check if node is leaf
         if(hasNoChild){
             return Integer.valueOf(splitattribute);
         }else{
-
                 HashMap childList = (HashMap) nodeMap.get("childList").iterator().next();
                 Iterator allChilds = childList.entrySet().iterator();
+
                 while(allChilds.hasNext()){
                     Map.Entry pair = (Map.Entry)allChilds.next();
                     if(attributes.contains(splitattribute+"_"+pair.getKey())) {
                         return iterateTree((int) pair.getValue(), tree, attributes);
                     }
-            }
-
+                 }
         }
-
         return -1;
     }
 }

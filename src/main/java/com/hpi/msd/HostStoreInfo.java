@@ -3,9 +3,7 @@ package com.hpi.msd;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Created by nicolashoeck on 05.08.19.
- */public class HostStoreInfo {
+public class HostStoreInfo {
 
     private String host;
     private int port;

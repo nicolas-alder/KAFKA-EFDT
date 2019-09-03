@@ -1,8 +1,5 @@
 package com.hpi.msd;
 
-/**
- * Created by nicolashoeck on 05.08.19.
- */
 /*
  * Copyright Confluent Inc.
  *
@@ -19,14 +16,14 @@ package com.hpi.msd;
  * limitations under the License.
  */
 
-        import org.apache.kafka.common.serialization.Serializer;
-        import org.apache.kafka.streams.KafkaStreams;
-        import org.apache.kafka.streams.state.StreamsMetadata;
+import org.apache.kafka.common.serialization.Serializer;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.state.StreamsMetadata;
 
-        import javax.ws.rs.NotFoundException;
-        import java.util.Collection;
-        import java.util.List;
-        import java.util.stream.Collectors;
+import javax.ws.rs.NotFoundException;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Looks up StreamsMetadata from KafkaStreams and converts the results

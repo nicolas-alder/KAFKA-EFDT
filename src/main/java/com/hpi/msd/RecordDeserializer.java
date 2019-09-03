@@ -9,14 +9,10 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nicolashoeck on 31.05.19.
- */
 public class RecordDeserializer implements Deserializer<HashMap>{
-    @Override
-    public void configure(Map map, boolean b) {
 
-    }
+    @Override
+    public void configure(Map map, boolean b) {}
 
     @Override
     public HashMap deserialize(String s, byte[] bytes) {
@@ -32,12 +28,9 @@ public class RecordDeserializer implements Deserializer<HashMap>{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return msg;
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() {}
 }

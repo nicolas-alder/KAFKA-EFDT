@@ -9,17 +9,10 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * Created by nicolashoeck on 31.05.19.
- */
 public class RecordSerializer implements Serializer<HashMap> {
 
-
     @Override
-    public void configure(Map map, boolean b) {
-
-    }
+    public void configure(Map map, boolean b) {}
 
     @Override
     public byte[] serialize(String s, HashMap o) {
@@ -37,7 +30,5 @@ public class RecordSerializer implements Serializer<HashMap> {
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() {}
 }

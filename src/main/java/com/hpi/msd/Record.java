@@ -5,7 +5,9 @@ import java.util.HashMap;
 /**
  * Created by nicolashoeck on 31.05.19.
  */
+
 public class Record {
+
     HashMap<String,Integer> map;
 
     public Record(HashMap<String,Integer> map){

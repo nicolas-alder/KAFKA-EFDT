@@ -7,17 +7,12 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nicolashoeck on 31.05.19.
- */
 public class MultimapDeserializer implements Deserializer<Multimap>{
-    @Override
-    public void configure(Map map, boolean b) {
 
-    }
+    @Override
+    public void configure(Map map, boolean b) {}
 
     @Override
     public Multimap deserialize(String s, byte[] bytes) {
@@ -33,12 +28,9 @@ public class MultimapDeserializer implements Deserializer<Multimap>{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return msg;
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() {}
 }

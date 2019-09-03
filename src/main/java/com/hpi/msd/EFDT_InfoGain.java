@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class EFDT_InfoGain {
     /* Class for calculating the InformationGain within a node */
 
@@ -186,78 +185,7 @@ public class EFDT_InfoGain {
     }
 
 
-    public static void main(String[] args) {
-        /* main with example dict */
 
-        HashMap<String, Double> map = new HashMap<String, Double>();
-        map.put("node_Outlook_Sunny_0", 2.0);
-        map.put("node_Outlook_Sunny_1", 3.0);
-        map.put("node_Outlook_Normal_0", 0.0);
-        map.put("node_Outlook_Normal_1", 4.0);
-        map.put("node_Outlook_Rainy_0", 3.0);
-        map.put("node_Outlook_Rainy_1", 2.0);
-        map.put("node_Temp_Hot_0", 2.0);
-        map.put("node_Temp_Hot_1", 2.0);
-        map.put("node_Temp_Mild_0", 4.0);
-        map.put("node_Temp_Mild_1", 2.0);
-        map.put("node_Temp_Cold_0", 3.0);
-        map.put("node_Temp_Cold_1", 1.0);
-        map.put("node_Humidity_High_0", 4.0);
-        map.put("node_Humidity_High_1", 3.0);
-        map.put("node_Humidity_Normal_0", 1.0);
-        map.put("node_Humidity_Normal_1", 6.0);
-        map.put("node_Windy_True_0", 3.0);
-        map.put("node_Windy_True_1", 3.0);
-        map.put("node_Windy_False_0", 2.0);
-        map.put("node_Windy_False_1", 6.0);
-        map.put("node_label_0", 5.0);
-        map.put("node_label_1", 9.0);
-
-        HashMap<String, Double> map2 = new HashMap<String, Double>();
-        map2.put("node_Outlook_Sunny_0", 2.0);
-        map2.put("node_Outlook_Sunny_1", 3.0);
-        map2.put("node_Outlook_Normal_0", 0.0);
-        map2.put("node_Outlook_Normal_1", 4.0);
-        map2.put("node_Outlook_Rainy_0", 3.0);
-        map2.put("node_Outlook_Rainy_1", 2.0);
-        map2.put("node_label_0", 5.0);
-        map2.put("node_label_1", 9.0);
-
-
-        List GXa_List = new ArrayList<Double>();
-        List GX0_List = new ArrayList<Double>();
-
-        //per node
-        HashMap<String,Double> IGs= IG(map);
-        System.out.println(IGs);
-        double GXa= FindGXa(IGs);
-        System.out.println(GXa);
-
-
-        GX0_List.add(IGs.get("Nullsplit"));
-        GXa_List.add(GXa);
-
-        Double GXa_avg=avg(GX0_List);
-        Double GX0_avg=avg(GXa_List);
-
-        double Numberofevents=Numberofevents(map);
-        double Epsilon = HoeffdingTreshold(0.95, Numberofevents);
-
-        HoeffdingSplit(GXa_avg,GX0_avg,Epsilon);
-
-        System.out.println(map);
-
-        System.out.println(Classlabel(map));
-
-        System.out.println(map.containsKey("label"));
-
-        //TEST AREA
-        HashMap<String,HashMap<String,Double>> NodeStore= new HashMap<>();
-        NodeStore.put("node1",map);
-        NodeStore.put("node2",map2);
-        //System.out.println(NodeStore);
-
-    }
 
     public static String FindGXaKey(HashMap<String, Double> IG_collection) {
         /* Method for finding key of X_a */
