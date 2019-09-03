@@ -12,6 +12,7 @@ import org.graphstream.ui.view.Viewer;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class TreeworkerProcessor implements Processor<String,HashMap> {
@@ -106,6 +107,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
     public void close() {}
 
     public void iterateTree(int node, KeyValueStore tree, HashMap value){
+        TreeworkerStatus.getInstance().setLast_insertion(new Timestamp(System.currentTimeMillis()));
         graph.addAttribute("ui.screenshot", "/Users/nicolashoeck/KAFKA-EFDT/src/main/java/com/hpi/msd/screenshot.png");
 
         //System.out.println(node);
