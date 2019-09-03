@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.Assert.assertEquals;
+
 public class TreeworkerProcessorTest {
 
     @Mock
@@ -20,6 +22,6 @@ public class TreeworkerProcessorTest {
 
     @Test
     void test() {
-
+        assertEquals(2, 2);
     }
 }

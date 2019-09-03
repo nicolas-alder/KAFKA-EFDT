@@ -51,6 +51,7 @@ public class EFDT_InfoGain {
             IGS.put(Att,IG_calc(Atts,Lab));
         }
 
+        // Initialize with 1.5. In case there are no attributes to split left, Lab Arraylist is empty. So we prefert the nullsplit in any case.
         double Nullsplit = 1.5;
         if(!Lab.isEmpty()){
         Nullsplit=Collections.min(Lab.get(0))/Collections.max(Lab.get(0));}else{
