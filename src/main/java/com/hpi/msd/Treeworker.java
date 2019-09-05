@@ -13,9 +13,9 @@ public class Treeworker {
 
     public static void main(String[] args) throws Exception {
 
-
-        if (!args[0].isEmpty()){DatasetPath.getInstance().setDataset_path(args[0]);}else{System.out.println("Please provide absolute dataset path as first commandline argument");System.exit(0);}
-        if (!args[1].isEmpty()){ThresholdParameter.getInstance().setThreshold(Double.parseDouble(args[1]));}else{System.out.println("Please provide security threshold from 0.01 to 1.0 as first commandline argument");System.exit(0);}
+        if(args.length!=2){System.out.println("Please provide necessary parameters dataset path and security threshold.");System.exit(0);}
+        if (!args[0].isEmpty()){DatasetPath.getInstance().setDataset_path(args[0]);}else{System.out.println("Please provide absolute dataset path as first commandline argument.");System.exit(0);}
+        if (!args[1].isEmpty()){ThresholdParameter.getInstance().setThreshold(Double.parseDouble(args[1]));}else{System.out.println("Please provide security threshold from 0.01 to 1.0 as second commandline argument.");System.exit(0);}
 
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "treeworker");
