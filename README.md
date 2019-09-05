@@ -34,6 +34,7 @@ By default, data streams are processed in a stateless way within a Kafka topolog
 
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/kv-store.png" width="700"/>
 
+Currently we make use of a persistent local state store. The settings of the state store (e.g. using it in-memory) can be easily changed in the "Treeworker" class.
 #### REST API LAYER
 Concrete description of how input data must be structured.
 The processing of the records is designed in a way that it is possible to feed 
