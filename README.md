@@ -2,6 +2,7 @@
 # - An Apache Kafka Implementation -
 
 ## Build & Run Project
+0. Clone repository and download Apache Kafka and Zookeeper as described here: https://kafka.apache.org/quickstart
 1. bin/zookeeper-server-start.sh config/zookeeper.properties
 2. bin/kafka-server-start.sh config/server.properties --override delete.topic.enable=true 
 3. bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic aggregatedinput
