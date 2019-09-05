@@ -50,14 +50,14 @@ The query application does not necessarily mean one specific implemented applica
 ### REST API Layer
 The REST API Layer serves as an interface to insert and query the decision tree, as well as receive status information if the tree application node currently processes records. This enables better evaluation. The layer was realized with a Jetty (cite 9) webserver and can be requested via http://localhost:7070/{endpoint}/{record}. All requests are GET-requests. Records are sent as URL parameters. They have to be in the format {attribute1_attributevalue_labelClass, attribute2_attributevalue_labelClass, ... }. You find specific examples for illustration purposes below. We also provided a dataset preprocessing pipeline within our evaluation jupyter notebook that you can use to process your dataset in the requirement format for the jar datapath parameter and to load and evaluate any dataset with this prototype (see "Evaluation" section).
 
-| Purpose         |  Endpoint                    | Return value
+| Method         |  Endpoint                    | Return value
 | ------------- | -------------------- | ----------------------- |
 | `insert`      | messages/insert       | Successful: 1|
 | `query`   | messages/query           |  Label value: 0/1; Error: -1|
 | `status`   | messages/status        | Busy: 1; Not-Busy: 0|
 
 
-| Purpose         |  Example                    | 
+| Method         |  Example                    | 
 | ------------- | --------------------------------------------------------------------------- |
 | `insert`      | http://localhost:7070/messages/insert/{wohnzeit_WD4_0, telef_nein_0, beruf_B2_0, moral_M1_0, dhoehe_DH2_0, dalter_A3_0, beszeit_BD4_0, rate_RH2_0, verm_V3_0, gastarb_ja_0, buerge_WS1_0, sparkont_SW1_0, weitkred_RK3_0, dlaufzeit_LZ02_0, bishkred_ARK1_0, pers_U2_0, verw_VZ9_0, wohn_W3_0, famges_FG2_0, laufkont_K1_0}  | 
 | `query`   |http://localhost:7070/messages/query/{wohnzeit_WD3, beruf_B3, telef_nein, verw_VZ11, moral_M2, dhoehe_DH2, beszeit_BD5, verm_V3, rate_RH4, weitkred_RK3, label, laufkont_K4, gastarb_ja, buerge_WS1, pers_U2, dalter_A4, sparkont_SW5, bishkred_ARK2, dlaufzeit_LZ02, wohn_W1, famges_FG2}  |  
