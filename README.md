@@ -8,15 +8,22 @@
 3. bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic aggregatedinput
 4. mvn package
 5. java -jar target/EFDT-1.0-SNAPSHOT-jar-with-dependencies.jar "\<path to dataset\>" "\<security threshold (e.g. 0.95)\>"
-## Motivation 
+
+## Motivation
+In the age of Big Data, we find ourselves in a situation where more and more data is being produced. The sequential procedure of a traditional data pipeline - the collection of a data set, its preparation, and subsequent analysis - is increasingly no longer sufficient to meet the requirements placed on live data. Today, data that is collected in real-time. Therefore, it must be analyzed in real-time to make immediate decisions based on this data. Data streams can also grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Applications can be found in industrial production, for example, to predict failures due to sensor data on production machines. But there are also numerous applications for fraud detection in financial transactions and all other areas that produce large amounts of real-time data.
+An example of a decision tree algorithm is the "Extremely Fast Decision Tree Algorithm" for streaming data by Manapragada et al. (cite 0, https://github.com/chaitanya-m/kdd2018).
+
+In addition to the algorithms, we need a powerful framework for streaming data in which we implement our algorithm. The choice for this evaluation is Apache Kafka. Apache Kafka is an open-source streaming platform, which is built according to a publish/subscribe principle and can process data streams fault-tolerantly and scalably at the time of their appearance (cite Link https://kafka.apache.org/intro). 
+A good introduction to the concepts of Kafka can be found in "Kafka - The Definitive Guide" that is freely provided by Confluent: https://www.confluent.io/wp-content/uploads/confluent-kafka-definitive-guide-complete.pdf
+
+Our contribution is the implemented prototype of the "Extremely Fast Decision Tree" by Manapragada et al. (cite 0) with Apache Kafka (Link: https://kafka.apache.org/) on Apache Kafka. In this ReadMe, we aim for an overview of our implementation, its rough theoretical background and concepts and the challenges we faced implementing this algorithm on Apache Kafka.
 
 ## Related Work
+The theoretical background of this work is building in particular on three papers.
+The theoretical basis of this implementation is the algorithm "Extremely Fast Decision Tree" (EFDT) by Manapragada et al. (cite 0). This is an extension of the "Very Fast Decision Tree" (VFDT) by Domingos and Hulten (cite 3). An important concept for both algorithms is Hoeffding inequality (cite 4). This work focuses on the implementation of the "Extremely Fast Decision Tree" on Apache Kafka, therefore we dispense with a further listing of alternative decision tree algorithms on streaming data. The interested reader will find a summary of the most popular algorithms in the paper by Rosset (cite 5). The VFDT is also implemented in the Massive Online Analysis (MOA) Framework (cite https://moa.cms.waikato.ac.nz/), a framework that provides machine learning algorithms for data stream mining, especially for concept drift. We will come back to the concept of concept drift succeeding.
+The EFDT can also be found as an implemented extension for the MOA framework based on the VDFT implementation (cite 0) on the Github page of Manapragada et al. (https://github.com/chaitanya-m/kdd2018). Our paper analysis has shown that none of these algorithms has been implemented on Apache Kafka so far. Generally, we did not find any information about a direct implementation of decision trees on Apache Kafka without embedding external frameworks. Therefore our work is to be understood as an attempt to implement the "Extremely Fast Decision Tree" algorithm with Apache Kafka, on the one hand, and as an evaluation of how tree structures can be reasonably mapped to Apache Kafka, on the other hand.
 
-## Approach/Implementation
-- Architecture
-- Problems
--> Parallelization
--> Scaling...
+
 
 ### Architecture and Components
 <p align="center">
