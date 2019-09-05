@@ -3,11 +3,13 @@
 
 ## Build & Run Project
 0. Clone this repository and download Apache Kafka and Zookeeper as described here: https://kafka.apache.org/quickstart
-1. bin/zookeeper-server-start.sh config/zookeeper.properties
-2. bin/kafka-server-start.sh config/server.properties --override delete.topic.enable=true 
-3. bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic aggregatedinput
-4. mvn package
-5. java -jar target/EFDT-1.0-SNAPSHOT-jar-with-dependencies.jar "\<path to dataset\>" "\<security threshold (e.g. 0.95)\>"
+1. Change to Kafka directory with terminal.
+2. bin/zookeeper-server-start.sh config/zookeeper.properties
+3. bin/kafka-server-start.sh config/server.properties --override delete.topic.enable=true 
+4. bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic aggregatedinput
+5. Change to repository directory
+6. mvn package
+7. java -jar target/EFDT-1.0-SNAPSHOT-jar-with-dependencies.jar "\<path to dataset\>" "\<security threshold (e.g. 0.95)\>"
 
 ## Motivation
 In the age of Big Data, we find ourselves in a situation where more and more data is being produced. The sequential procedure of a traditional data pipeline - the collection of a data set, its preparation, and subsequent analysis - is increasingly no longer sufficient to meet the requirements placed on live data. Today, data that is collected in real-time. Therefore, it must be analyzed in real-time to make immediate decisions based on this data. Data streams can also grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Applications can be found in industrial production, for example, to predict failures due to sensor data on production machines. But there are also numerous applications for fraud detection in financial transactions and all other areas that produce large amounts of real-time data.
