@@ -198,7 +198,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
         nodeMap.put("GX0",GX0_average);
 
         double numberofevents=EFDT_InfoGain.Numberofevents(attributeHashMap);
-        double epsilon = EFDT_InfoGain.HoeffdingTreshold(0.95, numberofevents);
+        double epsilon = EFDT_InfoGain.HoeffdingTreshold(ThresholdParameter.getInstance().getThreshold(), numberofevents);
         System.out.println("Epsilon: " + epsilon);
         System.out.println("GXA: "+GXA_average + "(" + GXa_key + ")");
         System.out.println("GXO: "+GX0_average + "(Nullsplit)");
@@ -313,7 +313,7 @@ public class TreeworkerProcessor implements Processor<String,HashMap> {
 
         tree.put("node".concat(Integer.toString(node)), nodeMap);
 
-        double treshold = EFDT_InfoGain.HoeffdingTreshold(0.95,EFDT_InfoGain.Numberofevents(attributeHashMap));
+        double treshold = EFDT_InfoGain.HoeffdingTreshold(ThresholdParameter.getInstance().getThreshold(),EFDT_InfoGain.Numberofevents(attributeHashMap));
         if(!((GXA_average-XCurrent_average)>treshold)){return true;}
 
         if(GXa_key.equals("Nullsplit")){
