@@ -35,6 +35,7 @@ By default, data streams are processed in a stateless way within a Kafka topolog
 <p align="center">
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/kv-store.png" width="700"/>
 </p>
+The structure and contents (e.g. the statistics of the nodes described in "The Algorithm") of the state store are iniatialized within the init() method of the processor node class "TreeworkerProcessor" when the processor node is started before the first record arrives.
 Currently we make use of a persistent local state store. The settings of the state store (e.g. using it in-memory) can be easily changed in the "Treeworker" class.
 #### REST API LAYER
 Concrete description of how input data must be structured.
