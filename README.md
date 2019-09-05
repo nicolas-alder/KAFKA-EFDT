@@ -26,7 +26,7 @@ The EFDT can also be found as an implemented extension for the MOA framework bas
 
 ## Architecture and Components
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/architecture.png" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/architecture-with-rest-layer.png" width="400"/>
 </p>
 The architecture of this implementation consists of five main components: The input topic, the tree app, the local state store, and the query app. Those components are capsulated within a rest API layer. We explain those components in the following.
 
