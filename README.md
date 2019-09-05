@@ -19,8 +19,9 @@
 -> Scaling...
 
 ### Architecture and Components
+<p align="center">
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/architecture.png" width="400"/>
-
+</p>
 The architecture of this implementation consists of five main components: The input topic, the tree app, the local state store, and the query app. Those components are capsulated within a rest API layer. We further explain those components in the following.
 
 #### The input topic
@@ -31,9 +32,9 @@ Apache Kafka organizes data streams in so-called topologies (cite 7). The topolo
 
 #### The Local State Store
 By default, data streams are processed in a stateless way within a Kafka topology. This means that any input data is processed in a way that is independent of any former input. As we obviously must learn from former input and maintain a decision tree structure, we are performing stateful operations and must store the tree structure. This is done with the help of a local state store. A local state store is organized as a key-value store (think of a dictionary structure) and bound to our specific processor node. Anything that must be saved to represent the decision tree, that is learned from the data or saved within the tree must be stored in the local state store. Below, you find a short overview of how we organized the key-value store.
-
+<p align="center">
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/kv-store.png" width="700"/>
-
+</p>
 Currently we make use of a persistent local state store. The settings of the state store (e.g. using it in-memory) can be easily changed in the "Treeworker" class.
 #### REST API LAYER
 Concrete description of how input data must be structured.
