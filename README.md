@@ -38,6 +38,9 @@ By default, data streams are processed in a stateless way within a Kafka topolog
 The structure and contents (e.g. the statistics of the nodes described in "The Algorithm") of the state store are iniatialized within the init() method of the processor node class "TreeworkerProcessor" when the processor node is started before the first record arrives.
 Currently we make use of a persistent local state store. The settings of the state store (e.g. using it in-memory) can be easily changed in the "Treeworker" class.
 
+#### The Query Application
+The query application does not necessarily means one specific implemented application by us. It specifies the possibility of any application to insert into, query from and receive status information of the tree. The specific query application that is used in this implementation is the Jupyter Notebook that was used for evaluation. Status information denotes if the tree currently processes entries. This information is used in the evaluation process to determine if the evaluation can already be started or if there are still records that must be processed by the processor node into the treestructure.  The insertion, query and status functionalities are implemented by the REST API Layer.
+
 #### REST API LAYER
 Concrete description of how input data must be structured.
 The processing of the records is designed in a way that it is possible to feed 
