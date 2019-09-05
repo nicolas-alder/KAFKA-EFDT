@@ -24,8 +24,7 @@ The theoretical basis of this implementation is the algorithm "Extremely Fast De
 The EFDT can also be found as an implemented extension for the MOA framework based on the VDFT implementation (cite 0) on the Github page of Manapragada et al. (https://github.com/chaitanya-m/kdd2018). Our paper analysis has shown that none of these algorithms has been implemented on Apache Kafka so far. Generally, we did not find any information about a direct implementation of decision trees on Apache Kafka without embedding external frameworks. Therefore our work is to be understood as an attempt to implement the "Extremely Fast Decision Tree" algorithm with Apache Kafka, on the one hand, and as an evaluation of how tree structures can be reasonably mapped to Apache Kafka, on the other hand.
 
 
-
-### Architecture and Components
+## Architecture and Components
 <p align="center">
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/architecture.png" width="400"/>
 </p>
