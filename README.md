@@ -18,6 +18,10 @@
 -> Parallelization
 -> Scaling...
 
+### Architecture and Components
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/architecture.png" width="400"/>
+The architecture of this implementation consists of five main components that we will describe 
+
 ## Goals/Contributions/Research Question
 
 ## References
