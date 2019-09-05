@@ -42,7 +42,7 @@ Currently, we make use of a persistent local state store. The settings of the st
 The query application does not necessarily mean one specific implemented application by us. It specifies the possibility of any application to insert into, query from and receive status information of the tree. The specific query application that is used in this implementation is the Jupyter Notebook that was used for evaluation. Status information denotes if the tree currently processes entries. This information is used in the evaluation process to determine if the evaluation can already be started or if there are still records that must be processed by the processor node into the tree structure.  The insertion, query, and status functionalities are implemented by the REST API Layer.
 
 ### REST API Layer
-The REST API Layer serves as an interface to insert and query the decision tree, as well as receive status information if the tree application node currently processes records. This enables better evaluation. The layer was realized with a Jetty (cite 9) webserver and can be requested via http://localhost:7070/{endpoint}/{record}. All requests are GET-requests. Records are sent as URL parameters. They have to be in the format {attribute1_attributevalue_labelClass, attribute2_attributevalue_labelClass, ... }. You find specific examples for illustration purposes below.
+The REST API Layer serves as an interface to insert and query the decision tree, as well as receive status information if the tree application node currently processes records. This enables better evaluation. The layer was realized with a Jetty (cite 9) webserver and can be requested via http://localhost:7070/{endpoint}/{record}. All requests are GET-requests. Records are sent as URL parameters. They have to be in the format {attribute1_attributevalue_labelClass, attribute2_attributevalue_labelClass, ... }. You find specific examples for illustration purposes below. We also provided a dataset preprocessing pipeline within our evaluation jupyter notebook that you can use to process you dataset in the requirement format for the jar datapath parameter and to load and evaluate any dataset with this prototype (see "Evaluation" section).
 
 | Purpose         |  Endpoint                    | Return value
 | ------------- | -------------------- | ----------------------- |
@@ -57,8 +57,6 @@ The REST API Layer serves as an interface to insert and query the decision tree,
 | `query`   |http://localhost:7070/messages/query/{wohnzeit_WD3, beruf_B3, telef_nein, verw_VZ11, moral_M2, dhoehe_DH2, beszeit_BD5, verm_V3, rate_RH4, weitkred_RK3, label, laufkont_K4, gastarb_ja, buerge_WS1, pers_U2, dalter_A4, sparkont_SW5, bishkred_ARK2, dlaufzeit_LZ02, wohn_W1, famges_FG2}  |  
 | `status`   |  http://localhost:7070/messages/status/| 
 
-#### Record Format and Dataset
-## Goals/Contributions/Research Question
 
 ## References
 
