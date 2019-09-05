@@ -16,7 +16,7 @@ An example of a decision tree algorithm is the "Extremely Fast Decision Tree Alg
 In addition to the algorithms, we need a powerful framework for streaming data in which we implement our algorithm. The choice for this evaluation is Apache Kafka. Apache Kafka is an open-source streaming platform, which is built according to a publish/subscribe principle and can process data streams fault-tolerantly and scalably at the time of their appearance (cite Link https://kafka.apache.org/intro). 
 A good introduction to the concepts of Kafka can be found in "Kafka - The Definitive Guide" that is freely provided by Confluent: https://www.confluent.io/wp-content/uploads/confluent-kafka-definitive-guide-complete.pdf
 
-Our contribution is the implemented prototype of the "Extremely Fast Decision Tree" by Manapragada et al. (cite 0) with Apache Kafka (Link: https://kafka.apache.org/) on Apache Kafka. In this ReadMe, we aim for an overview of our implementation, its rough theoretical background and concepts and the challenges we faced implementing this algorithm on Apache Kafka.
+Our contribution is the implemented prototype of the "Extremely Fast Decision Tree" by Manapragada et al. (cite 0) with Apache Kafka (Link: https://kafka.apache.org/). In this ReadMe, we aim for an overview of our implementation, its rough theoretical background, concepts and the challenges we faced implementing this algorithm on Apache Kafka.
 
 ## Related Work
 The theoretical background of this work is building in particular on three papers.
