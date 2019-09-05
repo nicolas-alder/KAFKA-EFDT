@@ -46,9 +46,9 @@ The REST API Layer serves as an interface to insert and query the decision tree,
 
 | Purpose         |  Endpoint                    | Return value
 | ------------- | -------------------- | ----------------------- |
-| `insert`      | /messages/insert/       | Successful: 1|
-| `query`   | /messages/query/           |  Label value: 0/1; Error: -1|
-| `status`   | /messages/status/        | Busy: 1; Not-Busy: 0|
+| `insert`      | messages/insert       | Successful: 1|
+| `query`   | messages/query           |  Label value: 0/1; Error: -1|
+| `status`   | messages/status        | Busy: 1; Not-Busy: 0|
 
 
 ## Goals/Contributions/Research Question
