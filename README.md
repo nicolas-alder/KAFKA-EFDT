@@ -24,10 +24,10 @@
 </p>
 The architecture of this implementation consists of five main components: The input topic, the tree app, the local state store, and the query app. Those components are capsulated within a rest API layer. We further explain those components in the following.
 
-#### The input topic
+#### The Input Topic
 Apache Kafka stores data in so-called topics.  They serve to ensure elasticity, scalability, high performance, and fault tolerance (cite 7). At this point, it is not important to fully deep-dive into the concept of the topics but to know they are the main abstraction used for storing data within Kafka. All data that is fed into the Extremely Fast Decision Tree is, therefore, send to the input topic at the very beginning via a provided rest API endpoint. The input topic is created via the command line (see Build & Run Project). Internally its referenced as "aggregatedinput". The name can be changed by changing the command together with the topology definition in the "Treeworker" class.
 
-#### The tree application
+#### The Tree Application
 Apache Kafka organizes data streams in so-called topologies (cite 7). The topology concept helps to denote the computational logic behind the transformation of an input data stream to any output (data stream). They are represented as a graph structure. This topology graph may contain source-, stream- or sink-processor nodes. While stream nodes receive their input from other nodes and send their output over to other nodes, source nodes receive their input from topics as well as sink nodes send their output to topics. We use the low-level processor API (cite 8) of Apache Kafka to define our topology. Our graph consists only of one processor node, our tree application node, and is, therefore, source- and sink-node at the same time. Each input record that is stored in the input topic is read, one record at a time, into the tree application processor node. All computational logic to operate the tree, described in "The Algorithm" is implemented in the tree application processor node. The corresponding java class is "TreeworkerProcessor". The topology with the embedded processor node is "Treeworker".
 
 #### The Local State Store
