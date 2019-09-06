@@ -12,9 +12,17 @@
 7. java -jar target/EFDT-1.0-SNAPSHOT-jar-with-dependencies.jar "\<path to dataset\>" "\<security threshold (e.g. 0.95)\>"
 
 ## Technical FAQ
-> A second 
+> A second/multiple tree-visualization window(s) randomly appear(s). 
+Multiple visualization windows may appear if the kafka broker or another kafka component fails/dies and the processor node, i.e. the whole prototype, is restored. The init() method of the processor node in "TreeworkerProcessor" is triggered, resulting in opening another visualization window. REST requests are not possible in the time of restoration. We have not evaluated the correctness of the restored StateStore and the corresponding tree yet and recommend a restart of the prototype.
 
-Paragraphs and Line Breaks
+> I receive an error that my port is already in use
+Open the command line and type "lsof -i :7070". Subsequently kill the responsible process with its PID and try to restart the prototype again. This is at your own risk.
+
+> How do I delete a topic and its contents?
+Please run the script "kafka-del-topics.sh" that is provided in the root directory of this repository from within the kafka distribution "bin" directory. 
+
+> How can I contact you?
+You can contact us via nicolas.alder@student.hpi.de or henrik.wenck@student.hpi.de
 
 ## Motivation
 In the age of Big Data, we find ourselves in a situation where more and more data is being produced. The sequential procedure of a traditional data pipeline - the collection of a data set, its preparation, and subsequent analysis - is increasingly no longer sufficient to meet the requirements placed on live data. Today, data that is collected in real-time. Therefore, it must be analyzed in real-time to make immediate decisions based on this data. Data streams can also grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Applications can be found in industrial production, for example, to predict failures due to sensor data on production machines. But there are also numerous applications for fraud detection in financial transactions and all other areas that produce large amounts of real-time data.
