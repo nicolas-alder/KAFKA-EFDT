@@ -65,6 +65,48 @@ The REST API Layer serves as an interface to insert and query the decision tree,
 | `query`   |http://localhost:7070/messages/query/{wohnzeit_WD3, beruf_B3, telef_nein, verw_VZ11, moral_M2, dhoehe_DH2, beszeit_BD5, verm_V3, rate_RH4, weitkred_RK3, label, laufkont_K4, gastarb_ja, buerge_WS1, pers_U2, dalter_A4, sparkont_SW5, bishkred_ARK2, dlaufzeit_LZ02, wohn_W1, famges_FG2}  |  
 | `status`   |  http://localhost:7070/messages/status/| 
 
+## Scaling Considerations and Future Works
+As mentioned in the Motivation, data streams may grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Therefore, scaling is an important subject to consider.  In this implementation, we did not include any specific scaling mechanisms. Possible scaling options and their possible problems are elaborated in this section. Those considerations on scaling can be taken up in future works.
+
+If you think of scaling this EFDT implementation, you have to consider two different aspects. First, the possibility of scaling within the algorithm. Secondly, Apache Kafkas offered scaling concepts must eventually enable scaling possibilities within the algorithm. Apache Kafka traditionally scales via replication of processor nodes (that is our tree application) and input topics. 
+
+In our current architecture, we read one record at a time into our tree application component. The performance is therefore bound to the computational processing duration when each record is subsequently inserted into the tree. Possible requests that query/use the current tree and therefore additionally add performance needs are not considered here for simplicity reasons.  Eventually, as soon as there are arriving more records in our input topic as we can process into our tree application, we face an overload. 
+
+We want to discuss two approaches to avoid this bottleneck: aggregating incoming records into one summarized record and parallelizing within the tree structure.
+
+### Aggregating Incoming Records 
+To avoid this bottleneck, one can think of aggregating incoming data records into one record, from the view of the tree application. The timeframe of aggregating records corresponds to the duration the last aggregated record is processed/inserted into the tree structure. Each record contains all the necessary information for the update process of the tree. As the algorithm updates observed attributes and its node statistics from a given timeframe, we process fresh incoming records into one summarized record with all observations. The result is a batch insert operation into the tree.
+ 
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app.png" width="400"/>
+</p>
+
+While this approach seems promising, we face one critical problem. 
+It is exemplified below with two incoming records at their aggregated representation. 
+
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app-conflict.png" width="400"/>
+</p>
+
+If we aggregate records as shown, we might lose information if a target variable label was observed with one or another attribute. In the example shown above, we cannot reconstruct if "Label_0" or "Label_1" was observed with the "Temperature_Hot" or "Temperature_Normal" attribute. Therefore, the approach of aggregating arbitrarily of a given timeframe into one record does not work.  
+As a consequence, one may argue that we could aggregate records in such a way that only unambiguous aggregation, without information loss, is created. This could be done by considering aggregating records for each tree path from the root to any leaf that exists in our decision tree. Those aggregated records must inevitably share the same attributes and could, therefore, be processed at the same time. Though, the paths have to be updated after each insertion and are dependent on the size of the decision tree, again depending on the formatting and statistical properties of the input data. Considering that trees do not grow with the input size of data, but with the complexity of its statistical properties and the number of discrete attributes, the insert operation might not be a necessary bottleneck for each case. In the end, those performance factors have to be evaluated individually for each use case. 
+
+### Parallelizing Tree Insertions
+
+Inserting one (not-summarized) record at a time can lead to an overload of records that have to be inserted into the tree by our tree application.
+Apache Kafka traditionally scales via replication of processor nodes that is our tree application. Is replicating our tree application with letting it insert in one global state store a possible solution?
+
+Apache Kafka 
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/parallelizing-node-processors.png" width="400"/>
+</p>
+
+It is not a solution due to a concurrency conflict. Apache Kafka ensures that the memory is consistent even when the memory is requested and updated. But it cannot ensure that multiple tree application nodes do not save back conflicting versions of the global tree store. 
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/parallelizing-node-processors-conflict.png" width="400"/>
+</p>
+If tree application A and tree application B both request the global state store at time t, they share a common version of the tree structure. Both update the tree according to the record A and B process, resulting in two inconsistent trees that have to be synchronized. An alternative might be that different tree workers maintain specific parts of the tree exclusively, which requires a new reworked architecture. 
+Another alternative is the use of locking mechanisms such as semaphores or monitors that ensure mutual exclusion on nodes or tree parts, while the tree application could be simply replicated. Apache Kafka does not offer genuine techniques for using such locking mechanisms on one global state store, resulting in the concurrency problem anew or being bound into subsequently processing the global state store at once again (and therefore do not parallelize). The only possible approach is, therefore, to rework the architecture in splitting the tree structure into multiple state stores that contain tree parts and limiting parallel access with locking mechanisms.
 
 ## References
 
