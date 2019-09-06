@@ -13,15 +13,19 @@
 
 ## Technical FAQ
 > A second/multiple tree-visualization window(s) randomly appear(s). 
+
 Multiple visualization windows may appear if the kafka broker or another kafka component fails/dies and the processor node, i.e. the whole prototype, is restored. The init() method of the processor node in "TreeworkerProcessor" is triggered, resulting in opening another visualization window. REST requests are not possible in the time of restoration. We have not evaluated the correctness of the restored StateStore and the corresponding tree yet and recommend a restart of the prototype.
 
 > I receive an error that my port is already in use
+
 Open the command line and type "lsof -i :7070". Subsequently kill the responsible process with its PID and try to restart the prototype again. This is at your own risk.
 
 > How do I delete a topic and its contents?
+
 Please run the script "kafka-del-topics.sh" that is provided in the root directory of this repository from within the kafka distribution "bin" directory. 
 
 > How can I contact you?
+
 You can contact us via nicolas.alder@student.hpi.de or henrik.wenck@student.hpi.de
 
 ## Motivation
