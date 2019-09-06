@@ -139,23 +139,23 @@ Extending the EFDT algorithm to a random forest approach is fairly easy with our
 We implemented a full working prototype of the "Extremely Fast Decision Tree" by Manapragada et al. [1] on Apache Kafka [3] and elaborated on the algorithm and the theoretical prerequesites. An architectural representation based on the concepts of Apache Kafka was found and illustrated. The limitations and possibilities for scaling the algorithm as well as the corresponding possible approaches to implement them on Apache Kafka werde discussed and can be adressed in future works. We evaluated the performance of the EFDT algorithm of our implementation and provided a pipeline for (pre)processing and evaluating arbitrary datasets for the prototype. A adapting live-visualization of the decision tree enables manual tracking and exploration of the tree structure development within the running data stream.
 
 ## References
-[1] Manapragada, Chaitanya, Geoffrey I. Webb, and Mahsa Salehi. "Extremely fast decision tree." Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. ACM, 2018.
+[1]  Manapragada, Chaitanya, Geoffrey I. Webb, and Mahsa Salehi. "Extremely fast decision tree." Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. ACM, 2018.
 
-[2] https://github.com/chaitanya-m/kdd2018
+[2]  https://github.com/chaitanya-m/kdd2018
 
-[3] https://kafka.apache.org/intro
+[3]  https://kafka.apache.org/intro
 
-[4] https://www.confluent.io/wp-content/uploads/confluent-kafka-definitive-guide-complete.pdf
+[4]  https://www.confluent.io/wp-content/uploads/confluent-kafka-definitive-guide-complete.pdf
 
-[5] Domingos, Pedro, and Geoff Hulten. "Mining high-speed data streams." Kdd. Vol. 2. 2000.
+[5]  Domingos, Pedro, and Geoff Hulten. "Mining high-speed data streams." Kdd. Vol. 2. 2000.
 
-[6] Hoeffding, Wassily. "Probability inequalities for sums of bounded random variables." The Collected Works of Wassily Hoeffding. Springer, 1994.
+[6]  Hoeffding, Wassily. "Probability inequalities for sums of bounded random variables." The Collected Works of Wassily Hoeffding. Springer, 1994.
 
-[7] Rosset, Corbin. "A Review of Online Decision Tree Learning Algorithms." Technical Report. Johns Hopkins University, Department of Computer Science, 2015.
+[7]  Rosset, Corbin. "A Review of Online Decision Tree Learning Algorithms." Technical Report. Johns Hopkins University, Department of Computer Science, 2015.
 
-[8] https://moa.cms.waikato.ac.nz/
+[8]  https://moa.cms.waikato.ac.nz/
 
-[9] https://docs.confluent.io/current/streams/concepts.html
+[9]  https://docs.confluent.io/current/streams/concepts.html
 
 [10] https://docs.confluent.io/current/streams/developer-guide/processor-api.html
 
