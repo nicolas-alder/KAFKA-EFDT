@@ -26,7 +26,7 @@ Please run the script "kafka-del-topics.sh" that is provided in the root directo
 
 #### How can I contact you?
 
-You can contact us via nicolas.alder@student.hpi.de or henrik.wenck@student.hpi.de
+You can contact us via nicolas.alder@student.hpi.de or henrik.wenck@student.hpi.de .
 
 ## Motivation
 In the age of Big Data, we find ourselves in a situation where more and more data is being produced. The sequential procedure of a traditional data pipeline - the collection of a data set, its preparation, and subsequent analysis - is increasingly no longer sufficient to meet the requirements placed on live data. Today, data that is collected in real-time. Therefore, it must be analyzed in real-time to make immediate decisions based on this data. Data streams can also grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Applications can be found in industrial production, for example, to predict failures due to sensor data on production machines. But there are also numerous applications for fraud detection in financial transactions and all other areas that produce large amounts of real-time data.
