@@ -11,6 +11,8 @@
 6. mvn package
 7. java -jar target/EFDT-1.0-SNAPSHOT-jar-with-dependencies.jar "\<path to dataset\>" "\<security threshold (e.g. 0.95)\>"
 
+## FAQ
+
 ## Motivation
 In the age of Big Data, we find ourselves in a situation where more and more data is being produced. The sequential procedure of a traditional data pipeline - the collection of a data set, its preparation, and subsequent analysis - is increasingly no longer sufficient to meet the requirements placed on live data. Today, data that is collected in real-time. Therefore, it must be analyzed in real-time to make immediate decisions based on this data. Data streams can also grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Applications can be found in industrial production, for example, to predict failures due to sensor data on production machines. But there are also numerous applications for fraud detection in financial transactions and all other areas that produce large amounts of real-time data.
 An example of a decision tree algorithm is the "Extremely Fast Decision Tree Algorithm" for streaming data by Manapragada et al. (cite 0, https://github.com/chaitanya-m/kdd2018).
@@ -114,6 +116,8 @@ Extending the EFDT algorithm to a random forest approach is fairly easy with our
 
 <strong>PARAMETER BAUMTIEFE HENRIK</strong>
 
-  
+## Summary
+We implemented a full working prototype of the "Extremely Fast Decision Tree" by Manapragada et al. (cite 0) on Apache Kafka and elaborated on the algorithm and the theoretical prerequesites. An architectural representation based on the concepts of apache kafka was found and illustrated. The limitations and possibilities for scaling the algorithm as well as the corresponding possible approaches to implement them on Apache Kafka werde discussed and can be adressed in future works.
+
 ## References
 
