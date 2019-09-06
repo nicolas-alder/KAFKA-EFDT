@@ -11,7 +11,10 @@
 6. mvn package
 7. java -jar target/EFDT-1.0-SNAPSHOT-jar-with-dependencies.jar "\<path to dataset\>" "\<security threshold (e.g. 0.95)\>"
 
-## FAQ
+## Technical FAQ
+> A second 
+
+Paragraphs and Line Breaks
 
 ## Motivation
 In the age of Big Data, we find ourselves in a situation where more and more data is being produced. The sequential procedure of a traditional data pipeline - the collection of a data set, its preparation, and subsequent analysis - is increasingly no longer sufficient to meet the requirements placed on live data. Today, data that is collected in real-time. Therefore, it must be analyzed in real-time to make immediate decisions based on this data. Data streams can also grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Applications can be found in industrial production, for example, to predict failures due to sensor data on production machines. But there are also numerous applications for fraud detection in financial transactions and all other areas that produce large amounts of real-time data.
@@ -39,6 +42,8 @@ Apache Kafka stores data in so-called topics.  They serve to ensure elasticity, 
 
 ### The Tree Application
 Apache Kafka organizes data streams in so-called topologies (cite 7). The topology concept helps to denote the computational logic behind the transformation of an input data stream to any output (data stream). They are represented as a graph structure. This topology graph may contain source-, stream- or sink-processor nodes. While stream nodes receive their input from other nodes and send their output over to other nodes, source nodes receive their input from topics as well as sink nodes send their output to topics. We use the low-level processor API (cite 8) of Apache Kafka to define our topology. Our graph consists only of one processor node, our tree application node, and is, therefore, source- and sink-node at the same time. Each input record that is stored in the input topic is read, one record at a time, into the tree application processor node. All computational logic to operate the tree, described in "The Algorithm" is implemented in the tree application processor node. The corresponding java class is "TreeworkerProcessor". The topology with the embedded processor node is "Treeworker".
+The implementation comes with a adapting live-visualization of the decision tree. This enables manual tracking and exploration of the tree structure development within a running data stream.
+
 
 ### The Local State Store
 By default, data streams are processed in a stateless way within a Kafka topology. This means that any input data is processed in a way that is independent of any former input. As we obviously must learn from former input and maintain a decision tree structure, we are performing stateful operations and must store the tree structure. This is done with the help of a local state store. A local state store is organized as a key-value store (think of a dictionary structure) and bound to our specific processor node. Anything that must be saved to represent the decision tree, that is learned from the data or saved within the tree must be stored in the local state store. Below, you find a short overview of how we organized the key-value store.
@@ -66,6 +71,8 @@ The REST API Layer serves as an interface to insert and query the decision tree,
 | `insert`      | http://localhost:7070/messages/insert/{wohnzeit_WD4_0, telef_nein_0, beruf_B2_0, moral_M1_0, dhoehe_DH2_0, dalter_A3_0, beszeit_BD4_0, rate_RH2_0, verm_V3_0, gastarb_ja_0, buerge_WS1_0, sparkont_SW1_0, weitkred_RK3_0, dlaufzeit_LZ02_0, bishkred_ARK1_0, pers_U2_0, verw_VZ9_0, wohn_W3_0, famges_FG2_0, laufkont_K1_0}  | 
 | `query`   |http://localhost:7070/messages/query/{wohnzeit_WD3, beruf_B3, telef_nein, verw_VZ11, moral_M2, dhoehe_DH2, beszeit_BD5, verm_V3, rate_RH4, weitkred_RK3, label, laufkont_K4, gastarb_ja, buerge_WS1, pers_U2, dalter_A4, sparkont_SW5, bishkred_ARK2, dlaufzeit_LZ02, wohn_W1, famges_FG2}  |  
 | `status`   |  http://localhost:7070/messages/status/| 
+
+
 
 ## Scaling Considerations and Future Works
 As mentioned in the Motivation, data streams may grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Therefore, scaling is an important subject to consider.  In this implementation, we did not include any specific scaling mechanisms. Possible scaling options and their possible problems are elaborated in this section. Those considerations on scaling can be taken up in future works.
@@ -117,7 +124,7 @@ Extending the EFDT algorithm to a random forest approach is fairly easy with our
 <strong>PARAMETER BAUMTIEFE HENRIK</strong>
 
 ## Summary
-We implemented a full working prototype of the "Extremely Fast Decision Tree" by Manapragada et al. (cite 0) on Apache Kafka and elaborated on the algorithm and the theoretical prerequesites. An architectural representation based on the concepts of apache kafka was found and illustrated. The limitations and possibilities for scaling the algorithm as well as the corresponding possible approaches to implement them on Apache Kafka werde discussed and can be adressed in future works.
+We implemented a full working prototype of the "Extremely Fast Decision Tree" by Manapragada et al. (cite 0) on Apache Kafka and elaborated on the algorithm and the theoretical prerequesites. An architectural representation based on the concepts of apache kafka was found and illustrated. The limitations and possibilities for scaling the algorithm as well as the corresponding possible approaches to implement them on Apache Kafka werde discussed and can be adressed in future works. We evaluated the performance of the EFDT algorithm of our implementation and provided a pipeline for (pre)processing arbitrary datasets for the prototype. A adapting live-visualization of the decision tree enables manual tracking and exploration of the development of the tree structure within the running data stream.
 
 ## References
 
