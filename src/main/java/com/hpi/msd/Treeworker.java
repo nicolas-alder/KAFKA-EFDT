@@ -36,8 +36,8 @@ public class Treeworker {
                 .withLoggingDisabled(); // disable backing up the store to a changelog topic
 
         // add the source processor node that takes Kafka topic "source-topic" as input
-        //aggregatedinput contains our normal (also unaggregated) input
-        topology.addSource("inputTreeworker", "aggregatedinput")
+        // contains our normal input
+        topology.addSource("inputTreeworker", "input")
 
         // add the AttributeCountProcessorAPI node which takes the source processor as its upstream processor
         .addProcessor("treeworker", () -> new TreeworkerProcessor(), "inputTreeworker").addStateStore(treeStructure, "treeworker");
