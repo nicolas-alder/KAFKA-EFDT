@@ -78,14 +78,14 @@ We want to discuss two approaches to avoid this bottleneck: aggregating incoming
 To avoid this bottleneck, one can think of aggregating incoming data records into one record, from the view of the tree application. The timeframe of aggregating records corresponds to the duration the last aggregated record is processed/inserted into the tree structure. Each record contains all the necessary information for the update process of the tree. As the algorithm updates observed attributes and its node statistics from a given timeframe, we process fresh incoming records into one summarized record with all observations. The result is a batch insert operation into the tree.
  
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app.png" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app.png" width="500"/>
 </p>
 
 While this approach seems promising, we face one critical problem. 
 It is exemplified below with two incoming records at their aggregated representation. 
 
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app-conflict.png" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app-conflict.png" width="700"/>
 </p>
 
 If we aggregate records as shown, we might lose information if a target variable label was observed with one or another attribute. In the example shown above, we cannot reconstruct if "Label_0" or "Label_1" was observed with the "Temperature_Hot" or "Temperature_Normal" attribute. Therefore, the approach of aggregating arbitrarily of a given timeframe into one record does not work.  
@@ -103,7 +103,7 @@ Apache Kafka
 
 It is not a solution due to a concurrency conflict. Apache Kafka ensures that the memory is consistent even when the memory is requested and updated. But it cannot ensure that multiple tree application nodes do not save back conflicting versions of the global tree store. 
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/parallelizing-node-processors-conflict.png" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/parallelizing-node-processors-conflict.png" width="700"/>
 </p>
 If tree application A and tree application B both request the global state store at time t, they share a common version of the tree structure. Both update the tree according to the record A and B process, resulting in two inconsistent trees that have to be synchronized. An alternative might be that different tree workers maintain specific parts of the tree exclusively, which requires a new reworked architecture. 
 Another alternative is the use of locking mechanisms such as semaphores or monitors that ensure mutual exclusion on nodes or tree parts, while the tree application could be simply replicated. Apache Kafka does not offer genuine techniques for using such locking mechanisms on one global state store, resulting in the concurrency problem anew or being bound into subsequently processing the global state store at once again (and therefore do not parallelize). The only possible approach is, therefore, to rework the architecture in splitting the tree structure into multiple state stores that contain tree parts and limiting parallel access with locking mechanisms.
