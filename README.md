@@ -108,5 +108,11 @@ It is not a solution due to a concurrency conflict. Apache Kafka ensures that th
 If tree application A and tree application B both request the global state store at time t, they share a common version of the tree structure. Both update the tree according to the record A and B process, resulting in two inconsistent trees that have to be synchronized. An alternative might be that different tree workers maintain specific parts of the tree exclusively, which requires a new reworked architecture. 
 Another alternative is the use of locking mechanisms such as semaphores or monitors that ensure mutual exclusion on nodes or tree parts, while the tree application could be simply replicated. Apache Kafka does not offer genuine techniques for using such locking mechanisms on one global state store, resulting in the concurrency problem anew or being bound into subsequently processing the global state store at once again (and therefore do not parallelize). The only possible approach is, therefore, to rework the architecture in splitting the tree structure into multiple state stores that contain tree parts and limiting parallel access with locking mechanisms.
 
+### Future Works Beyond Scaling
+
+Extending the EFDT algorithm to a random forest approach is fairly easy with our implementation, since only the tree application within in the "TreeworkerProcessor" class has to be modified together within the orchestration of the processor nodes in the "Treeworker" class.
+
+<strong>PARAMETER BAUMTIEFE HENRIK</strong>
+
 ## References
 
