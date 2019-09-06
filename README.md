@@ -42,7 +42,7 @@ Apache Kafka stores data in so-called topics.  They serve to ensure elasticity, 
 
 ### The Tree Application
 Apache Kafka organizes data streams in so-called topologies (cite 7). The topology concept helps to denote the computational logic behind the transformation of an input data stream to any output (data stream). They are represented as a graph structure. This topology graph may contain source-, stream- or sink-processor nodes. While stream nodes receive their input from other nodes and send their output over to other nodes, source nodes receive their input from topics as well as sink nodes send their output to topics. We use the low-level processor API (cite 8) of Apache Kafka to define our topology. Our graph consists only of one processor node, our tree application node, and is, therefore, source- and sink-node at the same time. Each input record that is stored in the input topic is read, one record at a time, into the tree application processor node. All computational logic to operate the tree, described in "The Algorithm" is implemented in the tree application processor node. The corresponding java class is "TreeworkerProcessor". The topology with the embedded processor node is "Treeworker".
-The implementation comes with a adapting live-visualization of the decision tree. This enables manual tracking and exploration of the tree structure development within a running data stream.
+The implementation comes with a adapting live-visualization of the decision tree (implemented with graphstream (cite 10)). This enables manual tracking and exploration of the tree structure development within a running data stream.
 
 
 ### The Local State Store
