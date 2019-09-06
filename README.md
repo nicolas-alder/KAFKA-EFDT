@@ -134,6 +134,7 @@ Another alternative is the use of locking mechanisms such as semaphores or monit
 Extending the EFDT algorithm to a random forest approach is fairly easy with our implementation, since only the tree application within in the "TreeworkerProcessor" class has to be modified together within the orchestration of the processor nodes in the "Treeworker" class.
 
 <strong>PARAMETER BAUMTIEFE HENRIK</strong>
+TreeworkerProcess-Klasse zusätzlichen Parameter, damit Eindringtiefe
 
 ## Summary
 We implemented a full working prototype of the "Extremely Fast Decision Tree" by Manapragada et al. [1] on Apache Kafka [3] and elaborated on the algorithm and the theoretical prerequesites. An architectural representation based on the concepts of Apache Kafka was found and illustrated. The limitations and possibilities for scaling the algorithm as well as the corresponding possible approaches to implement them on Apache Kafka werde discussed and can be adressed in future works. We evaluated the performance of the EFDT algorithm of our implementation and provided a pipeline for (pre)processing and evaluating arbitrary datasets for the prototype. A adapting live-visualization of the decision tree enables manual tracking and exploration of the tree structure development within the running data stream.
