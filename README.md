@@ -78,7 +78,7 @@ We want to discuss two approaches to avoid this bottleneck: aggregating incoming
 To avoid this bottleneck, one can think of aggregating incoming data records into one record, from the view of the tree application. The timeframe of aggregating records corresponds to the duration the last aggregated record is processed/inserted into the tree structure. Each record contains all the necessary information for the update process of the tree. As the algorithm updates observed attributes and its node statistics from a given timeframe, we process fresh incoming records into one summarized record with all observations. The result is a batch insert operation into the tree.
  
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app.png" width="500"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/aggregation-app.png" width="550"/>
 </p>
 
 While this approach seems promising, we face one critical problem. 
@@ -98,7 +98,7 @@ Apache Kafka traditionally scales via replication of processor nodes that is our
 
 Apache Kafka 
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/parallelizing-node-processors.png" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/parallelizing-node-processors.png" width="450"/>
 </p>
 
 It is not a solution due to a concurrency conflict. Apache Kafka ensures that the memory is consistent even when the memory is requested and updated. But it cannot ensure that multiple tree application nodes do not save back conflicting versions of the global tree store. 
