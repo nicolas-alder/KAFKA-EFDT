@@ -1,4 +1,4 @@
-# Extremely Fast Decision Trees 
+# Extremely Fast Decision Tree 
 # - An Apache Kafka Implementation -
 
 ## Build & Run Project
