@@ -114,6 +114,6 @@ Extending the EFDT algorithm to a random forest approach is fairly easy with our
 
 <strong>PARAMETER BAUMTIEFE HENRIK</strong>
 
-## Summary
+  
 ## References
 
