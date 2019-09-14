@@ -41,6 +41,57 @@ The theoretical background of this work is building in particular on three paper
 The theoretical basis of this implementation is the algorithm "Extremely Fast Decision Tree" (EFDT) by Manapragada et al.[1]. This is an extension of the "Very Fast Decision Tree" (VFDT) by Domingos and Hulten [5]. An important concept for both algorithms is Hoeffding inequality [6]. This work focuses on the implementation of the "Extremely Fast Decision Tree" on Apache Kafka, therefore we dispense with a further listing of alternative decision tree algorithms on streaming data. The interested reader will find a summary of the most popular algorithms in the paper by Rosset [7]. The VFDT is also implemented in the Massive Online Analysis (MOA) Framework [8], a framework that provides machine learning algorithms for data stream mining, especially for concept drift. We will come back to the concept of concept drift succeeding.
 The EFDT can be found as an implemented extension for the MOA framework, based on the VDFT implementation on the Github page of Manapragada et al. [2]. Our paper analysis has shown that none of these algorithms has been implemented on Apache Kafka so far. Generally, we did not find any information about direct implementations of decision trees on Apache Kafka without embedding external frameworks. Therefore our work is to be understood as an attempt to implement the "Extremely Fast Decision Tree" algorithm with Apache Kafka, on the one hand, and as an evaluation of how tree structures can be reasonably mapped to Apache Kafka, on the other hand.
 
+## The Aproach
+
+### Operations
+
+The algorithm presented by Manapragada et al. [smth] uses the individual records of the stream data to iteratively create a tree structure of nodes and edges, which finally allows a classification of these data. A record consists of a set of attributes, which have different attribute values. The following section gives an overview of the four basic components of the algorithm. The algorithm can be found in our implementation in TreeworkerProcessor and EFDT_InfoGain.
+
+### Initializing 
+
+At the beginning there are again two steps. First, a node is initialized, which simultaneously acts as root of the tree, and the second, a count statistic is created based on the possible attribute-attribute value combinations with 0 as initial value.
+
+[BILD]
+
+##### The following steps are now done iteratively for each record
+
+### Insert
+
+The record is inserted into the existing tree structure and the count statistics are updated on the way to the leaf.
+
+[BILD]
+
+### AttemptToSplit
+
+Once you have arrived at the leaf, the system checks whether there is a pure division. If this is the case, the sheet is labeled with the most frequently occurring label. If there is no pure division, an InformationGain value is calculated based on the count statistics for each attribute. This value indicates how much the respective attribute would reduce the existing impurity and is calculated using the following formula: 
+
+$$ IG(node,Attribute)=H(node)-H(node \mid  Attribute)$$ with $$H(node)$$ as the entropy of the node and $$H(node \mid  Attribute)$$ as the entropy in case you would split at that attribute. The calculations can be found in EFDT_InfoGain.
+
+The attribute with the highest value, $$G(X_A)$$ and the value of the zero split $$G(X_0)$$ are selected and a weighted average with the previously calculated values is determined $$\rightarrow \overline{G}(X_A), \overline{G}(X_0)$$. 
+
+Then we check the Hoeffding criterion, where we look if $$\overline{G}(X_A) - \overline{G}(X_0)>\varepsilon$$ is. Here $$\epsilon$$ describes a safety threshold, which in turn is described in the following. 
+
+$$ \varepsilon=\sqrt{\frac{R^2 \ln(1/\delta)}{2n}} $$ 
+
+Included are the number of records $$n$$ that have arrived in the node so far and a user-defined security $$ \delta $$ that specifies the probability to which $$X_A$$ truly is the optimal splitting attribute. The definition of the $$ R^2$$, however, was not clearly described in the original paper, which is why, after careful consideration, $$R$$ was set to the number of classes to be predicted, in our case 2.
+
+If the coeffding criterion and $$X_A \neq X_0$$ is fulfilled, the leaf gets the attribute as label and gets leafs assigned by the number of the respective attribute values. A new count statistic is also initialized in each of these leafs.
+
+### ReEvaluate
+
+As already mentioned, there can also be changes within characteristics in a data stream, such as a new behavior when measuring click behavior.  This phenomenon is also called Concept Drift and the ReEvaluate function enables exactly this flexibility. 
+
+It does this in a very similar way to the AttemptToSplit function, but with one decisive difference: It checks the Hoeffding criterion not in the leaf but on the way to the leaf. Thus a $$G(X_A)$$ or $$\overline{G}(X_A)$$ is calculated on the basis of the stored count statistics and compared with the currently dividing attribute $$G(X_{current})$$ or $$\overline{G}(X_{current})$$ within the coeffding criterion (below). 
+
+$$ \begin{align*} \overline{G}(X_A) - \overline{G}(X_{current}) > \varepsilon \end{align*} $$
+
+If the criterion is fulfilled, there are two possibilities. First, $$X_A$$ could be the nullsplit, which leads to the so called subtreekill, where the node becomes a reinitialized leaf and its child nodes are deleted. In the other case, the child nodes are deleted again, but the current node is not initialized to the leaf, but with the new best attribute. 
+
+### Summarizing representation
+
+[BILD]
+
+
 ## Architecture and Components
 <p align="center">
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/architecture-with-rest-layer.png" width="400"/>
