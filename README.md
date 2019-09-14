@@ -41,7 +41,7 @@ The theoretical background of this work is building in particular on three paper
 The theoretical basis of this implementation is the algorithm "Extremely Fast Decision Tree" (EFDT) by Manapragada et al.[1]. This is an extension of the "Very Fast Decision Tree" (VFDT) by Domingos and Hulten [5]. An important concept for both algorithms is Hoeffding inequality [6]. This work focuses on the implementation of the "Extremely Fast Decision Tree" on Apache Kafka, therefore we dispense with a further listing of alternative decision tree algorithms on streaming data. The interested reader will find a summary of the most popular algorithms in the paper by Rosset [7]. The VFDT is also implemented in the Massive Online Analysis (MOA) Framework [8], a framework that provides machine learning algorithms for data stream mining, especially for concept drift. We will come back to the concept of concept drift succeeding.
 The EFDT can be found as an implemented extension for the MOA framework, based on the VDFT implementation on the Github page of Manapragada et al. [2]. Our paper analysis has shown that none of these algorithms has been implemented on Apache Kafka so far. Generally, we did not find any information about direct implementations of decision trees on Apache Kafka without embedding external frameworks. Therefore our work is to be understood as an attempt to implement the "Extremely Fast Decision Tree" algorithm with Apache Kafka, on the one hand, and as an evaluation of how tree structures can be reasonably mapped to Apache Kafka, on the other hand.
 
-## The Aproach
+## The Approach
 
 ### Operations
 
