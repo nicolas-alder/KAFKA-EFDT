@@ -51,7 +51,9 @@ The algorithm presented by Manapragada et al. [smth] uses the individual records
 
 At the beginning there are again two steps. First, a node is initialized, which simultaneously acts as root of the tree, and the second, a count statistic is created based on the possible attribute-attribute value combinations with 0 as initial value.
 
-[BILD]
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Initialize.jpg" width="400"/>
+</p>
 
 ##### The following steps are now done iteratively for each record
 
@@ -59,7 +61,9 @@ At the beginning there are again two steps. First, a node is initialized, which 
 
 The record is inserted into the existing tree structure and the count statistics are updated on the way to the leaf.
 
-[BILD]
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Insert.jpg" width="400"/>
+</p>
 
 ### AttemptToSplit
 
@@ -89,7 +93,9 @@ If the criterion is fulfilled, there are two possibilities. First, $$X_A$$ could
 
 ### Summarizing representation
 
-[BILD]
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Summary.png" width="600"/>
+</p>
 
 ## Further explanations of the concept drift
 
@@ -97,7 +103,9 @@ To make the concept of Concept Drift completely clear to the reader, this will b
 
 In the Extremly Fast Decision Tree algorithm, these changes are made in the re-evaluation. The Epsilon has a very important role as from the following diagram should be clarified.
 
-[Bild]
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Epsilon_Curve.png" width="600"/>
+</p>
 
 In this graph one can see that the higher the safety threshold $$\delta$$ is set, the later the limit of the Hoeffding criterion converges towards 0. This in turn has the consequence that a deviation appears later as a signifier and thus the following reaction is only carried out if one no longer wants to assume any temporary property. 
 
@@ -149,7 +157,7 @@ The following section will now show how we have evaluated our implementation. Tw
 
 The first dataset comes from a [major Southern German bank](https://www.wi.hs-wismar.de/~cleve/vorl/dmdaten/daten/kreditscoring.htm "Credit scoring data set"), which classified 1000 potential credit borrowers based on 20 categorical characteristics regarding their credit solvency. The first 70% of the persons in the data set with the classification 1, i.e. that the persons were able to repay the loan, are opposed to 30% of unworthy persons. 
 
-The second data set, on the other hand, deals with [Skin Region Segmentation] (https://archive.ics.uci.edu/ml/datasets/skin+segmentation "Skin Segmentation Data Set"), with the aim of distinguishing [Skin and Nonskin] (https://users.cecs.anu.edu.au/~adhall/INDICON.pdf). A total of 245057 uncategorized records are available for this purpose, which in turn each contain 3 characteristics, namely values from the BGR color space. The classification ratio is 80% 0 and 20% 1.
+The second data set, on the other hand, deals with [Skin Region Segmentation](https://archive.ics.uci.edu/ml/datasets/skin+segmentation), with the aim of distinguishing [Skin and Nonskin](https://users.cecs.anu.edu.au/~adhall/INDICON.pdf). A total of 245057 uncategorized records are available for this purpose, which in turn each contain 3 characteristics, namely values from the BGR color space. The classification ratio is 80% 0 and 20% 1.
 
 The way to the evaluation, as well as the results are accomplished by the Jupyter Notebook "EFDT_Handling" and the Python class `EFDT` and shown in the following chapters.
 
@@ -182,7 +190,9 @@ Now that the tree structure has been built, you can start to evaluate the accura
 
 We got the following graph for the bank data by the functions `EFDT.calc_error_curve` and `EFDT.plot_error_curves` with a `percentage_split` of 0.01 and a $$\delta=0.95$$.
 
-[BILD]
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Bank_Error_Curve.png" width="600"/>
+</p>
 
 In it it can be observed that in the beginning both in the mixed and the unmixed case both graphs remain around an accuracy of approx. 70% and an error of 30% respectively. The error rate of the graph of the unmixed data is even slightly lower, which could be related to the initialization settings. Further on, the blue graph shows a consistently lower error rate than the orange graph. This difference can be attributed to two factors. On the one hand, the original data set is ordered as mentioned before. This means that in the unshuffled case, the first 70% of the instances carry the label 1, which means that 70% of the 90% of 1000, 630, training instances do not contain a 0 as label. Thus only towards the end the characteristics are "learned", which lead to the 0 classifications, the Concept Drift starts. Since the test data consists in unshuffled case only of 0 labels, the algorithm performs worse and worse up to the sighting of the first training zero. In contrast, shuffled data leads to a more heterogeneous learning behavior, which is why short-term changes in the tree structure can be observed more frequently. In this case, the algorithm also learns the prediction of 0, which explains the adjustment in the last 15%. It is noticeable, however, that in neither case was the error threshold significantly below 30%. Two coherent reasons would be possible for this. Firstly, the safety threshold $$\delta$$ of 0.95 could have been chosen too high, since, for example, 865 records are needed to reduce $$ \varepsilon $$ to below 0.1. This in turn could lead to the algorithm not behaving sensitively enough to detect subtleties in the data. Secondly, the number of training records, in this case 900, could be too small. The conclusion remains the same in this case.
 
@@ -190,15 +200,17 @@ In order to estimate the influence of the number of learning records, the skin d
 
 [BILD] [BILD]
 
-| 5 Kategorien                                  | 25 Kategorien                                  |
+| 5 Categories                                  | 25 Categories                                  |
 | :-------------------------------------------- | :--------------------------------------------- |
-| ![](/Users/henrikwenck/Error_Curve_Skin5.png) | ![](/Users/henrikwenck/Error_Curve_Skin25.png) |
+| ![](https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Skin_Error_Rate5.png) | ![](https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Skin_Error_Rate25.png) |
 
 It becomes apparent that the graph behaves similarly for the unshuffled data in both graphs. Namely, after the first 50000 instances one can look at a concept drift, after which the error rate drops to about 20%. However, the graphs that were created from the shuffled data differ. The error rate for 5 categories is significantly lower than for 25 categories. This supports the last two arguments derived from the bank data. That is, that a higher number of instances leads to a higher refinement within the data. For 25 categories, the amount of data seemed to be insufficient.
 
 If one compares these graphs with the results of Manapragada et al. [smth], it can be seen that their accuracy was not achieved. This could result from the automatic and not "natural" categorization of the data. What can be observed, however, is that at least the peak at 50000 instances, which marks the concept drift, can also be seen in both unshuffled data graphs. 
 
-[BILD]
+<p align="center">
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Skin_Reference.png" width="600"/>
+</p>
 
 ## Scaling Considerations and Future Works
 As mentioned in Motivation, data streams may grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Therefore, scaling is an important subject to consider.  In this implementation, we do not include any specific scaling mechanisms. Possible scaling approaches and their possible problems are discussed in this section. Those considerations on scaling can be taken up in future works.
