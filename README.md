@@ -83,7 +83,7 @@ As already mentioned, there can also be changes within characteristics in a data
 
 It does this in a very similar way to the AttemptToSplit function, but with one decisive difference: It checks the Hoeffding criterion not in the leaf but on the way to the leaf. Thus a $$G(X_A)$$ or $$\overline{G}(X_A)$$ is calculated on the basis of the stored count statistics and compared with the currently dividing attribute $$G(X_{current})$$ or $$\overline{G}(X_{current})$$ within the coeffding criterion (below). 
 
-$$ \begin{align*} \overline{G}(X_A) - \overline{G}(X_{current}) > \varepsilon \end{align*} $$
+$ \begin{align*} \overline{G}(X_A) - \overline{G}(X_{current}) > \varepsilon \end{align*} $
 
 If the criterion is fulfilled, there are two possibilities. First, $$X_A$$ could be the nullsplit, which leads to the so called subtreekill, where the node becomes a reinitialized leaf and its child nodes are deleted. In the other case, the child nodes are deleted again, but the current node is not initialized to the leaf, but with the new best attribute. 
 
@@ -91,6 +91,15 @@ If the criterion is fulfilled, there are two possibilities. First, $$X_A$$ could
 
 [BILD]
 
+## Further explanations of the concept drift
+
+To make the concept of Concept Drift completely clear to the reader, this will be clarified once again in the following section. Basically, the Concept Drift can only be found in stream data mining, because unlike batch data mining, the total amount of data is not available at any time. Therefore one must conclude from it that the records observed so far do not have to be compellingly representative for the records arriving in the future.
+
+In the Extremly Fast Decision Tree algorithm, these changes are made in the re-evaluation. The Epsilon has a very important role as from the following diagram should be clarified.
+
+[Bild]
+
+In this graph one can see that the higher the safety threshold $$\delta$$ is set, the later the limit of the Hoeffding criterion converges towards 0. This in turn has the consequence that a deviation appears later as a signifier and thus the following reaction is only carried out if one no longer wants to assume any temporary property. 
 
 ## Architecture and Components
 <p align="center">
@@ -134,6 +143,62 @@ The REST API Layer serves as an interface to insert and query the decision tree,
 | `status`   |  http://localhost:7070/messages/status/| 
 
 
+## Evaluation
+
+The following section will now show how we have evaluated our implementation. Two data sets were used for this purpose. 
+
+The first dataset comes from a [major Southern German bank](https://www.wi.hs-wismar.de/~cleve/vorl/dmdaten/daten/kreditscoring.htm "Credit scoring data set"), which classified 1000 potential credit borrowers based on 20 categorical characteristics regarding their credit solvency. The first 70% of the persons in the data set with the classification 1, i.e. that the persons were able to repay the loan, are opposed to 30% of unworthy persons. 
+
+The second data set, on the other hand, deals with [Skin Region Segmentation] (https://archive.ics.uci.edu/ml/datasets/skin+segmentation "Skin Segmentation Data Set"), with the aim of distinguishing [Skin and Nonskin] (https://users.cecs.anu.edu.au/~adhall/INDICON.pdf). A total of 245057 uncategorized records are available for this purpose, which in turn each contain 3 characteristics, namely values from the BGR color space. The classification ratio is 80% 0 and 20% 1.
+
+The way to the evaluation, as well as the results are accomplished by the Jupyter Notebook "EFDT_Handling" and the Python class `EFDT` and shown in the following chapters.
+
+### Preprocessing
+
+Since our algorithm works on the basis of categorical characteristic values, it is important in the first step to bring the data set to be used into the desired form. This is made possible by the `preprocess` function within the `EFDT` class. It transforms the data set into records, which have the already described REST API Layer Form (attribute_attributevalue_labelClass or attribute_attributevalue), under the assumption that the independent target variable is in the last column. The following parameters are provided for this.
+
+|Preprocessing 
+
+| Parameter         |  Explanation
+
+| data | data that needs to be preprocessed
+
+| categorized | "True" if data is already categorized, "False" if not
+
+| bins | number of equal-width categorizing bins 
+| col_names_exist | "True" if data has column names, "False" if not. In that case sample column names will inserted
+| shuffle | "True" if data should be shuffled, "False" if not
+
+Three lists are returned. First, 90% of the instances become training records to train the model. On the other hand 10% of the instances become unlabelled test records to predict labels as well as ground_truth values to test the predicted labels for accuracy.
+
+
+### Core Functions
+
+Once the 3 lists are available, the tree structure can be built by the algorithm using `EFDT.train_model` and the train records. You can also send queries directly in jupyter notebook via `EFDT.predict` to get labels for unlabeled records.
+
+### Evaluation
+
+Now that the tree structure has been built, you can start to evaluate the accuracy. For this 2 functions are available. Once the total performance can be queried with EFDT.evaluate_model by looking in how many cases the predicted labels match the ground_truth values and from this the share is formed. The `EFDT.calc_error_curve` function is also available. It uses the percentage defined by the parameter `percentage_split` to iteratively use this part of the train records to build the tree structure and to evaluate it afterwards. This will result in 1/percenage_split accuracy values at the end. These values can be visualized by the function `EFDT.plot_error_curves` for a clear representation. Whereby this is not limited to a list of accuracy values, but can also be added to a second list of values, for example to compare the performance between shuffeling and unshuffeling.
+
+We got the following graph for the bank data by the functions `EFDT.calc_error_curve` and `EFDT.plot_error_curves` with a `percentage_split` of 0.01 and a $$\delta=0.95$$.
+
+[BILD]
+
+In it it can be observed that in the beginning both in the mixed and the unmixed case both graphs remain around an accuracy of approx. 70% and an error of 30% respectively. The error rate of the graph of the unmixed data is even slightly lower, which could be related to the initialization settings. Further on, the blue graph shows a consistently lower error rate than the orange graph. This difference can be attributed to two factors. On the one hand, the original data set is ordered as mentioned before. This means that in the unshuffled case, the first 70% of the instances carry the label 1, which means that 70% of the 90% of 1000, 630, training instances do not contain a 0 as label. Thus only towards the end the characteristics are "learned", which lead to the 0 classifications, the Concept Drift starts. Since the test data consists in unshuffled case only of 0 labels, the algorithm performs worse and worse up to the sighting of the first training zero. In contrast, shuffled data leads to a more heterogeneous learning behavior, which is why short-term changes in the tree structure can be observed more frequently. In this case, the algorithm also learns the prediction of 0, which explains the adjustment in the last 15%. It is noticeable, however, that in neither case was the error threshold significantly below 30%. Two coherent reasons would be possible for this. Firstly, the safety threshold $$\delta$$ of 0.95 could have been chosen too high, since, for example, 865 records are needed to reduce $$ \varepsilon $$ to below 0.1. This in turn could lead to the algorithm not behaving sensitively enough to detect subtleties in the data. Secondly, the number of training records, in this case 900, could be too small. The conclusion remains the same in this case.
+
+In order to estimate the influence of the number of learning records, the skin data is considered. They are about 250 times larger and are ordered, with the first 50000 entries bearing the label 1. Using the same parameter values (`percentage_split=0.01`, $$ \delta=0.95$$ ) and two different numbers of categories (5 and 25) we received the following graphics.
+
+[BILD] [BILD]
+
+| 5 Kategorien                                  | 25 Kategorien                                  |
+| :-------------------------------------------- | :--------------------------------------------- |
+| ![](/Users/henrikwenck/Error_Curve_Skin5.png) | ![](/Users/henrikwenck/Error_Curve_Skin25.png) |
+
+It becomes apparent that the graph behaves similarly for the unshuffled data in both graphs. Namely, after the first 50000 instances one can look at a concept drift, after which the error rate drops to about 20%. However, the graphs that were created from the shuffled data differ. The error rate for 5 categories is significantly lower than for 25 categories. This supports the last two arguments derived from the bank data. That is, that a higher number of instances leads to a higher refinement within the data. For 25 categories, the amount of data seemed to be insufficient.
+
+If one compares these graphs with the results of Manapragada et al. [smth], it can be seen that their accuracy was not achieved. This could result from the automatic and not "natural" categorization of the data. What can be observed, however, is that at least the peak at 50000 instances, which marks the concept drift, can also be seen in both unshuffled data graphs. 
+
+[BILD]
 
 ## Scaling Considerations and Future Works
 As mentioned in Motivation, data streams may grow to such sizes that storage is no longer economical or possible and therefore on-the-fly analysis is a sensible way to make use of them. Therefore, scaling is an important subject to consider.  In this implementation, we do not include any specific scaling mechanisms. Possible scaling approaches and their possible problems are discussed in this section. Those considerations on scaling can be taken up in future works.
