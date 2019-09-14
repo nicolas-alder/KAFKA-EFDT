@@ -52,7 +52,7 @@ The algorithm presented by Manapragada et al. [1] uses the individual records of
 At the beginning there are two steps. First, a node is initialized, which simultaneously acts as root of the tree, and the second, a count statistic is created based on the possible attribute-attribute value combinations with 0 as initial value.
 
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Initialize.jpg" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Initialize.jpg" width="300"/>
 </p>
 
 ##### The following steps are now done iteratively for each record
@@ -62,7 +62,7 @@ At the beginning there are two steps. First, a node is initialized, which simult
 The record is inserted into the existing tree structure and the count statistics are updated on the way to the leaf.
 
 <p align="center">
-<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Insert.jpg" width="400"/>
+<img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Insert.jpg" width="700"/>
 </p>
 
 ### AttemptToSplit
@@ -73,7 +73,7 @@ Once it have arrived at the leaf, the system checks whether there is a pure divi
 
 The attribute with the highest value, <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;G(X_A)" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;G(X_A)" title="G(X_A)" /></a> and the value of the nullsplit <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;G(X_0)" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;G(X_0)" title="G(X_0)" /></a> are selected and a weighted average with the previously calculated values is determined <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;\rightarrow&space;\overline{G}(X_A),&space;\overline{G}(X_0)" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;\rightarrow&space;\overline{G}(X_A),&space;\overline{G}(X_0)" title="\rightarrow \overline{G}(X_A), \overline{G}(X_0)" /></a>. 
 
-Then we check the Hoeffding criterion, where we look if <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;\overline{G}(X_A)&space;-&space;\overline{G}(X_0)>\varepsilon" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;\overline{G}(X_A)&space;-&space;\overline{G}(X_0)>\varepsilon" title="\overline{G}(X_A) - \overline{G}(X_0)>\varepsilon" /></a> is. Here <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;\epsilon" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;\epsilon" title="\epsilon" /></a> describes a safety threshold, which in turn is described in the following formula. 
+Then we check the Hoeffding criterion, where we look if <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;\overline{G}(X_A)&space;-&space;\overline{G}(X_0)>\varepsilon" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;\overline{G}(X_A)&space;-&space;\overline{G}(X_0)>\varepsilon" title="\overline{G}(X_A) - \overline{G}(X_0)>\varepsilon" /></a> is. Here <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;\varepsilon" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;\varepsilon" title="\varepsilon" /></a> describes a safety threshold, which in turn is described in the following formula. 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\varepsilon=\sqrt{\frac{R^2&space;\ln(1/\delta)}{2n}}" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\varepsilon=\sqrt{\frac{R^2&space;\ln(1/\delta)}{2n}}" title="\varepsilon=\sqrt{\frac{R^2 \ln(1/\delta)}{2n}}" /></a>
 
@@ -93,6 +93,8 @@ It does this in a very similar way to the AttemptToSplit function, but with one 
 If the criterion is fulfilled, there are two possibilities. First, <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;X_A" target="_blank"><img src="https://latex.codecogs.com/svg.latex?\inline&space;X_A" title="X_A" /></a> could be the nullsplit, which leads to the so called subtreekill, where the node becomes a reinitialized leaf and its child nodes are deleted. In the other case, the child nodes are deleted again, but the current node is not initialized to the leaf, but with the new best attribute. 
 
 ### Summarizing representation
+
+Finally, the algorithm will be summarized and illustrated with the help of a graphic. It shows an incoming record, which is inserted into the tree structure. At each passed node the evaluation is performed or an attempt is made to split in the leaf. If the Hoeffding criterion is fulfilled in the reevaluation or in the split attempt, the node or leaf is then replaced and new child nodes are initialized.
 
 <p align="center">
 <img src="https://github.com/NicolasBenjamin/KAFKA-EFDT/blob/master/readme_images/Summary.png" width="600"/>
@@ -179,7 +181,7 @@ Three lists are returned. First, 90% of the instances become training records to
 
 ### Core Functions
 
-Once the 3 lists are available, the tree structure can be built by the algorithm using `EFDT.train_model` and the train records. You can also send queries directly in jupyter notebook via `EFDT.predict` to get labels for unlabeled records.
+Once the 3 lists are available, the tree structure can be built by the algorithm using `EFDT.train_model` and the train records. The resulting tree structure is illustrated in an extra window by GraphStream. You can also send queries directly in jupyter notebook via `EFDT.predict` to get labels for unlabeled records.
 
 ### Evaluation
 
@@ -254,8 +256,7 @@ Another alternative is the use of locking mechanisms such as semaphores or monit
 
 Extending the EFDT algorithm to a random forest approach is fairly easy with our implementation. The tree application in the "TreeworkerProcessor" class as well as the orchestration of the processor nodes in the "Treeworker" class has to be modified.
 
-<strong>PARAMETER BAUMTIEFE HENRIK</strong>
-TreeworkerProcess-Klasse zusätzlichen Parameter, damit Eindringtiefe
+Another possibility to continue with the implementation would be to extend the algorithm, so that it can process not only categorical but also metric attribute values. In addition, a parameter could be added that limits the tree depth in order to avoid the problem of overfitting.
 
 ## Summary
 We implemented a full working prototype of the "Extremely Fast Decision Tree" by Manapragada et al. [1] on Apache Kafka [3] and elaborated on the algorithm and the theoretical prerequesites. An architectural representation based on the concepts of Apache Kafka was found and illustrated. The limitations and possibilities for scaling the algorithm as well as the corresponding possible approaches to implement them on Apache Kafka werde discussed and can be adressed in future works. We evaluated the performance of the EFDT algorithm of our implementation and provided a pipeline for (pre)processing and evaluating arbitrary datasets for the prototype. A adapting live-visualization of the decision tree enables manual tracking and exploration of the tree structure development within the running data stream.
