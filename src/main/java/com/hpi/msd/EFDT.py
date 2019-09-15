@@ -120,7 +120,7 @@ class EFDT:
         bins - number of equal-width bins
         col_names_exist - "True" if data has column names, "False" if not
         shuffle - "True" if data should be shuffled, "False" if not
-        save_categorized_data - "True" if categorized data set should be saved into the format name_categorized to pass it in java jar , "False" if not
+        save_categorized_data - "True" if categorized data set should be saved into the format "name_categorized.csv" to pass it in java jar, "False" if not
 
         returns:
             train_records - records to train the algorithm
